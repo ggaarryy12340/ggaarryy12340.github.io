@@ -5,15 +5,22 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   
-  <title>蓋瑞 Blog</title>
+  <title>C# Delegate委派的使用情境與簡介 | 蓋瑞 Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="蓋瑞 Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="委派的宣告簡單來說，委派就是將方法當成參數傳進另一個方法中。上面這個說法可能過於簡短有點抽象，我們可以先來了解一下委派宣告的方式。 /// &amp;lt;summary&amp;gt; /// 烹調方式 Delegate /// &amp;lt;/summary&amp;gt; /// &amp;lt;param name=&amp;quot;食材&amp;quot;&amp;gt;&amp;lt;/param&amp;gt; /// &amp;lt;returns&amp;gt;煮好的佳">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C# Delegate委派的使用情境與簡介">
+<meta property="og:url" content="http://yoursite.com/2019/08/26/C-Delegate委派的使用情境與簡介/index.html">
 <meta property="og:site_name" content="蓋瑞 Blog">
+<meta property="og:description" content="委派的宣告簡單來說，委派就是將方法當成參數傳進另一個方法中。上面這個說法可能過於簡短有點抽象，我們可以先來了解一下委派宣告的方式。 /// &amp;lt;summary&amp;gt; /// 烹調方式 Delegate /// &amp;lt;/summary&amp;gt; /// &amp;lt;param name=&amp;quot;食材&amp;quot;&amp;gt;&amp;lt;/param&amp;gt; /// &amp;lt;returns&amp;gt;煮好的佳">
 <meta property="og:locale" content="C#、ASP.NET MVC、Web API、Angular">
+<meta property="og:image" content="https://upload.cc/i1/2019/08/25/uvAICb.png">
+<meta property="og:image" content="https://upload.cc/i1/2019/08/25/lG0S8v.png">
+<meta property="og:updated_time" content="2019-08-26T14:34:26.001Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="蓋瑞 Blog">
+<meta name="twitter:title" content="C# Delegate委派的使用情境與簡介">
+<meta name="twitter:description" content="委派的宣告簡單來說，委派就是將方法當成參數傳進另一個方法中。上面這個說法可能過於簡短有點抽象，我們可以先來了解一下委派宣告的方式。 /// &amp;lt;summary&amp;gt; /// 烹調方式 Delegate /// &amp;lt;/summary&amp;gt; /// &amp;lt;param name=&amp;quot;食材&amp;quot;&amp;gt;&amp;lt;/param&amp;gt; /// &amp;lt;returns&amp;gt;煮好的佳">
+<meta name="twitter:image" content="https://upload.cc/i1/2019/08/25/uvAICb.png">
   
     <link rel="alternative" href="/atom.xml" title="蓋瑞 Blog" type="application/atom+xml">
   
@@ -76,9 +83,7 @@
 </header>
 
     <div class="outer">
-      <section id="main">
-  
-    <article id="post-C-Delegate委派的使用情境與簡介" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-C-Delegate委派的使用情境與簡介" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <h3 href="/2019/08/26/C-Delegate委派的使用情境與簡介/" class="article-date">
   <time datetime="2019-08-26T14:33:03.000Z" itemprop="datePublished">2019-08-26</time>
@@ -93,8 +98,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/26/C-Delegate委派的使用情境與簡介/">C# Delegate委派的使用情境與簡介</a>
+    <h1 class="article-title" itemprop="name">
+      C# Delegate委派的使用情境與簡介
     </h1>
   
 
@@ -318,109 +323,21 @@ Console.WriteLine($&quot;HowToCookResult : {HowToCookResult}&quot;);
   </div>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-my-first-post" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <h3 href="/2019/04/13/my-first-post/" class="article-date">
-  <time datetime="2019-04-13T08:47:36.000Z" itemprop="datePublished">2019-04-13</time>
-</h3>
-    
-  </div>
-  <div class="article-inner">
-  <div class="curve-down">
-  <div class="fill-content">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/13/my-first-post/">my_first_post</a>
-    </h1>
+    <a href="/2019/04/13/my-first-post/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">my_first_post</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-content">
-        
-        <a data-url="http://yoursite.com/2019/04/13/my-first-post/" data-id="cjzsi6bw20001bgw5euqk1tbc" class="article-share-link">Share</a>
-        
-      </div>
-    </footer>
-  </div>
-  </div>
-  </div>
   
 </article>
 
 
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <h3 href="/2019/04/13/hello-world/" class="article-date">
-  <time datetime="2019-04-13T08:45:49.692Z" itemprop="datePublished">2019-04-13</time>
-</h3>
-    
-  </div>
-  <div class="article-inner">
-  <div class="curve-down">
-  <div class="fill-content">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/13/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-content">
-        
-        <a data-url="http://yoursite.com/2019/04/13/hello-world/" data-id="cjzsi6bvx0000bgw5c8xws8tx" class="article-share-link">Share</a>
-        
-      </div>
-    </footer>
-  </div>
-  </div>
-  </div>
-  
-</article>
-
-
-
-  
-  
 </section>
       
       <aside id="sidebar">
