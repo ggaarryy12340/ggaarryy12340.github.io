@@ -78,6 +78,120 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-物件導向-二- 實質型別(value type) 與 參考型別(reference type)" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <h3 href="/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/" class="article-date">
+  <time datetime="2020-01-12T07:36:32.000Z" itemprop="datePublished">2020-01-12</time>
+</h3>
+    
+  </div>
+  <div class="article-inner">
+  <div class="curve-down">
+  <div class="fill-content">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/">物件導向(二) 實質型別(value type) 與 參考型別(reference type)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        <p>C# 依照記憶體存取方式的不同，將型別大致分為實質型別 (value type) 與參考型別 (reference type)。也因為這兩種型別在執行存取時運作的模式不一樣，觀念不夠清晰的情況下，常會發生執行結果與預期不相符的情況。這篇文章將簡單說明 value type 與 reference type 在執行記憶體存取的運作情形。</p>
+<h2 id="記憶體位置-stack-amp-heap"><a href="#記憶體位置-stack-amp-heap" class="headerlink" title="記憶體位置 stack &amp; heap"></a>記憶體位置 stack &amp; heap</h2><p>在說明兩種型別存取過程前，需要先簡單了解記憶體有兩個重要區塊:</p>
+<ul>
+<li>stack: 用於<strong>靜態</strong>記憶體配置，必須在編譯時期為<strong>已知</strong>的資料。</li>
+<li>heap: 用於<strong>動態</strong>記憶體配置，使用這裡的記憶體主要是用在編譯時期還<strong>不知道</strong>大小或個數的資料。</li>
+</ul>
+<blockquote>
+<p>這部分非本章節重點，只要先大致知道記憶體有這兩個不同區塊即可。</p>
+</blockquote>
+<h2 id="實質型別-Value-Type"><a href="#實質型別-Value-Type" class="headerlink" title="實質型別 Value Type"></a>實質型別 Value Type</h2><p>C# 中絕大部分的型別都屬於 value type，像是 int、bool、double、decimel…，在記憶體中存取的方式比較單純，下面將用一個簡單的例子來拆解 value type 在記憶體中存取的逐步運作。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> b = a;</span><br><span class="line"></span><br><span class="line">b = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(a);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(b);</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>當執行 int a = 0 時，記憶體狀況如下:</p>
+<p> <img src="https://upload.cc/i1/2020/01/13/3RfyLw.png" alt></p>
+<blockquote>
+<p>在 stack 新增一個區塊 a，填入值為 0。</p>
+</blockquote>
+</li>
+<li><p>當執行 int b = a 時，記憶體狀況如下:</p>
+<p> <img src="https://upload.cc/i1/2020/01/13/XOYAUu.png" alt></p>
+<blockquote>
+<p>在 stack 新增一個區塊 b，填入值為和 a 相同的 0。</p>
+</blockquote>
+</li>
+<li><p>當執行 b = 20 時，記憶體狀況如下:</p>
+<p> <img src="https://upload.cc/i1/2020/01/13/jwhvdM.png" alt></p>
+<blockquote>
+<p>b 原始的值 0 被新賦予值 20 取代。</p>
+</blockquote>
+</li>
+<li><p>所以程式執行最終的輸出結果:</p>
+<blockquote>
+<p>a = 0、b = 20。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="參考型別-Reference-Type"><a href="#參考型別-Reference-Type" class="headerlink" title="參考型別 Reference Type"></a>參考型別 Reference Type</h2><p>參考型別在 C# 中最指標性的型別就是物件 (Object)，下面也會用一個簡單的例子來拆解 reference type 在記憶體中存取的逐步運作。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Car car1 = <span class="keyword">new</span> Car();</span><br><span class="line">car1.brand = <span class="string">"Toyota"</span>;</span><br><span class="line">car1.speed = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">Car car2 = car1;</span><br><span class="line">car2.brand = <span class="string">"Mazda"</span>;</span><br><span class="line">car2.speed = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(car1.brand + <span class="string">"品牌的汽車正以"</span> + car1.speed + <span class="string">"公里的速度奔馳"</span>)</span><br><span class="line"><span class="comment">// Output: </span></span><br><span class="line"></span><br><span class="line">Console.WriteLine(car2.brand + <span class="string">"品牌的汽車正以"</span> + car2.speed + <span class="string">"的速度奔馳"</span>)</span><br><span class="line"><span class="comment">// Output:</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>先建立一個 Car class，有兩個屬性 brand (string) 及 speed (int)。</p>
+</li>
+<li><p>new 一個 Car，命名為 car1，並將其屬性賦予值，此時記憶體狀態如下:</p>
+<p> <img src="https://upload.cc/i1/2020/01/13/2QeC7A.png" alt></p>
+<blockquote>
+<p>car1 在 stack 建立了一組 car1 address，指向到儲存於 heap 的物件內容。</p>
+</blockquote>
+</li>
+<li><p>Car car2 = car1。 宣告一個 car2 並將 car1 的值賦予給 car2，此時記憶體狀態如下:</p>
+<p> <img src="https://upload.cc/i1/2020/01/13/ZagmGN.png" alt></p>
+<blockquote>
+<p>car2 在 stack 新增了一個區塊，並將 car1 的值 car1 address 賦予給 car2，所以此時 car1、car2 在 stack 中的儲存內容都是 car1 address，指向 heap 中同一區塊。</p>
+</blockquote>
+</li>
+<li><p>修改 car2 的屬性 brand、speed，此時記憶體狀況如下:</p>
+<p> <img src="https://upload.cc/i1/2020/01/13/vFJMQr.png" alt></p>
+<blockquote>
+<p>屬性變更會直接到 heap 中修改屬性值，所以 heap 區塊中的 brand 變為 Mazda，speed 變為 60。</p>
+</blockquote>
+</li>
+<li><p>由於 car1、car2 都指向相同的 heap 區塊，所以輸出結果皆為</p>
+<blockquote>
+<p>Mazda品牌的汽車正以60公里的速度奔馳</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h3><p><a href="https://docs.microsoft.com/zh-tw/dotnet/csharp/language-reference/keywords/built-in-types-table" target="_blank" rel="noopener">MSDN 內建類型資料表 (C# 參考)</a></p>
+<p><a href="http://slmtsite.blogspot.com/2013/03/c-16-value-reference-type.html" target="_blank" rel="noopener">小山的 C# 教學-第16課-Value 與 Reference Type</a></p>
+<p><a href="https://nwpie.blogspot.com/2017/05/5-stack-heap.html" target="_blank" rel="noopener">NW PIE stack 與 heap 的底層概念</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-content">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/">heap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reference-type/">reference type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/value-type/">value type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/參考型別/">參考型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/實質型別/">實質型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
+
+        <a data-url="http://yoursite.com/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/" data-id="ck5c6igqk0002ygw5dz3nptrq" class="article-share-link">Share</a>
+        
+      </div>
+    </footer>
+  </div>
+  </div>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-物件導向-一-物件與類別" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <h3 href="/2020/01/08/物件導向-一-物件與類別/" class="article-date">
@@ -138,7 +252,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Class/">Class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Object/">Object</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/01/08/物件導向-一-物件與類別/" data-id="ck57xd1fj0001hgw5vbkuyp5a" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/01/08/物件導向-一-物件與類別/" data-id="ck5c6igqi0001ygw5mur0gqr9" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -219,7 +333,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Delegate/">Delegate</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/委派/">委派</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2019/08/26/C-Delegate委派的使用情境與簡介/" data-id="ck57xd1fq0003hgw57f9sae93" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2019/08/26/C-Delegate委派的使用情境與簡介/" data-id="ck5c6igrq000gygw51xinb5uz" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -263,7 +377,7 @@
     <footer class="article-footer">
       <div class="article-footer-content">
         
-        <a data-url="http://yoursite.com/2019/04/13/my-first-post/" data-id="ck57xd1fl0002hgw56cyhfg0g" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2019/04/13/my-first-post/" data-id="ck5c6igqd0000ygw5uww68sgq" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -316,7 +430,7 @@
     <footer class="article-footer">
       <div class="article-footer-content">
         
-        <a data-url="http://yoursite.com/2019/04/13/hello-world/" data-id="ck57xd1fe0000hgw5p1havl2i" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2019/04/13/hello-world/" data-id="ck5c6igqo0004ygw5wwu2gwih" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -339,6 +453,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/">物件導向(二) 實質型別(value type) 與 參考型別(reference type)</a>
+          </li>
         
           <li>
             <a href="/2020/01/08/物件導向-一-物件與類別/">物件導向(一) 物件與類別</a>
@@ -365,7 +483,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/">Class</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Delegate/">Delegate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object/">Object</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/委派/">委派</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/物件導向/">物件導向</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/">Class</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Delegate/">Delegate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object/">Object</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/">heap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference-type/">reference type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/">stack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/value-type/">value type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/參考型別/">參考型別</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/委派/">委派</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/實質型別/">實質型別</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/物件導向/">物件導向</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -374,7 +492,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
