@@ -78,6 +78,86 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-物件導向-三-建構子及其多載設計" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <h3 href="/2020/01/16/物件導向-三-建構子及其多載設計/" class="article-date">
+  <time datetime="2020-01-16T08:03:58.000Z" itemprop="datePublished">2020-01-16</time>
+</h3>
+    
+  </div>
+  <div class="article-inner">
+  <div class="curve-down">
+  <div class="fill-content">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/16/物件導向-三-建構子及其多載設計/">物件導向(三) 建構子及其多載設計</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        <h2 id="何謂建構子-constructior"><a href="#何謂建構子-constructior" class="headerlink" title="何謂建構子 constructior"></a>何謂建構子 constructior</h2><p>建構子 (Constructor) 是一種名稱和 Class 名稱相同，可以輸入參數，但沒有輸出值的特殊 method，在 class 被實體化的時候會被觸發，常被用來設定物件的初始值。</p>
+<h2 id="如何建立-class-的建構子"><a href="#如何建立-class-的建構子" class="headerlink" title="如何建立 class 的建構子"></a>如何建立 class 的建構子</h2><p>要設計一個類別的建構子，需要有以下要求:</p>
+<ul>
+<li>method name 和 class name 需相同</li>
+<li>不需要設定回傳值型別</li>
+</ul>
+<p>而以下就是一個典型的建構子設計範例:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Car</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> brand;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> speed;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// method name 與 class name 相同</span></span><br><span class="line">    <span class="comment">// 沒有設定回傳值型別</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">// 只要 Car class 被實體化，speed 初始值為 0</span></span><br><span class="line">        speed = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">CarStatus</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">return</span> brand + <span class="string">"汽車目前時速為"</span> + speed + <span class="string">"公里"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Car 類別中有兩個 property 及兩個 method，一個 method 為名稱和類別名稱相同的建構子，另一個 CarStatus()，則回傳汽車狀態字串。</p>
+</blockquote>
+<p>當我們實體化一個物件出來後，建構子會自動被觸發，如以下範例:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">// new 一個 Car 類別的物件名為 toyota</span></span><br><span class="line">        Car toyota = <span class="keyword">new</span> Car();</span><br><span class="line">        toyota.brand = <span class="string">"Toyota"</span>;</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(toyota.CarStatus());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>toyota 物件被 new 出來後，雖然沒有設定其屬性 speed 的值，但因物件被建立出來後，會呼叫 class 的建構子，所以 toyota 的 speed 被初始為 0。</p>
+</blockquote>
+<blockquote>
+<p>console 輸出的結果為 : Toyota汽車目前時速為0公里</p>
+</blockquote>
+<h2 id="設計多載建構子"><a href="#設計多載建構子" class="headerlink" title="設計多載建構子"></a>設計多載建構子</h2><p>而建構子也可以設計為多載，在不同參數輸入時，執行不一樣的程式碼，如以下範例: </p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Car</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> brand;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> speed;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建構子1: 沒有輸入參數</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        speed = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建構子2: 可以在建立物件時，同時設定速度</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span>(<span class="params"><span class="keyword">int</span> setSpeed</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        speed = setSpeed;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">CarStatus</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">return</span> brand + <span class="string">"汽車目前時速為"</span> + speed + <span class="string">"公里"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在新增 toyota 物件時，呼叫建構子1，新增 mazda 物件時，呼叫建構子2 :</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">// 呼叫建構子1</span></span><br><span class="line">        Car toyota = <span class="keyword">new</span> Car();</span><br><span class="line">        toyota.brand = <span class="string">"Toyota"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 呼叫建構子2</span></span><br><span class="line">        Car mazda = <span class="keyword">new</span> Car(<span class="number">60</span>);</span><br><span class="line">        mazda.brand = <span class="string">"Mazda"</span>;</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(toyota.CarStatus());</span><br><span class="line">        Console.WriteLine(mazda.CarStatus());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>輸出結果為 : </p>
+</blockquote>
+<blockquote>
+<p>Toyota汽車目前時速為0公里</p>
+</blockquote>
+<blockquote>
+<p>mazda汽車目前時速為60公里</p>
+</blockquote>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h3><p><a href="https://docs.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/using-constructors" target="_blank" rel="noopener">MSDN 使用建構函式 (C# 程式設計手冊)</a></p>
+<p><a href="http://slmtsite.blogspot.com/2013/04/c-17-constructor.html" target="_blank" rel="noopener">小山的 C# 教學-第17課-Constructor 建構子</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-content">
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Constructor/">Constructor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/overloaded/">overloaded</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多載/">多載</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/建構子/">建構子</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
+
+        <a data-url="http://yoursite.com/2020/01/16/物件導向-三-建構子及其多載設計/" data-id="ck5gj58d600037sw5q02kjgkj" class="article-share-link">Share</a>
+        
+      </div>
+    </footer>
+  </div>
+  </div>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-物件導向-二- 實質型別(value type) 與 參考型別(reference type)" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <h3 href="/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/" class="article-date">
@@ -94,7 +174,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/">物件導向(二) 實質型別(value type) 與 參考型別(reference type)</a>
+      <a class="article-title" href="/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/">物件導向(二) 實質型別(value type) 與參考型別(reference type)</a>
     </h1>
   
 
@@ -140,7 +220,7 @@
 </li>
 </ol>
 <h2 id="參考型別-Reference-Type"><a href="#參考型別-Reference-Type" class="headerlink" title="參考型別 Reference Type"></a>參考型別 Reference Type</h2><p>參考型別在 C# 中最指標性的型別就是物件 (Object)，下面也會用一個簡單的例子來拆解 reference type 在記憶體中存取的逐步運作。</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Car car1 = <span class="keyword">new</span> Car();</span><br><span class="line">car1.brand = <span class="string">"Toyota"</span>;</span><br><span class="line">car1.speed = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">Car car2 = car1;</span><br><span class="line">car2.brand = <span class="string">"Mazda"</span>;</span><br><span class="line">car2.speed = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(car1.brand + <span class="string">"品牌的汽車正以"</span> + car1.speed + <span class="string">"公里的速度奔馳"</span>)</span><br><span class="line"><span class="comment">// Output: </span></span><br><span class="line"></span><br><span class="line">Console.WriteLine(car2.brand + <span class="string">"品牌的汽車正以"</span> + car2.speed + <span class="string">"的速度奔馳"</span>)</span><br><span class="line"><span class="comment">// Output:</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Car car1 = <span class="keyword">new</span> Car();</span><br><span class="line">car1.brand = <span class="string">"Toyota"</span>;</span><br><span class="line">car1.speed = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">Car car2 = car1;</span><br><span class="line">car2.brand = <span class="string">"Mazda"</span>;</span><br><span class="line">car2.speed = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(car1.brand + <span class="string">"品牌的汽車正以"</span> + car1.speed + <span class="string">"公里的速度奔馳"</span>)</span><br><span class="line"><span class="comment">// Output: </span></span><br><span class="line"></span><br><span class="line">Console.WriteLine(car2.brand + <span class="string">"品牌的汽車正以"</span> + car2.speed + <span class="string">"公里的速度奔馳"</span>)</span><br><span class="line"><span class="comment">// Output:</span></span><br></pre></td></tr></table></figure>
 <ol>
 <li><p>先建立一個 Car class，有兩個屬性 brand (string) 及 speed (int)。</p>
 </li>
@@ -179,7 +259,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/">heap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reference-type/">reference type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/value-type/">value type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/參考型別/">參考型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/實質型別/">實質型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/" data-id="ck5c6igqk0002ygw5dz3nptrq" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/" data-id="ck5gj58d900057sw52d9iyahd" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -252,7 +332,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Class/">Class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Object/">Object</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/01/08/物件導向-一-物件與類別/" data-id="ck5c6igqi0001ygw5mur0gqr9" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/01/08/物件導向-一-物件與類別/" data-id="ck5gj58cq00007sw56r0k59n9" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -333,7 +413,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Delegate/">Delegate</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/委派/">委派</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2019/08/26/C-Delegate委派的使用情境與簡介/" data-id="ck5c6igrq000gygw51xinb5uz" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2019/08/26/C-Delegate委派的使用情境與簡介/" data-id="ck5gj58ee00187sw5s9ulgnwc" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -377,7 +457,7 @@
     <footer class="article-footer">
       <div class="article-footer-content">
         
-        <a data-url="http://yoursite.com/2019/04/13/my-first-post/" data-id="ck5c6igqd0000ygw5uww68sgq" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2019/04/13/my-first-post/" data-id="ck5gj58cz00017sw53sbgww54" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -430,7 +510,7 @@
     <footer class="article-footer">
       <div class="article-footer-content">
         
-        <a data-url="http://yoursite.com/2019/04/13/hello-world/" data-id="ck5c6igqo0004ygw5wwu2gwih" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2019/04/13/hello-world/" data-id="ck5gj58e500177sw58fd7bqkj" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -455,7 +535,11 @@
       <ul>
         
           <li>
-            <a href="/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/">物件導向(二) 實質型別(value type) 與 參考型別(reference type)</a>
+            <a href="/2020/01/16/物件導向-三-建構子及其多載設計/">物件導向(三) 建構子及其多載設計</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/">物件導向(二) 實質型別(value type) 與參考型別(reference type)</a>
           </li>
         
           <li>
@@ -470,10 +554,6 @@
             <a href="/2019/04/13/my-first-post/">my_first_post</a>
           </li>
         
-          <li>
-            <a href="/2019/04/13/hello-world/">Hello World</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -483,7 +563,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/">Class</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Delegate/">Delegate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object/">Object</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/">heap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference-type/">reference type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/">stack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/value-type/">value type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/參考型別/">參考型別</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/委派/">委派</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/實質型別/">實質型別</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/物件導向/">物件導向</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/">Class</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Constructor/">Constructor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Delegate/">Delegate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object/">Object</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/">heap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/overloaded/">overloaded</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference-type/">reference type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/">stack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/value-type/">value type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/參考型別/">參考型別</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多載/">多載</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/委派/">委派</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/實質型別/">實質型別</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/建構子/">建構子</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/物件導向/">物件導向</a><span class="tag-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -492,7 +572,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

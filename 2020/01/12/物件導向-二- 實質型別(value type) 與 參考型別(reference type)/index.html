@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   
-  <title>物件導向(二) 實質型別(value type) 與 參考型別(reference type) | 蓋瑞 Blog</title>
+  <title>物件導向(二) 實質型別(value type) 與參考型別(reference type) | 蓋瑞 Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="C# 依照記憶體存取方式的不同，將型別大致分為實質型別 (value type) 與參考型別 (reference type)。也因為這兩種型別在執行存取時運作的模式不一樣，觀念不夠清晰的情況下，常會發生執行結果與預期不相符的情況。這篇文章將簡單說明 value type 與 reference type 在執行記憶體存取的運作情形。 記憶體位置 stack &amp;amp; heap在說明兩種型別存取">
 <meta name="keywords" content="C#,物件導向,實質型別,參考型別,value type,reference type,stack,heap">
 <meta property="og:type" content="article">
-<meta property="og:title" content="物件導向(二) 實質型別(value type) 與 參考型別(reference type)">
+<meta property="og:title" content="物件導向(二) 實質型別(value type) 與參考型別(reference type)">
 <meta property="og:url" content="http://yoursite.com/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/index.html">
 <meta property="og:site_name" content="蓋瑞 Blog">
 <meta property="og:description" content="C# 依照記憶體存取方式的不同，將型別大致分為實質型別 (value type) 與參考型別 (reference type)。也因為這兩種型別在執行存取時運作的模式不一樣，觀念不夠清晰的情況下，常會發生執行結果與預期不相符的情況。這篇文章將簡單說明 value type 與 reference type 在執行記憶體存取的運作情形。 記憶體位置 stack &amp;amp; heap在說明兩種型別存取">
@@ -21,9 +21,9 @@
 <meta property="og:image" content="https://upload.cc/i1/2020/01/13/2QeC7A.png">
 <meta property="og:image" content="https://upload.cc/i1/2020/01/13/ZagmGN.png">
 <meta property="og:image" content="https://upload.cc/i1/2020/01/13/vFJMQr.png">
-<meta property="og:updated_time" content="2020-01-13T09:29:05.636Z">
+<meta property="og:updated_time" content="2020-01-13T09:53:07.841Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="物件導向(二) 實質型別(value type) 與 參考型別(reference type)">
+<meta name="twitter:title" content="物件導向(二) 實質型別(value type) 與參考型別(reference type)">
 <meta name="twitter:description" content="C# 依照記憶體存取方式的不同，將型別大致分為實質型別 (value type) 與參考型別 (reference type)。也因為這兩種型別在執行存取時運作的模式不一樣，觀念不夠清晰的情況下，常會發生執行結果與預期不相符的情況。這篇文章將簡單說明 value type 與 reference type 在執行記憶體存取的運作情形。 記憶體位置 stack &amp;amp; heap在說明兩種型別存取">
 <meta name="twitter:image" content="https://upload.cc/i1/2020/01/13/3RfyLw.png">
   
@@ -104,7 +104,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      物件導向(二) 實質型別(value type) 與 參考型別(reference type)
+      物件導向(二) 實質型別(value type) 與參考型別(reference type)
     </h1>
   
 
@@ -150,7 +150,7 @@
 </li>
 </ol>
 <h2 id="參考型別-Reference-Type"><a href="#參考型別-Reference-Type" class="headerlink" title="參考型別 Reference Type"></a>參考型別 Reference Type</h2><p>參考型別在 C# 中最指標性的型別就是物件 (Object)，下面也會用一個簡單的例子來拆解 reference type 在記憶體中存取的逐步運作。</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Car car1 = <span class="keyword">new</span> Car();</span><br><span class="line">car1.brand = <span class="string">"Toyota"</span>;</span><br><span class="line">car1.speed = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">Car car2 = car1;</span><br><span class="line">car2.brand = <span class="string">"Mazda"</span>;</span><br><span class="line">car2.speed = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(car1.brand + <span class="string">"品牌的汽車正以"</span> + car1.speed + <span class="string">"公里的速度奔馳"</span>)</span><br><span class="line"><span class="comment">// Output: </span></span><br><span class="line"></span><br><span class="line">Console.WriteLine(car2.brand + <span class="string">"品牌的汽車正以"</span> + car2.speed + <span class="string">"的速度奔馳"</span>)</span><br><span class="line"><span class="comment">// Output:</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Car car1 = <span class="keyword">new</span> Car();</span><br><span class="line">car1.brand = <span class="string">"Toyota"</span>;</span><br><span class="line">car1.speed = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">Car car2 = car1;</span><br><span class="line">car2.brand = <span class="string">"Mazda"</span>;</span><br><span class="line">car2.speed = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(car1.brand + <span class="string">"品牌的汽車正以"</span> + car1.speed + <span class="string">"公里的速度奔馳"</span>)</span><br><span class="line"><span class="comment">// Output: </span></span><br><span class="line"></span><br><span class="line">Console.WriteLine(car2.brand + <span class="string">"品牌的汽車正以"</span> + car2.speed + <span class="string">"公里的速度奔馳"</span>)</span><br><span class="line"><span class="comment">// Output:</span></span><br></pre></td></tr></table></figure>
 <ol>
 <li><p>先建立一個 Car class，有兩個屬性 brand (string) 及 speed (int)。</p>
 </li>
@@ -189,7 +189,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/">heap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reference-type/">reference type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/value-type/">value type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/參考型別/">參考型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/實質型別/">實質型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/" data-id="ck5c6igqk0002ygw5dz3nptrq" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/" data-id="ck5gj58d900057sw52d9iyahd" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -199,6 +199,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2020/01/16/物件導向-三-建構子及其多載設計/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          物件導向(三) 建構子及其多載設計
+        
+      </div>
+    </a>
   
   
     <a href="/2020/01/08/物件導向-一-物件與類別/" id="article-nav-older" class="article-nav-link-wrap">
@@ -223,7 +232,11 @@
       <ul>
         
           <li>
-            <a href="/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/">物件導向(二) 實質型別(value type) 與 參考型別(reference type)</a>
+            <a href="/2020/01/16/物件導向-三-建構子及其多載設計/">物件導向(三) 建構子及其多載設計</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/">物件導向(二) 實質型別(value type) 與參考型別(reference type)</a>
           </li>
         
           <li>
@@ -238,10 +251,6 @@
             <a href="/2019/04/13/my-first-post/">my_first_post</a>
           </li>
         
-          <li>
-            <a href="/2019/04/13/hello-world/">Hello World</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -251,7 +260,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/">Class</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Delegate/">Delegate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object/">Object</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/">heap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference-type/">reference type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/">stack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/value-type/">value type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/參考型別/">參考型別</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/委派/">委派</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/實質型別/">實質型別</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/物件導向/">物件導向</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C#</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/">Class</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Constructor/">Constructor</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Delegate/">Delegate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object/">Object</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/">heap</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/overloaded/">overloaded</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference-type/">reference type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/">stack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/value-type/">value type</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/參考型別/">參考型別</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多載/">多載</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/委派/">委派</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/實質型別/">實質型別</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/建構子/">建構子</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/物件導向/">物件導向</a><span class="tag-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -260,7 +269,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
