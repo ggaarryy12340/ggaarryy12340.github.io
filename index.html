@@ -78,6 +78,84 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-物件導向-四-static修飾字-靜態類別和靜態類別成員" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <h3 href="/2020/01/21/物件導向-四-static修飾字-靜態類別和靜態類別成員/" class="article-date">
+  <time datetime="2020-01-21T08:50:13.000Z" itemprop="datePublished">2020-01-21</time>
+</h3>
+    
+  </div>
+  <div class="article-inner">
+  <div class="curve-down">
+  <div class="fill-content">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/21/物件導向-四-static修飾字-靜態類別和靜態類別成員/">物件導向(四) static修飾字 靜態類別和靜態類別成員</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        <p>無論是程式新手或是有一些開發經驗的工程師，一定都會在範例程式或是專案中常常看到 static 關鍵字。本篇文章將簡單介紹 static 常見的使用情境，還有在使用時需要注意的事項。</p>
+<h2 id="靜態方法"><a href="#靜態方法" class="headerlink" title="靜態方法"></a>靜態方法</h2><p>靜態方法常出現在專案中的<strong>共用方法</strong>，像是 helper class 或是 type extention，最方便的地方在於靜態方法不需要被實體化，就可以被使用。下面的範例將示範傳統非靜態類方法與靜態方法被呼叫的方式:</p>
+<p>建立一個計算類別，其中包含 Plus (靜態方法) 以及 Minus (非靜態方法)</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Calculate</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Plus</span>(<span class="params"><span class="keyword">int</span> a, <span class="keyword">int</span> b</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		<span class="keyword">return</span> a + b;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Minus</span>(<span class="params"><span class="keyword">int</span> a, <span class="keyword">int</span> b</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		<span class="keyword">return</span> a - b;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>呼叫傳統的非靜態方法需先將 Calculate 類別實體化成物件，再由物件呼叫方法。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		Calculate calculateObject = <span class="keyword">new</span> Calculate();</span><br><span class="line">		<span class="keyword">var</span> minusResult = calculateObject.Minus(<span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">		Console.WriteLine(minusResult);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>output: 10</p>
+</blockquote>
+<p>呼叫靜態方法，不須要將類別實體化為物件，就可以直接透過類別呼叫。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		<span class="keyword">var</span> plusResult = Calculate.Plus(<span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">		Console.WriteLine(plusResult);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>output: 30</p>
+</blockquote>
+<h2 id="靜態變數"><a href="#靜態變數" class="headerlink" title="靜態變數"></a>靜態變數</h2><p>除了方法外，變數也可以在宣告時加入 static 修飾字，一樣是不需要實體化類別就可以被使用，但要特別注意的是，<strong>所有該類別實體化的物件，都可以改變靜態變數，而且這個靜態變數將被所有物件共用</strong>，下面將示範一個靜態變數的使用情境。</p>
+<p>家同共用帳戶範例: </p>
+<p>建立一個 Family class，其中有靜態變數 accountMoney 記錄家庭帳戶的金額。還有兩個非靜態方法 saveMoney()、spendMoney() 來異動 accountMoney 的數字。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Family</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> accountMoney;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SaveMoney</span>(<span class="params"><span class="keyword">int</span> money</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		accountMoney += money;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SpendMoney</span>(<span class="params"><span class="keyword">int</span> money</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		accountMoney -= money;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 Dad 做了存錢，Mom 做了花錢的動作後，因為 accountMoney 為靜態變數，所以會被所有物件 (Dad、Mon) 共用。也因 accountMoney 為靜態變數，所以在輸出 accountMoney 時，我們要直接透過類別 (Family) 來呼叫。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		Family Dad = <span class="keyword">new</span> Family();</span><br><span class="line">		Family Mon = <span class="keyword">new</span> Family();</span><br><span class="line">		</span><br><span class="line">		Console.WriteLine(<span class="string">"爸爸存了 100 元"</span>);</span><br><span class="line">		Dad.SaveMoney(<span class="number">100</span>);</span><br><span class="line">		Console.WriteLine(<span class="string">"現在帳戶金額是 : "</span> + Family.accountMoney);</span><br><span class="line">		</span><br><span class="line">		Console.WriteLine(<span class="string">"媽媽花了 50 元"</span>);</span><br><span class="line">		Mon.SpendMoney(<span class="number">50</span>);</span><br><span class="line">		Console.WriteLine(<span class="string">"現在帳戶金額是 : "</span> + Family.accountMoney);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>輸出結果: \<br>爸爸存了 100 元 \<br>現在帳戶金額是 : 100 \<br>媽媽花了 50 元 \<br>現在帳戶金額是 : 50</p>
+</blockquote>
+<h2 id="靜態類別"><a href="#靜態類別" class="headerlink" title="靜態類別"></a>靜態類別</h2><p>若我們可以確定該類別內的所有成員 (property、method…) 皆為靜態類型，也可以直接將 class 設計為靜態類別。好處在於可以確保類別不會被實體化，且類別內容若出現非靜態成員，編輯器也會在編譯前就先報錯提醒。要設計一個靜態類別，需要注意以下事項:</p>
+<ul>
+<li>只能包含靜態類別成員</li>
+<li>不允許被實體化為物件</li>
+<li>不能被其他類別所繼承</li>
+</ul>
+<p>而靜態類別的寫法也相當簡單，在 class 前加上 static 關鍵字即可。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Family</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> accountMoney;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SaveMoney</span>(<span class="params"><span class="keyword">int</span> money</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		accountMoney += money;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SpendMoney</span>(<span class="params"><span class="keyword">int</span> money</span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		accountMoney -= money;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h3><p><a href="https://docs.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/static-classes-and-static-class-members" target="_blank" rel="noopener">靜態類別和靜態類別成員 (C# 程式設計手冊)</a></p>
+<p><a href="http://slmtsite.blogspot.com/2013/07/c-19-static.html" target="_blank" rel="noopener">小山的 C# 教學-第19課-static 修飾字</a></p>
+<p><a href="http://weisnote.blogspot.com/2012/08/static.html" target="_blank" rel="noopener">Mr.Wei 的程式筆記 一秒看破 static</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-content">
+        
+        <a data-url="http://yoursite.com/2020/01/21/物件導向-四-static修飾字-靜態類別和靜態類別成員/" data-id="ck5p14ebz0002lgw57pbg3bwj" class="article-share-link">Share</a>
+        
+      </div>
+    </footer>
+  </div>
+  </div>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-物件導向-三-建構子及其多載設計" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <h3 href="/2020/01/16/物件導向-三-建構子及其多載設計/" class="article-date">
@@ -145,7 +223,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Constructor/">Constructor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/overloaded/">overloaded</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多載/">多載</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/建構子/">建構子</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/01/16/物件導向-三-建構子及其多載設計/" data-id="ck5gj58d600037sw5q02kjgkj" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/01/16/物件導向-三-建構子及其多載設計/" data-id="ck5p14ec50004lgw52lpcsvk0" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -259,7 +337,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/">heap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reference-type/">reference type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/value-type/">value type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/參考型別/">參考型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/實質型別/">實質型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/" data-id="ck5gj58d900057sw52d9iyahd" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/" data-id="ck5p14ecg0006lgw56mtz1osg" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -332,7 +410,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Class/">Class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Object/">Object</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/01/08/物件導向-一-物件與類別/" data-id="ck5gj58cq00007sw56r0k59n9" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/01/08/物件導向-一-物件與類別/" data-id="ck5p14ec30003lgw5dxlwjprv" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -413,7 +491,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Delegate/">Delegate</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/委派/">委派</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2019/08/26/C-Delegate委派的使用情境與簡介/" data-id="ck5gj58ee00187sw5s9ulgnwc" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2019/08/26/C-Delegate委派的使用情境與簡介/" data-id="ck5p14edd001algw5a5ndhe50" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -457,7 +535,7 @@
     <footer class="article-footer">
       <div class="article-footer-content">
         
-        <a data-url="http://yoursite.com/2019/04/13/my-first-post/" data-id="ck5gj58cz00017sw53sbgww54" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2019/04/13/my-first-post/" data-id="ck5p14eb10000lgw5rlq0i8ha" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -510,7 +588,7 @@
     <footer class="article-footer">
       <div class="article-footer-content">
         
-        <a data-url="http://yoursite.com/2019/04/13/hello-world/" data-id="ck5gj58e500177sw58fd7bqkj" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2019/04/13/hello-world/" data-id="ck5p14ebi0001lgw5kvfacu0h" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -535,6 +613,10 @@
       <ul>
         
           <li>
+            <a href="/2020/01/21/物件導向-四-static修飾字-靜態類別和靜態類別成員/">物件導向(四) static修飾字 靜態類別和靜態類別成員</a>
+          </li>
+        
+          <li>
             <a href="/2020/01/16/物件導向-三-建構子及其多載設計/">物件導向(三) 建構子及其多載設計</a>
           </li>
         
@@ -548,10 +630,6 @@
         
           <li>
             <a href="/2019/08/26/C-Delegate委派的使用情境與簡介/">C# Delegate委派的使用情境與簡介</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/13/my-first-post/">my_first_post</a>
           </li>
         
       </ul>
@@ -572,7 +650,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
