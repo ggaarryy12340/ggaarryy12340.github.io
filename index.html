@@ -78,6 +78,79 @@
     <div class="outer">
       <section id="main">
   
+    <article id="post-物件導向-六-Get-Set-存取子" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <h3 href="/2020/02/21/物件導向-六-Get-Set-存取子/" class="article-date">
+  <time datetime="2020-02-21T09:04:16.000Z" itemprop="datePublished">2020-02-21</time>
+</h3>
+    
+  </div>
+  <div class="article-inner">
+  <div class="curve-down">
+  <div class="fill-content">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/21/物件導向-六-Get-Set-存取子/">物件導向(六) Get &amp; Set 存取子</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        <h2 id="Get-amp-Set-存取子的基本使用"><a href="#Get-amp-Set-存取子的基本使用" class="headerlink" title="Get &amp; Set 存取子的基本使用"></a>Get &amp; Set 存取子的基本使用</h2><p>Get &amp; Set 存取子是用來設定 Class 的 Property，根據該屬性存取設定會有以下三種設定方式。</p>
+<ol>
+<li><p>唯讀: 用 Get 取值，將要回傳的值 return 回去</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">string</span> name;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">string</span> Name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>唯寫: 用 Set 寫入他的值，寫入的值會存在 <strong>value</strong></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">string</span> name;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">string</span> Name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">set</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = <span class="keyword">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"><span class="number">3.</span> 可以讀跟寫: 同時寫上 Get &amp; Set</span><br><span class="line">```csharp</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">string</span> name; </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">string</span> Name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = <span class="keyword">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Get-amp-Set-存取子的簡化版本"><a href="#Get-amp-Set-存取子的簡化版本" class="headerlink" title="Get &amp; Set 存取子的簡化版本"></a>Get &amp; Set 存取子的簡化版本</h2><p>看到這裡您可能會想也太麻煩了吧!定義一個屬性除了 public 屬性之外，還需要多定義一組對應的 private 屬性。所以在 C# 3.0 增加了<strong>自動實作屬性</strong>（automatically implemented properties），讓我們可以用更簡單的語法，就能設定出能讀能寫的 property。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 簡易寫法:</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">string</span> Name&#123;<span class="keyword">get</span>; <span class="keyword">set</span>;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 能達到如同下方屬性設定的效果</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">string</span> name; </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">string</span> Name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = <span class="keyword">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若是要設定屬性唯讀，在 set 存取子前加上 private 就可以。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">string</span> Name&#123;<span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Get-amp-Set-存取子變化範例"><a href="#Get-amp-Set-存取子變化範例" class="headerlink" title="Get &amp; Set 存取子變化範例"></a>Get &amp; Set 存取子變化範例</h2><p>若是我們要在 Car Class 中建立一個汽油存量的屬性 Gasoline，其屬性值不能低於 0。我們可以再 Gasoline 屬性的 set 存取子進行判斷，如果欲存入的 value &lt; 0，則會直接存入 0，避免油量為負數的狀況。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Car</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> gasoline;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> Gasoline</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">get</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> gasoline;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">set</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(<span class="keyword">value</span> &lt; <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				gasoline = <span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				gasoline = <span class="keyword">value</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>測試1: 當 Gasoline 存入的值為 100 時。<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		</span><br><span class="line">		car.Gasoline = <span class="number">100</span>;</span><br><span class="line">		Console.WriteLine(<span class="string">"When set Gasoline 100: "</span> + car.Gasoline);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p> When set Gasoline 100: 100</p>
+</blockquote>
+<p>測試2: 當 Gasoline 存入的值為 -42 時。<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		</span><br><span class="line">		car.Gasoline = <span class="number">-42</span>;</span><br><span class="line">		Console.WriteLine(<span class="string">"When set Gasoline -42: "</span> + car.Gasoline);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p> When set Gasoline -42: 0</p>
+</blockquote>
+<p>透過 get set 存取器，就能輕鬆在屬性端設定存取限制。防呆避免不是預期的值被存入屬性中。</p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h3><p><a href="https://docs.microsoft.com/zh-tw/dotnet/csharp/language-reference/keywords/get" target="_blank" rel="noopener">MSDN get (C# 參考)</a></p>
+<p><a href="https://docs.microsoft.com/zh-tw/dotnet/csharp/language-reference/keywords/set" target="_blank" rel="noopener">MSDN set (C# 參考)</a></p>
+<p><a href="https://docs.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/auto-implemented-properties" target="_blank" rel="noopener">MSDN 自動實作的屬性 (C# 程式設計手冊)</a></p>
+<p><a href="http://slmtsite.blogspot.com/2013/10/c-26-get-set.html" target="_blank" rel="noopener">小山的 C# 教學-第26課-Get &amp; Set 存取器</a></p>
+<p><a href="https://www.huanlintalk.com/2018/02/c-readonly-auto-property-from-beginning.html" target="_blank" rel="noopener">Huanlin 學習筆記 C# 的唯讀自動屬性是怎樣煉成的</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-content">
+        
+        <a data-url="http://yoursite.com/2020/02/21/物件導向-六-Get-Set-存取子/" data-id="ck72rcu8c0012p8w5u10wumju" class="article-share-link">Share</a>
+        
+      </div>
+    </footer>
+  </div>
+  </div>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-物件導向-五-封裝性-Public-Private-Protected" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <h3 href="/2020/02/07/物件導向-五-封裝性-Public-Private-Protected/" class="article-date">
@@ -116,8 +189,7 @@
 <p>再建立一個駕駛者的類別 Driver，其中有一個方法是踩下油門，而踩下油門後會做的動作就是去呼叫 Car 類別的 public method 加速()。</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Driver</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 踩下油門()</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		car.加速();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如此一來 Driver 想加速時只要踩下油門就會加速，而 Car 類別中其他 private method Driver 都不需要了解(也不能呼叫)，因為全部都被 <strong>封裝</strong> 在加速() method 了。</p>
-<p>若我們嘗試要直接在 Driver 類別去呼叫 Car 類別的 private 的方法，如下例:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Driver</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 踩下油門()</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		car.帶動輪圈();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若我們嘗試要直接在 Driver 類別去呼叫 Car 類別的 private 的方法，如下例:<br>-<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Driver</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 踩下油門()</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		car.帶動輪圈();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>則會出現下面錯誤訊息</p>
 <img src="/2020/02/07/物件導向-五-封裝性-Public-Private-Protected/封裝錯誤訊息.png" title="This is an error message">
 <blockquote>
@@ -134,7 +206,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/private/">private</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protected/">protected</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/public/">public</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/保護層級/">保護層級</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/存取修飾詞/">存取修飾詞</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/封裝/">封裝</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/封裝性/">封裝性</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/02/07/物件導向-五-封裝性-Public-Private-Protected/" data-id="ck6hbvp9k0000ggw5oflhfjr4" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/02/07/物件導向-五-封裝性-Public-Private-Protected/" data-id="ck72rcu7v0001p8w5qx97r1cp" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -214,7 +286,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/static/">static</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/靜態/">靜態</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/靜態方法/">靜態方法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/靜態變數/">靜態變數</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/靜態類別/">靜態類別</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/01/21/物件導向-四-static修飾字-靜態類別和靜態類別成員/" data-id="ck6hbucv5000054w5gbpp5417" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/01/21/物件導向-四-static修飾字-靜態類別和靜態類別成員/" data-id="ck72rcu8r001op8w515uhj3dt" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -294,7 +366,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Constructor/">Constructor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/overloaded/">overloaded</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多載/">多載</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/建構子/">建構子</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/01/16/物件導向-三-建構子及其多載設計/" data-id="ck6hbucwc001754w5z3spj9bg" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/01/16/物件導向-三-建構子及其多載設計/" data-id="ck72rcu8e0014p8w5yb6fdepx" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -408,7 +480,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/">heap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reference-type/">reference type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/value-type/">value type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/參考型別/">參考型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/實質型別/">實質型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/" data-id="ck6hbucvv000g54w5jfavbelj" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/" data-id="ck72rcu7x0002p8w5sqjjtwsi" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -481,7 +553,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Class/">Class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Object/">Object</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/01/08/物件導向-一-物件與類別/" data-id="ck6hbucvt000f54w57cy6hahy" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/01/08/物件導向-一-物件與類別/" data-id="ck72rcu8b0011p8w5t1bgownz" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -562,7 +634,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Delegate/">Delegate</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/委派/">委派</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2019/08/26/C-Delegate委派的使用情境與簡介/" data-id="ck6hbucwm001i54w5pgylirxq" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2019/08/26/C-Delegate委派的使用情境與簡介/" data-id="ck72rcu940022p8w5ary2gkr5" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -606,7 +678,7 @@
     <footer class="article-footer">
       <div class="article-footer-content">
         
-        <a data-url="http://yoursite.com/2019/04/13/my-first-post/" data-id="ck6hbucvx000i54w5x4mpx52z" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2019/04/13/my-first-post/" data-id="ck72rcu7q0000p8w5j0k9sg47" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -659,7 +731,7 @@
     <footer class="article-footer">
       <div class="article-footer-content">
         
-        <a data-url="http://yoursite.com/2019/04/13/hello-world/" data-id="ck6hbucw2000k54w584ozq1ix" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2019/04/13/hello-world/" data-id="ck72rcu920021p8w5t0fvqj51" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -684,6 +756,10 @@
       <ul>
         
           <li>
+            <a href="/2020/02/21/物件導向-六-Get-Set-存取子/">物件導向(六) Get &amp; Set 存取子</a>
+          </li>
+        
+          <li>
             <a href="/2020/02/07/物件導向-五-封裝性-Public-Private-Protected/">物件導向(五) 封裝性 Public Private Protected</a>
           </li>
         
@@ -697,10 +773,6 @@
         
           <li>
             <a href="/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/">物件導向(二) 實質型別(value type) 與參考型別(reference type)</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/08/物件導向-一-物件與類別/">物件導向(一) 物件與類別</a>
           </li>
         
       </ul>
@@ -721,7 +793,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

@@ -16,7 +16,7 @@
 <meta property="og:description" content="封裝性 (Encapsulation) 是物件導向三大特性之一。若是要理解封裝性，可以想像當我們在駕駛汽車時想加速的話，我們不需要理解引擎如何運作將動力傳輸到輪胎上，只需要踩下油門踏板就好，因為加速的知識已經被 封裝 起來了。再舉一個例子我們想拍照的時候不需要去理解鏡頭是如何捕捉影像在儲存至手機裡，只需要按快門就好，因為按快門至儲存影像這中間的運作，也已經被 封裝 起來了，透過這兩個例子應該會對封">
 <meta property="og:locale" content="C#、ASP.NET MVC、Web API、Angular">
 <meta property="og:image" content="http://yoursite.com/2020/02/07/物件導向-五-封裝性-Public-Private-Protected/封裝錯誤訊息.png">
-<meta property="og:updated_time" content="2020-02-11T03:30:42.005Z">
+<meta property="og:updated_time" content="2020-02-21T09:06:13.007Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="物件導向(五) 封裝性 Public Private Protected">
 <meta name="twitter:description" content="封裝性 (Encapsulation) 是物件導向三大特性之一。若是要理解封裝性，可以想像當我們在駕駛汽車時想加速的話，我們不需要理解引擎如何運作將動力傳輸到輪胎上，只需要踩下油門踏板就好，因為加速的知識已經被 封裝 起來了。再舉一個例子我們想拍照的時候不需要去理解鏡頭是如何捕捉影像在儲存至手機裡，只需要按快門就好，因為按快門至儲存影像這中間的運作，也已經被 封裝 起來了，透過這兩個例子應該會對封">
@@ -121,8 +121,7 @@
 <p>再建立一個駕駛者的類別 Driver，其中有一個方法是踩下油門，而踩下油門後會做的動作就是去呼叫 Car 類別的 public method 加速()。</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Driver</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 踩下油門()</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		car.加速();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如此一來 Driver 想加速時只要踩下油門就會加速，而 Car 類別中其他 private method Driver 都不需要了解(也不能呼叫)，因為全部都被 <strong>封裝</strong> 在加速() method 了。</p>
-<p>若我們嘗試要直接在 Driver 類別去呼叫 Car 類別的 private 的方法，如下例:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Driver</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 踩下油門()</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		car.帶動輪圈();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若我們嘗試要直接在 Driver 類別去呼叫 Car 類別的 private 的方法，如下例:<br>-<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Driver</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 踩下油門()</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		car.帶動輪圈();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>則會出現下面錯誤訊息</p>
 <img src="/2020/02/07/物件導向-五-封裝性-Public-Private-Protected/封裝錯誤訊息.png" title="This is an error message">
 <blockquote>
@@ -139,7 +138,7 @@
         
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/private/">private</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protected/">protected</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/public/">public</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/保護層級/">保護層級</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/存取修飾詞/">存取修飾詞</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/封裝/">封裝</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/封裝性/">封裝性</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物件導向/">物件導向</a></li></ul>
 
-        <a data-url="http://yoursite.com/2020/02/07/物件導向-五-封裝性-Public-Private-Protected/" data-id="ck6hbvp9k0000ggw5oflhfjr4" class="article-share-link">Share</a>
+        <a data-url="http://yoursite.com/2020/02/07/物件導向-五-封裝性-Public-Private-Protected/" data-id="ck72rcu7v0001p8w5qx97r1cp" class="article-share-link">Share</a>
         
       </div>
     </footer>
@@ -149,6 +148,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2020/02/21/物件導向-六-Get-Set-存取子/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          物件導向(六) Get &amp; Set 存取子
+        
+      </div>
+    </a>
   
   
     <a href="/2020/01/21/物件導向-四-static修飾字-靜態類別和靜態類別成員/" id="article-nav-older" class="article-nav-link-wrap">
@@ -173,6 +181,10 @@
       <ul>
         
           <li>
+            <a href="/2020/02/21/物件導向-六-Get-Set-存取子/">物件導向(六) Get &amp; Set 存取子</a>
+          </li>
+        
+          <li>
             <a href="/2020/02/07/物件導向-五-封裝性-Public-Private-Protected/">物件導向(五) 封裝性 Public Private Protected</a>
           </li>
         
@@ -186,10 +198,6 @@
         
           <li>
             <a href="/2020/01/12/物件導向-二- 實質型別(value type) 與 參考型別(reference type)/">物件導向(二) 實質型別(value type) 與參考型別(reference type)</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/08/物件導向-一-物件與類別/">物件導向(一) 物件與類別</a>
           </li>
         
       </ul>
@@ -210,7 +218,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
