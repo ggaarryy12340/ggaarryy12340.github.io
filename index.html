@@ -1,101 +1,218 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>Gary Blog - 以為程式很簡單</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
   <meta name="description" content=".Net Web 網站開發筆記及技術分享">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Gary Blog - 以為程式很簡單">
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="Gary Blog - 以為程式很簡單">
 <meta property="og:description" content=".Net Web 網站開發筆記及技術分享">
-<meta property="og:locale">
+<meta property="og:locale" content="zh_TW">
 <meta property="article:author" content="Gary Hsu">
 <meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Gary Blog - 以為程式很簡單</title>
   
-    <link rel="alternate" href="/atom.xml" title="Gary Blog - 以為程式很簡單" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Gary Blog - 以為程式很簡單</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>網站地圖</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-  
-<meta name="generator" content="Hexo 6.3.0"></head>
-
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Gary Blog - 以為程式很簡單</a>
-      </h1>
+          <div class="content index posts-expand">
+            
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/09/%E5%9C%A8%20ASP.Net%20MVC%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ELMAH%20%E5%A5%97%E4%BB%B6%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99%E6%9C%AA%E9%A0%90%E6%9C%9F%E7%9A%84%E4%BE%8B%E5%A4%96/">
 
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-在 ASP.Net MVC 中使用 ELMAH 套件紀錄網站未預期的例外" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/10/09/%E5%9C%A8%20ASP.Net%20MVC%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ELMAH%20%E5%A5%97%E4%BB%B6%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99%E6%9C%AA%E9%A0%90%E6%9C%9F%E7%9A%84%E4%BE%8B%E5%A4%96/" class="article-date">
-  <time class="dt-published" datetime="2022-10-09T08:02:04.000Z" itemprop="datePublished">2022-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/10/09/%E5%9C%A8%20ASP.Net%20MVC%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ELMAH%20%E5%A5%97%E4%BB%B6%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99%E6%9C%AA%E9%A0%90%E6%9C%9F%E7%9A%84%E4%BE%8B%E5%A4%96/">在 ASP.Net MVC 中使用 ELMAH 套件紀錄網站未預期的例外</a>
-    </h1>
-  
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
 
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/09/%E5%9C%A8%20ASP.Net%20MVC%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ELMAH%20%E5%A5%97%E4%BB%B6%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99%E6%9C%AA%E9%A0%90%E6%9C%9F%E7%9A%84%E4%BE%8B%E5%A4%96/" class="post-title-link" itemprop="url">在 ASP.Net MVC 中使用 ELMAH 套件紀錄網站未預期的例外</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2022-10-09 16:02:04" itemprop="dateCreated datePublished" datetime="2022-10-09T16:02:04+08:00">2022-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-10-11 16:25:16" itemprop="dateModified" datetime="2022-10-11T16:25:16+08:00">2022-10-11</time>
+              </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="ELMAH-是什麼-為甚麼要使用-ELMAH"><a href="#ELMAH-是什麼-為甚麼要使用-ELMAH" class="headerlink" title="ELMAH 是什麼? 為甚麼要使用 ELMAH"></a>ELMAH 是什麼? 為甚麼要使用 ELMAH</h2><p>系統開發的過程中，免不了會發生一些預期之外的 Exception。若沒有做良好的錯誤處理或記錄，這些發生過的 Exception 必定隨著時間而船過水無痕。若是可以重現的錯誤是還好，重現錯誤後修補即可。怕的是偶發性的 Exception，又或者 User 沒辦法清楚描述出出現 Exception 的情境，這些都是在實務過程中常常會發生的情況。為了要避免這樣的情況，今天介紹一個非常簡單好用的老牌套件 ELMAH。ELMAH 幾乎可以在不用修改任何 Source Code 的情況下，記錄下所有發生的錯誤。並有內建的 Dashboard 可以顯示發生過的所有錯誤，且內容豐富，連 StackTrace 的紀錄都有，讓我們可以有依據紀錄找到錯誤資訊，輕鬆地將 Bug 束手就擒。</p>
+          <h2 id="ELMAH-是什麼-為甚麼要使用-ELMAH"><a href="#ELMAH-是什麼-為甚麼要使用-ELMAH" class="headerlink" title="ELMAH 是什麼? 為甚麼要使用 ELMAH"></a>ELMAH 是什麼? 為甚麼要使用 ELMAH</h2><p>系統開發的過程中，免不了會發生一些預期之外的 Exception。若沒有做良好的錯誤處理或記錄，這些發生過的 Exception 必定隨著時間而船過水無痕。若是可以重現的錯誤是還好，重現錯誤後修補即可。怕的是偶發性的 Exception，又或者 User 沒辦法清楚描述出出現 Exception 的情境，這些都是在實務過程中常常會發生的情況。為了要避免這樣的情況，今天介紹一個非常簡單好用的老牌套件 ELMAH。ELMAH 幾乎可以在不用修改任何 Source Code 的情況下，記錄下所有發生的錯誤。並有內建的 Dashboard 可以顯示發生過的所有錯誤，且內容豐富，連 StackTrace 的紀錄都有，讓我們可以有依據紀錄找到錯誤資訊，輕鬆地將 Bug 束手就擒。</p>
 <h2 id="ELMAH-的安裝"><a href="#ELMAH-的安裝" class="headerlink" title="ELMAH 的安裝"></a>ELMAH 的安裝</h2><p>而 ELMAH 的安裝也很簡單，透過 Nuget 安裝以下套件</p>
 <ul>
 <li>elmah</li>
@@ -130,44 +247,68 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/10/09/%E5%9C%A8%20ASP.Net%20MVC%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ELMAH%20%E5%A5%97%E4%BB%B6%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99%E6%9C%AA%E9%A0%90%E6%9C%9F%E7%9A%84%E4%BE%8B%E5%A4%96/" data-id="cla7yx3ha0001pwtt0cta0315" data-title="在 ASP.Net MVC 中使用 ELMAH 套件紀錄網站未預期的例外" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ELMAH/" rel="tag">ELMAH</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Error/" rel="tag">Error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Log/" rel="tag">Log</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVC/" rel="tag">MVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B6%B2%E7%AB%99%E7%9B%A3%E6%8E%A7/" rel="tag">網站監控</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-ASP.NET Core MVC 透過 soffice.exe 將 Word doxc 檔轉成 odt" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/08/02/ASP.NET%20Core%20MVC%20%E9%80%8F%E9%81%8E%20soffice.exe%20%E5%B0%87%20Word%20doxc%20%E6%AA%94%E8%BD%89%E6%88%90%20odt/" class="article-date">
-  <time class="dt-published" datetime="2021-08-02T08:02:04.000Z" itemprop="datePublished">2021-08-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
-        
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/08/02/ASP.NET%20Core%20MVC%20%E9%80%8F%E9%81%8E%20soffice.exe%20%E5%B0%87%20Word%20doxc%20%E6%AA%94%E8%BD%89%E6%88%90%20odt/">ASP.NET Core MVC 透過 soffice.exe 將 Word doxc 檔轉成 odt</a>
-    </h1>
+  
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/02/ASP.NET%20Core%20MVC%20%E9%80%8F%E9%81%8E%20soffice.exe%20%E5%B0%87%20Word%20doxc%20%E6%AA%94%E8%BD%89%E6%88%90%20odt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/02/ASP.NET%20Core%20MVC%20%E9%80%8F%E9%81%8E%20soffice.exe%20%E5%B0%87%20Word%20doxc%20%E6%AA%94%E8%BD%89%E6%88%90%20odt/" class="post-title-link" itemprop="url">ASP.NET Core MVC 透過 soffice.exe 將 Word doxc 檔轉成 odt</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-08-02 16:02:04" itemprop="dateCreated datePublished" datetime="2021-08-02T16:02:04+08:00">2021-08-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-10-11 16:21:52" itemprop="dateModified" datetime="2022-10-11T16:21:52+08:00">2022-10-11</time>
+              </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>近年來公家機關因為不希望被微軟 Office 系列產品綁架，都會要求廠商將報表以開放格式 ODF 開放文檔格式（Open Document Format ) 儲存。過去遇到這種轉檔的需求，通常會購買 ASPOSE 之類的轉檔產品來搭配，但這次有一個報表在特殊情形下轉檔會發生跑版的現象，在尋找解決方法的時候陰錯陽差找到透過 soffice.exe 來轉檔的方式。在測試過程中踩到很多雷，所以把過程記錄下來。</p>
+          <p>近年來公家機關因為不希望被微軟 Office 系列產品綁架，都會要求廠商將報表以開放格式 ODF 開放文檔格式（Open Document Format ) 儲存。過去遇到這種轉檔的需求，通常會購買 ASPOSE 之類的轉檔產品來搭配，但這次有一個報表在特殊情形下轉檔會發生跑版的現象，在尋找解決方法的時候陰錯陽差找到透過 soffice.exe 來轉檔的方式。在測試過程中踩到很多雷，所以把過程記錄下來。</p>
 <h2 id="soffice-exe-下載"><a href="#soffice-exe-下載" class="headerlink" title="soffice.exe 下載"></a>soffice.exe 下載</h2><p>國發會有開發一套 ODF 格式的檔案操作工具，可以在<a target="_blank" rel="noopener" href="https://www.ndc.gov.tw/cp.aspx?n=32A75A78342B669D&s=41F160FA9EF25A20">這裡</a>下載。下載完成後可以到預設路徑 <code>C:\Program Files\NDC ODF Application Tools 6\program</code> 找到 soffice.exe。</p>
 <p><img src="https://i.imgur.com/1te8azP.png" alt="Imgur"></p>
 <h2 id="透過-cmd-測試轉檔功能"><a href="#透過-cmd-測試轉檔功能" class="headerlink" title="透過 cmd 測試轉檔功能"></a>透過 cmd 測試轉檔功能</h2><p>新增一個測試資料夾，並將要轉檔的 docx 檔案加入。</p>
@@ -203,44 +344,68 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/02/ASP.NET%20Core%20MVC%20%E9%80%8F%E9%81%8E%20soffice.exe%20%E5%B0%87%20Word%20doxc%20%E6%AA%94%E8%BD%89%E6%88%90%20odt/" data-id="cla7yx3hc0003pwtt7q8a0t9a" data-title="ASP.NET Core MVC 透過 soffice.exe 將 Word doxc 檔轉成 odt" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DOC/" rel="tag">DOC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DOCX/" rel="tag">DOCX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IIS/" rel="tag">IIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ODF/" rel="tag">ODF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ODT/" rel="tag">ODT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Word/" rel="tag">Word</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%89%E6%AA%94/" rel="tag">轉檔</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-物件導向(六) Get &amp; Set 存取子" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/02/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%85%AD)%20Get%20&%20Set%20%E5%AD%98%E5%8F%96%E5%AD%90/" class="article-date">
-  <time class="dt-published" datetime="2020-02-21T08:02:04.000Z" itemprop="datePublished">2020-02-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
-        
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/02/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%85%AD)%20Get%20&%20Set%20%E5%AD%98%E5%8F%96%E5%AD%90/">物件導向(六) Get &amp; Set 存取子</a>
-    </h1>
+  
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%85%AD)%20Get%20&%20Set%20%E5%AD%98%E5%8F%96%E5%AD%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%85%AD)%20Get%20&%20Set%20%E5%AD%98%E5%8F%96%E5%AD%90/" class="post-title-link" itemprop="url">物件導向(六) Get & Set 存取子</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-02-21 16:02:04" itemprop="dateCreated datePublished" datetime="2020-02-21T16:02:04+08:00">2020-02-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-10-11 16:25:30" itemprop="dateModified" datetime="2022-10-11T16:25:30+08:00">2022-10-11</time>
+              </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="Get-amp-Set-存取子的基本使用"><a href="#Get-amp-Set-存取子的基本使用" class="headerlink" title="Get &amp; Set 存取子的基本使用"></a>Get &amp; Set 存取子的基本使用</h2><p>Get &amp; Set 存取子是用來設定 Class 的 Property，根據該屬性存取設定會有以下三種設定方式。</p>
+          <h2 id="Get-amp-Set-存取子的基本使用"><a href="#Get-amp-Set-存取子的基本使用" class="headerlink" title="Get &amp; Set 存取子的基本使用"></a>Get &amp; Set 存取子的基本使用</h2><p>Get &amp; Set 存取子是用來設定 Class 的 Property，根據該屬性存取設定會有以下三種設定方式。</p>
 <ol>
 <li>唯讀: 用 Get 取值，將要回傳的值 return 回去</li>
 </ol>
@@ -288,44 +453,68 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/02/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%85%AD)%20Get%20&%20Set%20%E5%AD%98%E5%8F%96%E5%AD%90/" data-id="cla7yx3hg000apwtt2hg16cru" data-title="物件導向(六) Get &amp; Set 存取子" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/automatically-implemented/" rel="tag">automatically implemented</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/get/" rel="tag">get</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/model/" rel="tag">model</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/properties/" rel="tag">properties</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/property/" rel="tag">property</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D/" rel="tag">封裝</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D%E6%80%A7/" rel="tag">封裝性</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%87%AA%E5%8B%95%E5%AF%A6%E4%BD%9C%E5%B1%AC%E6%80%A7/" rel="tag">自動實作屬性</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-物件導向(五) 封裝性 Public Private Protected" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/" class="article-date">
-  <time class="dt-published" datetime="2020-02-07T08:02:04.000Z" itemprop="datePublished">2020-02-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
-        
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/">物件導向(五) 封裝性 Public Private Protected</a>
-    </h1>
+  
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/" class="post-title-link" itemprop="url">物件導向(五) 封裝性 Public Private Protected</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-02-07 16:02:04" itemprop="dateCreated datePublished" datetime="2020-02-07T16:02:04+08:00">2020-02-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-10-11 16:15:44" itemprop="dateModified" datetime="2022-10-11T16:15:44+08:00">2022-10-11</time>
+              </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>封裝性 (Encapsulation) 是物件導向三大特性之一。若是要理解封裝性，可以想像當我們在駕駛汽車時想加速的話，我們不需要理解引擎如何運作將動力傳輸到輪胎上，只需要踩下油門踏板就好，因為加速的知識已經被<strong>封裝</strong>起來了。再舉一個例子我們想拍照的時候不需要去理解鏡頭是如何捕捉影像在儲存至手機裡，只需要按快門就好，因為按快門至儲存影像這中間的運作，也已經被<strong>封裝</strong>起來了，透過這兩個例子應該會對封裝性有初步的理解吧!</p>
+          <p>封裝性 (Encapsulation) 是物件導向三大特性之一。若是要理解封裝性，可以想像當我們在駕駛汽車時想加速的話，我們不需要理解引擎如何運作將動力傳輸到輪胎上，只需要踩下油門踏板就好，因為加速的知識已經被<strong>封裝</strong>起來了。再舉一個例子我們想拍照的時候不需要去理解鏡頭是如何捕捉影像在儲存至手機裡，只需要按快門就好，因為按快門至儲存影像這中間的運作，也已經被<strong>封裝</strong>起來了，透過這兩個例子應該會對封裝性有初步的理解吧!</p>
 <h2 id="存取修飾詞"><a href="#存取修飾詞" class="headerlink" title="存取修飾詞"></a>存取修飾詞</h2><p>而要善用物件導向的封裝特性，我們首先需要認識一些<strong>存取修飾詞</strong>，下面將簡單介紹幾個常見的存取修飾詞。</p>
 <ul>
 <li>Public: 被設定的 class 或其成員可以被<strong>任何人</strong>所存取。</li>
@@ -355,44 +544,68 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/" data-id="cla7yx3hf0007pwttfiuk4ws2" data-title="物件導向(五) 封裝性 Public Private Protected" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/private/" rel="tag">private</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protected/" rel="tag">protected</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/public/" rel="tag">public</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BF%9D%E8%AD%B7%E5%B1%A4%E7%B4%9A/" rel="tag">保護層級</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%98%E5%8F%96%E4%BF%AE%E9%A3%BE%E8%A9%9E/" rel="tag">存取修飾詞</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D/" rel="tag">封裝</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D%E6%80%A7/" rel="tag">封裝性</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-物件導向(四) static修飾字 靜態類別和靜態類別成員" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/" class="article-date">
-  <time class="dt-published" datetime="2020-01-21T08:02:04.000Z" itemprop="datePublished">2020-01-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
-        
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/">物件導向(四) static修飾字 靜態類別和靜態類別成員</a>
-    </h1>
+  
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/" class="post-title-link" itemprop="url">物件導向(四) static修飾字 靜態類別和靜態類別成員</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-01-21 16:02:04" itemprop="dateCreated datePublished" datetime="2020-01-21T16:02:04+08:00">2020-01-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-10-11 16:14:24" itemprop="dateModified" datetime="2022-10-11T16:14:24+08:00">2022-10-11</time>
+              </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>無論是程式新手或是有一些開發經驗的工程師，一定都會在範例程式或是專案中常常看到 static 關鍵字。本篇文章將簡單介紹 static 常見的使用情境，還有在使用時需要注意的事項。</p>
+          <p>無論是程式新手或是有一些開發經驗的工程師，一定都會在範例程式或是專案中常常看到 static 關鍵字。本篇文章將簡單介紹 static 常見的使用情境，還有在使用時需要注意的事項。</p>
 <h2 id="靜態方法"><a href="#靜態方法" class="headerlink" title="靜態方法"></a>靜態方法</h2><p>靜態方法常出現在專案中的<strong>共用方法</strong>，像是 helper class 或是 type extention，最方便的地方在於靜態方法不需要被實體化，就可以被使用。下面的範例將示範傳統非靜態類方法與靜態方法被呼叫的方式:</p>
 <p>建立一個計算類別，其中包含 Plus (靜態方法) 以及 Minus (非靜態方法)</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Calculate</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span> <span class="title">Plus</span>(<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> a + b;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Minus</span>(<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> a - b;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -437,44 +650,68 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/" data-id="cla7yx3hh000bpwtth52j14w6" data-title="物件導向(四) static修飾字 靜態類別和靜態類別成員" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/static/" rel="tag">static</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B/" rel="tag">靜態</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95/" rel="tag">靜態方法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E8%AE%8A%E6%95%B8/" rel="tag">靜態變數</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5/" rel="tag">靜態類別</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-物件導向(三) 建構子及其多載設計" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/" class="article-date">
-  <time class="dt-published" datetime="2020-01-16T08:02:04.000Z" itemprop="datePublished">2020-01-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
-        
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/">物件導向(二) 實質型別(value type) 與參考型別(reference type)</a>
-    </h1>
+  
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/" class="post-title-link" itemprop="url">物件導向(二) 實質型別(value type) 與參考型別(reference type)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-01-16 16:02:04" itemprop="dateCreated datePublished" datetime="2020-01-16T16:02:04+08:00">2020-01-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-10-11 16:13:01" itemprop="dateModified" datetime="2022-10-11T16:13:01+08:00">2022-10-11</time>
+              </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="何謂建構子-constructior"><a href="#何謂建構子-constructior" class="headerlink" title="何謂建構子 constructior"></a>何謂建構子 constructior</h2><p>建構子 (Constructor) 是一種名稱和 Class 名稱相同，可以輸入參數，但沒有輸出值的特殊 method，在 class 被實體化的時候會被觸發，常被用來設定物件的初始值。</p>
+          <h2 id="何謂建構子-constructior"><a href="#何謂建構子-constructior" class="headerlink" title="何謂建構子 constructior"></a>何謂建構子 constructior</h2><p>建構子 (Constructor) 是一種名稱和 Class 名稱相同，可以輸入參數，但沒有輸出值的特殊 method，在 class 被實體化的時候會被觸發，常被用來設定物件的初始值。</p>
 <h2 id="如何建立-class-的建構子"><a href="#如何建立-class-的建構子" class="headerlink" title="如何建立 class 的建構子"></a>如何建立 class 的建構子</h2><p>要設計一個類別的建構子，需要有以下要求:</p>
 <ul>
 <li>method name 和 class name 需相同</li>
@@ -512,44 +749,68 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/" data-id="cla7yx3he0005pwtth8wy6skf" data-title="物件導向(二) 實質型別(value type) 與參考型別(reference type)" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Constructor/" rel="tag">Constructor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/overloaded/" rel="tag">overloaded</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%9A%E8%BC%89/" rel="tag">多載</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BB%BA%E6%A7%8B%E5%AD%90/" rel="tag">建構子</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-物件導向(二) 實質型別(value type) 與參考型別(reference type)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/" class="article-date">
-  <time class="dt-published" datetime="2020-01-12T08:02:04.000Z" itemprop="datePublished">2020-01-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
-        
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/">物件導向(三) 建構子及其多載設計</a>
-    </h1>
+  
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/" class="post-title-link" itemprop="url">物件導向(三) 建構子及其多載設計</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-01-12 16:02:04" itemprop="dateCreated datePublished" datetime="2020-01-12T16:02:04+08:00">2020-01-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-10-11 16:12:41" itemprop="dateModified" datetime="2022-10-11T16:12:41+08:00">2022-10-11</time>
+              </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>C# 依照記憶體存取方式的不同，將型別大致分為實質型別 (value type) 與參考型別 (reference type)。也因為這兩種型別在執行存取時運作的模式不一樣，觀念不夠清晰的情況下，常會發生執行結果與預期不相符的情況。這篇文章將簡單說明 value type 與 reference type 在執行記憶體存取的運作情形。</p>
+          <p>C# 依照記憶體存取方式的不同，將型別大致分為實質型別 (value type) 與參考型別 (reference type)。也因為這兩種型別在執行存取時運作的模式不一樣，觀念不夠清晰的情況下，常會發生執行結果與預期不相符的情況。這篇文章將簡單說明 value type 與 reference type 在執行記憶體存取的運作情形。</p>
 <h2 id="記憶體位置-stack-amp-heap"><a href="#記憶體位置-stack-amp-heap" class="headerlink" title="記憶體位置 stack &amp; heap"></a>記憶體位置 stack &amp; heap</h2><p>在說明兩種型別存取過程前，需要先簡單了解記憶體有兩個重要區塊:</p>
 <ul>
 <li>stack: 用於靜態記憶體配置，必須在編譯時期為<strong>已知</strong>的資料。</li>
@@ -627,44 +888,68 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/" data-id="cla7yx3hf0008pwtt3iwm6bao" data-title="物件導向(三) 建構子及其多載設計" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/" rel="tag">heap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reference/" rel="tag">reference</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/type/" rel="tag">type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/value-type/" rel="tag">value type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5/" rel="tag">參考型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5/" rel="tag">實質型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-物件導向(一) 物件與類別" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/01/08/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%80)%20%E7%89%A9%E4%BB%B6%E8%88%87%E9%A1%9E%E5%88%A5/" class="article-date">
-  <time class="dt-published" datetime="2020-01-08T08:02:04.000Z" itemprop="datePublished">2020-01-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
-        
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/01/08/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%80)%20%E7%89%A9%E4%BB%B6%E8%88%87%E9%A1%9E%E5%88%A5/">物件導向(一) 物件與類別</a>
-    </h1>
+  
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/08/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%80)%20%E7%89%A9%E4%BB%B6%E8%88%87%E9%A1%9E%E5%88%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/08/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%80)%20%E7%89%A9%E4%BB%B6%E8%88%87%E9%A1%9E%E5%88%A5/" class="post-title-link" itemprop="url">物件導向(一) 物件與類別</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-01-08 16:02:04" itemprop="dateCreated datePublished" datetime="2020-01-08T16:02:04+08:00">2020-01-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-10-11 16:10:07" itemprop="dateModified" datetime="2022-10-11T16:10:07+08:00">2022-10-11</time>
+              </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>要學習物件導向的第一步，就是要先釐清**物件(Object)<strong>與</strong>類別(Class)**的關係。<br>以下整理了幾個網路上比喻物件類別之間關係的例子:</p>
+          <p>要學習物件導向的第一步，就是要先釐清**物件(Object)<strong>與</strong>類別(Class)**的關係。<br>以下整理了幾個網路上比喻物件類別之間關係的例子:</p>
 <ol>
 <li>類別是建築物的設計圖，而物件則是依照設計圖設計出來的建築物。</li>
 <li>類別是一本武林秘笈，而物件則是精通武林秘笈的武林高手。</li>
@@ -693,44 +978,68 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/01/08/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%80)%20%E7%89%A9%E4%BB%B6%E8%88%87%E9%A1%9E%E5%88%A5/" data-id="cla7yx3hd0004pwttcjax9ebi" data-title="物件導向(一) 物件與類別" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Object/" rel="tag">Object</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-C-Delegate委派的使用情境與簡介" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/08/26/C-Delegate%E5%A7%94%E6%B4%BE%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%E8%88%87%E7%B0%A1%E4%BB%8B/" class="article-date">
-  <time class="dt-published" datetime="2019-08-26T08:02:04.000Z" itemprop="datePublished">2019-08-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
-        
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/08/26/C-Delegate%E5%A7%94%E6%B4%BE%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%E8%88%87%E7%B0%A1%E4%BB%8B/">C# Delegate委派的使用情境與簡介</a>
-    </h1>
+  
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/08/26/C-Delegate%E5%A7%94%E6%B4%BE%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%E8%88%87%E7%B0%A1%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/26/C-Delegate%E5%A7%94%E6%B4%BE%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%E8%88%87%E7%B0%A1%E4%BB%8B/" class="post-title-link" itemprop="url">C# Delegate委派的使用情境與簡介</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-08-26 16:02:04" itemprop="dateCreated datePublished" datetime="2019-08-26T16:02:04+08:00">2019-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-10-11 16:08:02" itemprop="dateModified" datetime="2022-10-11T16:08:02+08:00">2022-10-11</time>
+              </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h2 id="委派的宣告"><a href="#委派的宣告" class="headerlink" title="委派的宣告"></a>委派的宣告</h2><p>簡單來說，委派就是將方法當成參數傳進另一個方法中。上面這個說法可能過於簡短有點抽象，我們可以先來了解一下委派宣告的方式。</p>
+          <h2 id="委派的宣告"><a href="#委派的宣告" class="headerlink" title="委派的宣告"></a>委派的宣告</h2><p>簡單來說，委派就是將方法當成參數傳進另一個方法中。上面這個說法可能過於簡短有點抽象，我們可以先來了解一下委派宣告的方式。</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 烹調方式 Delegate</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> <span class="built_in">string</span> <span class="title">HowToCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span>;</span><br></pre></td></tr></table></figure>
 
 <h2 id="委派的規則"><a href="#委派的規則" class="headerlink" title="委派的規則"></a>委派的規則</h2><p>而上面宣告的委派可以持有一個或多個方法，但前題是持有的方法必須與委派有相同的輸入和輸出，否則將無法編譯成功。下面將提供4個方法範例，媽媽煮、爸爸煮、妹妹煮及阿嬤煮。</p>
@@ -770,131 +1079,175 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/08/26/C-Delegate%E5%A7%94%E6%B4%BE%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%E8%88%87%E7%B0%A1%E4%BB%8B/" data-id="cla7yx3h60000pwtt46yw4d74" data-title="C# Delegate委派的使用情境與簡介" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Delegate/" rel="tag">Delegate</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A7%94%E6%B4%BE/" rel="tag">委派</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li></ul>
 
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Gary Hsu</p>
+  <div class="site-description" itemprop="description">.Net Web 網站開發筆記及技術分享</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary Hsu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
     </footer>
   </div>
-  
-</article>
-
-
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
 
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Constructor/" rel="tag">Constructor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOC/" rel="tag">DOC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOCX/" rel="tag">DOCX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Delegate/" rel="tag">Delegate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELMAH/" rel="tag">ELMAH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Error/" rel="tag">Error</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IIS/" rel="tag">IIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Log/" rel="tag">Log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/" rel="tag">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ODF/" rel="tag">ODF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ODT/" rel="tag">ODT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object/" rel="tag">Object</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Word/" rel="tag">Word</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/automatically-implemented/" rel="tag">automatically implemented</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/get/" rel="tag">get</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/model/" rel="tag">model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/overloaded/" rel="tag">overloaded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/private/" rel="tag">private</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/properties/" rel="tag">properties</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/property/" rel="tag">property</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protected/" rel="tag">protected</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/public/" rel="tag">public</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/" rel="tag">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static/" rel="tag">static</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/type/" rel="tag">type</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/value-type/" rel="tag">value type</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%9D%E8%AD%B7%E5%B1%A4%E7%B4%9A/" rel="tag">保護層級</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5/" rel="tag">參考型別</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E8%BC%89/" rel="tag">多載</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A7%94%E6%B4%BE/" rel="tag">委派</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%98%E5%8F%96%E4%BF%AE%E9%A3%BE%E8%A9%9E/" rel="tag">存取修飾詞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5/" rel="tag">實質型別</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D/" rel="tag">封裝</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D%E6%80%A7/" rel="tag">封裝性</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BB%BA%E6%A7%8B%E5%AD%90/" rel="tag">建構子</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B6%B2%E7%AB%99%E7%9B%A3%E6%8E%A7/" rel="tag">網站監控</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%87%AA%E5%8B%95%E5%AF%A6%E4%BD%9C%E5%B1%AC%E6%80%A7/" rel="tag">自動實作屬性</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%89%E6%AA%94/" rel="tag">轉檔</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B/" rel="tag">靜態</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95/" rel="tag">靜態方法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E8%AE%8A%E6%95%B8/" rel="tag">靜態變數</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5/" rel="tag">靜態類別</a></li></ul>
-    </div>
-  </div>
+<script src="/js/schemes/pisces.js"></script>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/Class/" style="font-size: 10px;">Class</a> <a href="/tags/Constructor/" style="font-size: 10px;">Constructor</a> <a href="/tags/DOC/" style="font-size: 10px;">DOC</a> <a href="/tags/DOCX/" style="font-size: 10px;">DOCX</a> <a href="/tags/Delegate/" style="font-size: 10px;">Delegate</a> <a href="/tags/ELMAH/" style="font-size: 10px;">ELMAH</a> <a href="/tags/Error/" style="font-size: 10px;">Error</a> <a href="/tags/IIS/" style="font-size: 10px;">IIS</a> <a href="/tags/Log/" style="font-size: 10px;">Log</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/ODF/" style="font-size: 10px;">ODF</a> <a href="/tags/ODT/" style="font-size: 10px;">ODT</a> <a href="/tags/Object/" style="font-size: 10px;">Object</a> <a href="/tags/Word/" style="font-size: 10px;">Word</a> <a href="/tags/automatically-implemented/" style="font-size: 10px;">automatically implemented</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/overloaded/" style="font-size: 10px;">overloaded</a> <a href="/tags/private/" style="font-size: 10px;">private</a> <a href="/tags/properties/" style="font-size: 10px;">properties</a> <a href="/tags/property/" style="font-size: 10px;">property</a> <a href="/tags/protected/" style="font-size: 10px;">protected</a> <a href="/tags/public/" style="font-size: 10px;">public</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/static/" style="font-size: 10px;">static</a> <a href="/tags/type/" style="font-size: 10px;">type</a> <a href="/tags/value-type/" style="font-size: 10px;">value type</a> <a href="/tags/%E4%BF%9D%E8%AD%B7%E5%B1%A4%E7%B4%9A/" style="font-size: 10px;">保護層級</a> <a href="/tags/%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5/" style="font-size: 10px;">參考型別</a> <a href="/tags/%E5%A4%9A%E8%BC%89/" style="font-size: 10px;">多載</a> <a href="/tags/%E5%A7%94%E6%B4%BE/" style="font-size: 10px;">委派</a> <a href="/tags/%E5%AD%98%E5%8F%96%E4%BF%AE%E9%A3%BE%E8%A9%9E/" style="font-size: 10px;">存取修飾詞</a> <a href="/tags/%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5/" style="font-size: 10px;">實質型別</a> <a href="/tags/%E5%B0%81%E8%A3%9D/" style="font-size: 13.33px;">封裝</a> <a href="/tags/%E5%B0%81%E8%A3%9D%E6%80%A7/" style="font-size: 13.33px;">封裝性</a> <a href="/tags/%E5%BB%BA%E6%A7%8B%E5%AD%90/" style="font-size: 10px;">建構子</a> <a href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" style="font-size: 16.67px;">物件導向</a> <a href="/tags/%E7%B6%B2%E7%AB%99%E7%9B%A3%E6%8E%A7/" style="font-size: 10px;">網站監控</a> <a href="/tags/%E8%87%AA%E5%8B%95%E5%AF%A6%E4%BD%9C%E5%B1%AC%E6%80%A7/" style="font-size: 10px;">自動實作屬性</a> <a href="/tags/%E8%BD%89%E6%AA%94/" style="font-size: 10px;">轉檔</a> <a href="/tags/%E9%9D%9C%E6%85%8B/" style="font-size: 10px;">靜態</a> <a href="/tags/%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95/" style="font-size: 10px;">靜態方法</a> <a href="/tags/%E9%9D%9C%E6%85%8B%E8%AE%8A%E6%95%B8/" style="font-size: 10px;">靜態變數</a> <a href="/tags/%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5/" style="font-size: 10px;">靜態類別</a>
-    </div>
-  </div>
+<script src="/js/next-boot.js"></script>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2022/10/09/%E5%9C%A8%20ASP.Net%20MVC%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ELMAH%20%E5%A5%97%E4%BB%B6%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99%E6%9C%AA%E9%A0%90%E6%9C%9F%E7%9A%84%E4%BE%8B%E5%A4%96/">在 ASP.Net MVC 中使用 ELMAH 套件紀錄網站未預期的例外</a>
-          </li>
-        
-          <li>
-            <a href="/2021/08/02/ASP.NET%20Core%20MVC%20%E9%80%8F%E9%81%8E%20soffice.exe%20%E5%B0%87%20Word%20doxc%20%E6%AA%94%E8%BD%89%E6%88%90%20odt/">ASP.NET Core MVC 透過 soffice.exe 將 Word doxc 檔轉成 odt</a>
-          </li>
-        
-          <li>
-            <a href="/2020/02/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%85%AD)%20Get%20&%20Set%20%E5%AD%98%E5%8F%96%E5%AD%90/">物件導向(六) Get &amp; Set 存取子</a>
-          </li>
-        
-          <li>
-            <a href="/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/">物件導向(五) 封裝性 Public Private Protected</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/">物件導向(四) static修飾字 靜態類別和靜態類別成員</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2022 Gary Hsu<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
 
 
 
 
 
-  </div>
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>
