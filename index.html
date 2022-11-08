@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Gary Blog - 以為程式很簡單</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content=".Net Web 網站開發筆記及技術分享">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gary Blog - 以為程式很簡單">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Gary Blog - 以為程式很簡單">
+<meta property="og:description" content=".Net Web 網站開發筆記及技術分享">
+<meta property="og:locale">
+<meta property="article:author" content="Gary Hsu">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Gary Blog - 以為程式很簡單" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Gary Blog - 以為程式很簡單</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-在 ASP.Net MVC 中使用 ELMAH 套件紀錄網站未預期的例外" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/10/09/%E5%9C%A8%20ASP.Net%20MVC%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ELMAH%20%E5%A5%97%E4%BB%B6%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99%E6%9C%AA%E9%A0%90%E6%9C%9F%E7%9A%84%E4%BE%8B%E5%A4%96/" class="article-date">
+  <time class="dt-published" datetime="2022-10-09T08:02:04.000Z" itemprop="datePublished">2022-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/10/09/%E5%9C%A8%20ASP.Net%20MVC%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ELMAH%20%E5%A5%97%E4%BB%B6%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99%E6%9C%AA%E9%A0%90%E6%9C%9F%E7%9A%84%E4%BE%8B%E5%A4%96/">在 ASP.Net MVC 中使用 ELMAH 套件紀錄網站未預期的例外</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="ELMAH-是什麼-為甚麼要使用-ELMAH"><a href="#ELMAH-是什麼-為甚麼要使用-ELMAH" class="headerlink" title="ELMAH 是什麼? 為甚麼要使用 ELMAH"></a>ELMAH 是什麼? 為甚麼要使用 ELMAH</h2><p>系統開發的過程中，免不了會發生一些預期之外的 Exception。若沒有做良好的錯誤處理或記錄，這些發生過的 Exception 必定隨著時間而船過水無痕。若是可以重現的錯誤是還好，重現錯誤後修補即可。怕的是偶發性的 Exception，又或者 User 沒辦法清楚描述出出現 Exception 的情境，這些都是在實務過程中常常會發生的情況。為了要避免這樣的情況，今天介紹一個非常簡單好用的老牌套件 ELMAH。ELMAH 幾乎可以在不用修改任何 Source Code 的情況下，記錄下所有發生的錯誤。並有內建的 Dashboard 可以顯示發生過的所有錯誤，且內容豐富，連 StackTrace 的紀錄都有，讓我們可以有依據紀錄找到錯誤資訊，輕鬆地將 Bug 束手就擒。</p>
+<h2 id="ELMAH-的安裝"><a href="#ELMAH-的安裝" class="headerlink" title="ELMAH 的安裝"></a>ELMAH 的安裝</h2><p>而 ELMAH 的安裝也很簡單，透過 Nuget 安裝以下套件</p>
+<ul>
+<li>elmah</li>
+<li>elmah.corelibrary</li>
+<li>Elmah.Mvc<br><img src="https://i.imgur.com/DAyn5Fj.png" alt="Imgur"></li>
+</ul>
+<p>安裝完畢後會跳出一個 readme.txt 檔案，簡單說明了 ELAMH 的使用方式，也提及了一些使用上的安全性問題。<br><img src="https://i.imgur.com/l0db2M6.png" alt="Imgur"></p>
+<p>同時專案的 Web.config 也會自動產生一些 ELMAH 所需的設定，這些設定內容在 ELMAH 的 GitHub 都可以找到詳細的說明。<br><img src="https://i.imgur.com/EkTCF1O.png" alt="Imgur"><br><img src="https://i.imgur.com/ISvGmEB.png" alt="Imgur"></p>
+<h2 id="ELMAH-的使用"><a href="#ELMAH-的使用" class="headerlink" title="ELMAH 的使用"></a>ELMAH 的使用</h2><p>安裝完畢後測試看看 ELMAH 是否已啟用。首先將專案 Run 起來。<br><img src="https://i.imgur.com/qOINShH.png" alt="Imgur"></p>
+<p>Run 起來後在 Domain 後加上 ELMAH.axd 即可進入 Dashboard。<br>此時 Dashboard 的錯誤清單是空的，因為我們尚未製造出任何錯誤。<br><img src="https://i.imgur.com/J4thu1S.png" alt="Imgur"></p>
+<p>在 Url 打上一個不存在的路徑製造一個找不到資源的 Exception。<br><img src="https://i.imgur.com/AVHEdNs.png" alt="Imgur"></p>
+<p>此時再回到 ELMAH.axd，可以看到 Dashboard 出現了剛才的 Exception。<br><img src="https://i.imgur.com/ysEtgNR.png" alt="Imgur"></p>
+<p>點擊 Details 後可以看到更詳細的錯誤資訊。<br><img src="https://i.imgur.com/vCmwLkM.png" alt="Imgur"></p>
+<h2 id="錯誤訊息的儲存方式"><a href="#錯誤訊息的儲存方式" class="headerlink" title="錯誤訊息的儲存方式"></a>錯誤訊息的儲存方式</h2><p>這些錯誤訊息預設是儲存在記憶體的(in-memory)，因此只要我們重新啟動專案，可以看到剛才的錯誤紀錄消失了。<br><img src="https://i.imgur.com/ngYaV0d.png" alt="Imgur"></p>
+<p>而這不是我們所樂見的，我們不會希望這些錯誤紀錄在我們重啟專案，或是重啟 IIS 又或是重新開機後紀錄都消失吧! 因此 ELMAH 除了記憶體的存儲方式也提供了其它方法，像是寫入 XML 檔案或是直接將紀錄寫到 DB 等等。我個人是喜歡將錯誤存到 DB 的方式，因為就能直接在資料庫連線工具中下 SQL 語法查詢出我要找的資訊，較為簡單直覺。而 ELMAH 也支援了大部分主流的資料庫。<br><img src="https://i.imgur.com/SVfI94s.png" alt="Imgur"></p>
+<h2 id="將錯誤訊息存入-SQL-Server"><a href="#將錯誤訊息存入-SQL-Server" class="headerlink" title="將錯誤訊息存入 SQL Server"></a>將錯誤訊息存入 SQL Server</h2><p>最後一個範例要說明的是如何將錯誤紀錄直接存入 SQL Server，首先在回到 Nuget 下載另一個套件 elmah.sqlserver。<br><img src="https://i.imgur.com/cgSnXV9.png" alt="Imgur"></p>
+<p>安裝完成後可以在檔案總管中找到兩個新加入的檔案。其中 Elmah.SqlServer.txt 的文件中寫道連線 SQL Server 的兩個步驟:</p>
+<ol>
+<li>在欲儲存錯誤紀錄的資料庫執行 Elmah.SqlServer.sql</li>
+<li>到 Web.config 中編輯 Connection string<br><img src="https://i.imgur.com/q1l5E34.png" alt="Imgur"></li>
+</ol>
+<p>在欲儲存錯誤紀錄的資料庫執行 Elmah.SqlServer.sql。<br><img src="https://i.imgur.com/hlGRpcJ.png" alt="Imgur"></p>
+<p>執行完畢後資料庫會產生一個 Table ELMAH_Error 還有三支 Stored Procedure。<br><img src="https://i.imgur.com/DJpEOit.png" alt="Imgur"></p>
+<p>回到 Web.config，安裝完套件 elmah.sqlserver 後會在 Web.Config 中新增兩行程式碼。<br><img src="https://i.imgur.com/FMfvDV0.png" alt="Imgur"></p>
+<p>這時候只要將剛才的連線資訊寫入 elmah-sqlserver 的 connectionString，錯誤紀錄就會自動寫入資料庫了。<br><img src="https://i.imgur.com/oSN1CvC.png" alt="Imgur"></p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://elmah.github.io/">elmah.github.io</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/aspnet/web-forms/overview/older-versions-getting-started/deploying-web-site-projects/logging-error-details-with-elmah-cs">使用 ELMAH 記錄錯誤的詳細資料 (C#)</a></li>
+<li><a target="_blank" rel="noopener" href="https://jeffprogrammer.wordpress.com/2015/12/05/asp-net-mvc-%E7%9B%A3%E6%8E%A7%E7%B3%BB%E7%B5%B1%E5%81%A5%E5%BA%B7-elmah-%E4%BD%BF%E7%94%A8%E7%B4%80%E9%8C%84/">[ASP.NET MVC] 監控系統健康 ELMAH 使用紀錄</a></li>
+<li><a target="_blank" rel="noopener" href="https://kevintsengtw.blogspot.com/2016/05/aspnet-mvc-elmah-dashboard-elmah-sql.html">ASP.NET MVC Elmah Dashboard - 查看 Elmah 存在 SQL Server 的記錄</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/10/09/%E5%9C%A8%20ASP.Net%20MVC%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ELMAH%20%E5%A5%97%E4%BB%B6%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99%E6%9C%AA%E9%A0%90%E6%9C%9F%E7%9A%84%E4%BE%8B%E5%A4%96/" data-id="cla7yx3ha0001pwtt0cta0315" data-title="在 ASP.Net MVC 中使用 ELMAH 套件紀錄網站未預期的例外" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ELMAH/" rel="tag">ELMAH</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Error/" rel="tag">Error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Log/" rel="tag">Log</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVC/" rel="tag">MVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B6%B2%E7%AB%99%E7%9B%A3%E6%8E%A7/" rel="tag">網站監控</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-ASP.NET Core MVC 透過 soffice.exe 將 Word doxc 檔轉成 odt" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/02/ASP.NET%20Core%20MVC%20%E9%80%8F%E9%81%8E%20soffice.exe%20%E5%B0%87%20Word%20doxc%20%E6%AA%94%E8%BD%89%E6%88%90%20odt/" class="article-date">
+  <time class="dt-published" datetime="2021-08-02T08:02:04.000Z" itemprop="datePublished">2021-08-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/08/02/ASP.NET%20Core%20MVC%20%E9%80%8F%E9%81%8E%20soffice.exe%20%E5%B0%87%20Word%20doxc%20%E6%AA%94%E8%BD%89%E6%88%90%20odt/">ASP.NET Core MVC 透過 soffice.exe 將 Word doxc 檔轉成 odt</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>近年來公家機關因為不希望被微軟 Office 系列產品綁架，都會要求廠商將報表以開放格式 ODF 開放文檔格式（Open Document Format ) 儲存。過去遇到這種轉檔的需求，通常會購買 ASPOSE 之類的轉檔產品來搭配，但這次有一個報表在特殊情形下轉檔會發生跑版的現象，在尋找解決方法的時候陰錯陽差找到透過 soffice.exe 來轉檔的方式。在測試過程中踩到很多雷，所以把過程記錄下來。</p>
+<h2 id="soffice-exe-下載"><a href="#soffice-exe-下載" class="headerlink" title="soffice.exe 下載"></a>soffice.exe 下載</h2><p>國發會有開發一套 ODF 格式的檔案操作工具，可以在<a target="_blank" rel="noopener" href="https://www.ndc.gov.tw/cp.aspx?n=32A75A78342B669D&s=41F160FA9EF25A20">這裡</a>下載。下載完成後可以到預設路徑 <code>C:\Program Files\NDC ODF Application Tools 6\program</code> 找到 soffice.exe。</p>
+<p><img src="https://i.imgur.com/1te8azP.png" alt="Imgur"></p>
+<h2 id="透過-cmd-測試轉檔功能"><a href="#透過-cmd-測試轉檔功能" class="headerlink" title="透過 cmd 測試轉檔功能"></a>透過 cmd 測試轉檔功能</h2><p>新增一個測試資料夾，並將要轉檔的 docx 檔案加入。</p>
+<p><img src="https://imgur.com/1qY7l0X.png" alt="Imgur"></p>
+<p>在該資料夾開啟 CMD 並輸入轉檔 command 語法: <code>&quot;C:\Program Files\NDC ODF Application Tools 6\program\soffice.exe&quot; --convert-to odt ConvertTestDocument.docx</code></p>
+<p><img src="https://imgur.com/95Bm0SX.png" alt="Imgur"></p>
+<p>過個幾秒就會產生一個相同檔名的 ODT 檔在同個資料夾中。</p>
+<p><img src="https://imgur.com/o5pbSQK.png" alt="Imgur"></p>
+<h2 id="在程式中加入-Command-語法"><a href="#在程式中加入-Command-語法" class="headerlink" title="在程式中加入 Command 語法"></a>在程式中加入 Command 語法</h2><p>經過測試後確認可以透過呼叫 soffice.exe 的方式將 docx 檔傳為 odt 格式後。設計了以下流程來開發轉檔的共用程式。</p>
+<ol>
+<li>將原本要回傳的 docx 檔案先下載至 AppTempData 資料夾(自己新增的 Temp 資料夾)</li>
+<li>new 一個 Process 執行 command 語法</li>
+<li>cd 到 AppTempData 資料夾</li>
+<li>執行 soffice.exe convert to odt 的 command 語法</li>
+<li>確認 odt 檔產製成功後，將 odt 檔的用 byte[] 讀出</li>
+<li>刪除 doxc 檔及 odt 檔</li>
+<li>回傳 odt 的 byte[]</li>
+</ol>
+<h2 id="範例程式碼"><a href="#範例程式碼" class="headerlink" title="範例程式碼"></a>範例程式碼</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ActionResult <span class="title">DownloadOdt</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">var</span> guid = Guid.NewGuid();</span><br><span class="line">	<span class="keyword">var</span> folderPath = <span class="string">$&quot;<span class="subst">&#123;AppHelper.GetCurrentDirectory()&#125;</span>AppTempData\\&quot;</span>;</span><br><span class="line">	<span class="keyword">var</span> sOfficeExePath = <span class="string">@&quot;C:/Program Files/NDC ODF Application Tools 6/program/soffice.exe&quot;</span>;</span><br><span class="line">	<span class="keyword">var</span> docxPath = folderPath + guid + <span class="string">&quot;.docx&quot;</span>;</span><br><span class="line">	<span class="built_in">string</span> odtPath = folderPath + guid + <span class="string">&quot;.odt&quot;</span>;</span><br><span class="line">	<span class="built_in">string</span> fileName = <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="built_in">byte</span>[] bytes = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 新增 AppTempData 資料夾</span></span><br><span class="line">	<span class="keyword">if</span> (!System.IO.Directory.Exists(folderPath))</span><br><span class="line">	&#123;</span><br><span class="line">		System.IO.Directory.CreateDirectory(folderPath);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 呼叫產製 docx 的 function，回傳 MemoryStream</span></span><br><span class="line">	<span class="keyword">var</span> ms = ToWord(<span class="keyword">ref</span> fileName);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 將 docx 的 MemoryStream 下載到 AppTempData 資料夾</span></span><br><span class="line">	<span class="keyword">if</span> (ms != <span class="literal">null</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">using</span> (<span class="keyword">var</span> stream = System.IO.File.Create(docxPath))</span><br><span class="line">		&#123;</span><br><span class="line">			ms.CopyTo(stream);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// new 一個 Process 執行 command 語法</span></span><br><span class="line">	Process p = <span class="keyword">new</span> Process();</span><br><span class="line">	p.StartInfo.FileName = <span class="string">&quot;cmd.exe&quot;</span>;</span><br><span class="line">	p.StartInfo.UseShellExecute = <span class="literal">false</span>;</span><br><span class="line">	p.StartInfo.RedirectStandardInput = <span class="literal">true</span>;</span><br><span class="line">	p.StartInfo.RedirectStandardOutput = <span class="literal">true</span>;</span><br><span class="line">	p.StartInfo.RedirectStandardError = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">	p.Start();</span><br><span class="line">	<span class="comment">// cd 到 AppTempData 資料夾</span></span><br><span class="line">	p.StandardInput.WriteLine(<span class="string">@&quot;cd &quot;</span> + folderPath);</span><br><span class="line">	<span class="comment">// 執行 docx 轉 odt 的 command 語法，範例如下</span></span><br><span class="line">	<span class="comment">// &quot;C:\Program Files\NDC ODF Application Tools 6\program\soffice.exe&quot; --convert-to odt &#123;guid&#125;.docx</span></span><br><span class="line">	p.StandardInput.WriteLine(<span class="string">&quot;\&quot;&quot;</span> + sOfficeExePath + <span class="string">&quot;\&quot;&quot;</span> + <span class="string">&quot; --convert-to odt &quot;</span> + guid + <span class="string">&quot;.docx&quot;</span>);</span><br><span class="line">	p.StandardInput.WriteLine(<span class="string">&quot;exit&quot;</span>);</span><br><span class="line">	p.WaitForExit();</span><br><span class="line">	p.Close();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 若 docx to odt 還沒產製完成，暫停兩秒再下載</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (System.IO.File.Exists(odtPath))</span><br><span class="line">		&#123;</span><br><span class="line">			bytes = System.IO.File.ReadAllBytes(odtPath);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Thread.Sleep(<span class="number">2000</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 刪除 docx</span></span><br><span class="line">	<span class="keyword">if</span> (System.IO.File.Exists(docxPath))</span><br><span class="line">		System.IO.File.Delete(docxPath);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 刪除 odt</span></span><br><span class="line">	<span class="keyword">if</span> (System.IO.File.Exists(odtPath))</span><br><span class="line">		System.IO.File.Delete(odtPath);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (bytes == <span class="literal">null</span>)</span><br><span class="line">		<span class="keyword">return</span> Content(<span class="string">&quot;檔案下載失敗&quot;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 回傳轉檔成功的 odt 檔</span></span><br><span class="line">	<span class="keyword">return</span> File(bytes, <span class="string">&quot;application/vnd.openxmlformats-officedocument.wordprocessingml.document&quot;</span>, <span class="string">$&quot;<span class="subst">&#123;fileName&#125;</span>.odt&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="在-IIS-上執行的錯誤"><a href="#在-IIS-上執行的錯誤" class="headerlink" title="在 IIS 上執行的錯誤"></a>在 IIS 上執行的錯誤</h2><p>上面的範例程式碼在 Visual Studio 的偵錯模式執行沒問題。但當部屬到 IIS 後，卻沒辦法轉檔成功。查了很久才在 stack overflow上找到<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51901973/using-libreofficesoffice-exe-as-process-start-from-code-behind-not-working-o">這篇問答</a>，簡單來說就是 soffice.exe 執行的時候會在使用者的資料夾產生一些暫存檔資料，但在 IIS 上因故無法產生。所以我們必須要在轉檔 command 語法中加入 <code>-env:UserInstallation=file:///...</code>，指定產生轉檔暫存檔的路徑。所以將上面的範例</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p.StandardInput.WriteLine(<span class="string">&quot;\&quot;&quot;</span> + sOfficeExePath + <span class="string">&quot;\&quot;&quot;</span> + <span class="string">&quot; --convert-to odt &quot;</span> + guid + <span class="string">&quot;.docx&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>修改為</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p.StandardInput.WriteLine(<span class="string">&quot;\&quot;&quot;</span> + sOfficeExePath + <span class="string">&quot;\&quot;&quot;</span> + <span class="string">&quot; -env:UserInstallation=file:///&quot;</span> + AppHelper.GetCurrentDirectory().Replace(<span class="string">&quot;\\&quot;</span>, <span class="string">&quot;/&quot;</span>) + <span class="string">&quot;AppTempData --convert-to odt &quot;</span> + guid + <span class="string">&quot;.docx&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>修改完成後在 IIS 上轉檔就沒問題了。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://wiki.documentfoundation.org/Faq/General/150">Using the –convert-to command-line function to convert formats under Windows 10</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51901973/using-libreofficesoffice-exe-as-process-start-from-code-behind-not-working-o">Using LibreOffice(soffice.exe) as Process.Start() from Code behind not working on IIS server</a></li>
+<li><a target="_blank" rel="noopener" href="https://ask.libreoffice.org/t/not-able-to-launch-soffice-within-an-application-on-the-iis-server/39184">Not able to launch soffice within an application on the iis server</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/08/02/ASP.NET%20Core%20MVC%20%E9%80%8F%E9%81%8E%20soffice.exe%20%E5%B0%87%20Word%20doxc%20%E6%AA%94%E8%BD%89%E6%88%90%20odt/" data-id="cla7yx3hc0003pwtt7q8a0t9a" data-title="ASP.NET Core MVC 透過 soffice.exe 將 Word doxc 檔轉成 odt" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DOC/" rel="tag">DOC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DOCX/" rel="tag">DOCX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IIS/" rel="tag">IIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ODF/" rel="tag">ODF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ODT/" rel="tag">ODT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Word/" rel="tag">Word</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%89%E6%AA%94/" rel="tag">轉檔</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-物件導向(六) Get &amp; Set 存取子" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/02/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%85%AD)%20Get%20&%20Set%20%E5%AD%98%E5%8F%96%E5%AD%90/" class="article-date">
+  <time class="dt-published" datetime="2020-02-21T08:02:04.000Z" itemprop="datePublished">2020-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/02/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%85%AD)%20Get%20&%20Set%20%E5%AD%98%E5%8F%96%E5%AD%90/">物件導向(六) Get &amp; Set 存取子</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Get-amp-Set-存取子的基本使用"><a href="#Get-amp-Set-存取子的基本使用" class="headerlink" title="Get &amp; Set 存取子的基本使用"></a>Get &amp; Set 存取子的基本使用</h2><p>Get &amp; Set 存取子是用來設定 Class 的 Property，根據該屬性存取設定會有以下三種設定方式。</p>
+<ol>
+<li>唯讀: 用 Get 取值，將要回傳的值 return 回去</li>
+</ol>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="built_in">string</span> name;</span><br><span class="line"><span class="keyword">public</span> <span class="built_in">string</span> Name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>唯寫: 用 Set 寫入他的值，寫入的值會存在 value</li>
+</ol>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="built_in">string</span> name;</span><br><span class="line"><span class="keyword">public</span> <span class="built_in">string</span> Name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">set</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = <span class="keyword">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>可以讀跟寫: 同時寫上 Get &amp; Set</li>
+</ol>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="built_in">string</span> name; </span><br><span class="line"><span class="keyword">public</span> <span class="built_in">string</span> Name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = <span class="keyword">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Get-amp-Set-存取子的簡化版本"><a href="#Get-amp-Set-存取子的簡化版本" class="headerlink" title="Get &amp; Set 存取子的簡化版本"></a>Get &amp; Set 存取子的簡化版本</h2><p>看到這裡您可能會想也太麻煩了吧!定義一個屬性除了 Public 屬性之外，還需要多定義一組對應的 Private 屬性。所以在 C# 3.0 增加了**自動實作屬性（automatically implemented properties)**，讓我們可以用更簡單的語法，就能設定出能讀能寫的 property。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 簡易寫法:</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">string</span> Name&#123;<span class="keyword">get</span>; <span class="keyword">set</span>;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 能達到如同下方屬性設定的效果</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">string</span> name; </span><br><span class="line"><span class="keyword">public</span> <span class="built_in">string</span> Name</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = <span class="keyword">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若是要設定屬性唯讀，在 set 存取子前加上 private 就可以。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">string</span> Name&#123;<span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Get-amp-Set-存取子變化範例"><a href="#Get-amp-Set-存取子變化範例" class="headerlink" title="Get &amp; Set 存取子變化範例"></a>Get &amp; Set 存取子變化範例</h2><p>若是我們要在 Car Class 中建立一個汽油存量的屬性 Gasoline，其屬性值不能低於 0。我們可以再 Gasoline 屬性的 set 存取子進行判斷，如果欲存入的 value &lt; 0，則會直接存入 0，避免油量為負數的狀況。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Car</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="built_in">int</span> gasoline;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">int</span> Gasoline</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">get</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> gasoline;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">set</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(<span class="keyword">value</span> &lt; <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				gasoline = <span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				gasoline = <span class="keyword">value</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>測試1: 當 Gasoline 存入的值為 100 時。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		</span><br><span class="line">		car.Gasoline = <span class="number">100</span>;</span><br><span class="line">		Console.WriteLine(<span class="string">&quot;When set Gasoline 100: &quot;</span> + car.Gasoline);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>When set Gasoline 100: 100</p>
+</blockquote>
+<p>測試2: 當 Gasoline 存入的值為 -42 時。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		</span><br><span class="line">		car.Gasoline = <span class="number">-42</span>;</span><br><span class="line">		Console.WriteLine(<span class="string">&quot;When set Gasoline -42: &quot;</span> + car.Gasoline);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>When set Gasoline -42: 0</p>
+</blockquote>
+<p>透過 get set 存取器，就能輕鬆在屬性端設定存取限制。防呆避免不是預期的值被存入屬性中。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/language-reference/keywords/get">MSDN get (C# 參考)</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/language-reference/keywords/set">MSDN set (C# 參考)</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/auto-implemented-properties">MSDN 自動實作的屬性 (C# 程式設計手冊)</a></li>
+<li><a target="_blank" rel="noopener" href="http://slmtsite.blogspot.com/2013/10/c-26-get-set.html">小山的 C# 教學-第26課-Get &amp; Set 存取器</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.huanlintalk.com/2018/02/c-readonly-auto-property-from-beginning.html">Huanlin 學習筆記 C# 的唯讀自動屬性是怎樣煉成的</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/02/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%85%AD)%20Get%20&%20Set%20%E5%AD%98%E5%8F%96%E5%AD%90/" data-id="cla7yx3hg000apwtt2hg16cru" data-title="物件導向(六) Get &amp; Set 存取子" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/automatically-implemented/" rel="tag">automatically implemented</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/get/" rel="tag">get</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/model/" rel="tag">model</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/properties/" rel="tag">properties</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/property/" rel="tag">property</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D/" rel="tag">封裝</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D%E6%80%A7/" rel="tag">封裝性</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%87%AA%E5%8B%95%E5%AF%A6%E4%BD%9C%E5%B1%AC%E6%80%A7/" rel="tag">自動實作屬性</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-物件導向(五) 封裝性 Public Private Protected" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/" class="article-date">
+  <time class="dt-published" datetime="2020-02-07T08:02:04.000Z" itemprop="datePublished">2020-02-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/">物件導向(五) 封裝性 Public Private Protected</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>封裝性 (Encapsulation) 是物件導向三大特性之一。若是要理解封裝性，可以想像當我們在駕駛汽車時想加速的話，我們不需要理解引擎如何運作將動力傳輸到輪胎上，只需要踩下油門踏板就好，因為加速的知識已經被<strong>封裝</strong>起來了。再舉一個例子我們想拍照的時候不需要去理解鏡頭是如何捕捉影像在儲存至手機裡，只需要按快門就好，因為按快門至儲存影像這中間的運作，也已經被<strong>封裝</strong>起來了，透過這兩個例子應該會對封裝性有初步的理解吧!</p>
+<h2 id="存取修飾詞"><a href="#存取修飾詞" class="headerlink" title="存取修飾詞"></a>存取修飾詞</h2><p>而要善用物件導向的封裝特性，我們首先需要認識一些<strong>存取修飾詞</strong>，下面將簡單介紹幾個常見的存取修飾詞。</p>
+<ul>
+<li>Public: 被設定的 class 或其成員可以被<strong>任何人</strong>所存取。</li>
+<li>Private: 被設定的 class 或成員，只能在<strong>自己的類別結構中</strong>被存取。</li>
+<li>Protected: 被設定的 class 或成員，只可由<strong>相同類別或繼承自該類別</strong>的程式碼進行存取。</li>
+</ul>
+<p>若想知道更多的存取修飾字資訊，可以參考<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers">MSDN 存取修飾詞</a> 。</p>
+<h2 id="簡介範例的-code-example"><a href="#簡介範例的-code-example" class="headerlink" title="簡介範例的 code example"></a>簡介範例的 code example</h2><p>我們試著把第一段簡介中油門踏板範例透過程式實例化出來，首先會有一個類別 Car，記錄著車輛的各種功能，其中 public 的功能是可以直接被外部所呼叫的，而 private 的功能則只能被 Car 類別內的其他功能所呼叫。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Car</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 加速()</span><br><span class="line">	&#123;</span><br><span class="line">		引擎供油();</span><br><span class="line">		引擎運轉();</span><br><span class="line">		帶動傳動();</span><br><span class="line">		帶動輪圈();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">void</span> 引擎供油()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// ...	</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">void</span> 引擎運轉()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// ...	</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">void</span> 帶動傳動()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// ...	</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">void</span> 帶動輪圈()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// ...	</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再建立一個駕駛者的類別 Driver，其中有一個方法是踩下油門，而踩下油門後會做的動作就是去呼叫 Car 類別的 public method 加速()。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Driver</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 踩下油門()</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		car.加速();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如此一來 Driver 想加速時只要踩下油門就會加速，而 Car 類別中其他 private method Driver 都不需要了解(也不能呼叫)，因為全部都被<strong>封裝</strong>在加速() method 了。</p>
+<p>若我們嘗試要直接在 Driver 類別去呼叫 Car 類別的 private 的方法，如下例:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Driver</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 踩下油門()</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		car.帶動輪圈();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>則會出現下面錯誤訊息<br> <img src="https://ggaarryy12340.github.io/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91-%E4%BA%94-%E5%B0%81%E8%A3%9D%E6%80%A7-Public-Private-Protected/%E5%B0%81%E8%A3%9D%E9%8C%AF%E8%AA%A4%E8%A8%8A%E6%81%AF.png" alt="Imgur"></p>
+<blockquote>
+<p>由於其保護層級之故，所以無法存取。</p>
+</blockquote>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers">MSDN 存取修飾詞 (C# 程式設計手冊)</a></li>
+<li><a target="_blank" rel="noopener" href="http://slmtsite.blogspot.com/2013/08/c-24-public-vs-private.html">小山的 C# 教學-第24課-封裝性 Public vs Private</a></li>
+<li><a target="_blank" rel="noopener" href="https://dotblogs.com.tw/initials/2016/06/10/171117">聊聊程式 c# 物件導向程式 - 2.封裝、繼承、多型的三大特性</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/" data-id="cla7yx3hf0007pwttfiuk4ws2" data-title="物件導向(五) 封裝性 Public Private Protected" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/private/" rel="tag">private</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/protected/" rel="tag">protected</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/public/" rel="tag">public</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BF%9D%E8%AD%B7%E5%B1%A4%E7%B4%9A/" rel="tag">保護層級</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%98%E5%8F%96%E4%BF%AE%E9%A3%BE%E8%A9%9E/" rel="tag">存取修飾詞</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D/" rel="tag">封裝</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D%E6%80%A7/" rel="tag">封裝性</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-物件導向(四) static修飾字 靜態類別和靜態類別成員" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/" class="article-date">
+  <time class="dt-published" datetime="2020-01-21T08:02:04.000Z" itemprop="datePublished">2020-01-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/">物件導向(四) static修飾字 靜態類別和靜態類別成員</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>無論是程式新手或是有一些開發經驗的工程師，一定都會在範例程式或是專案中常常看到 static 關鍵字。本篇文章將簡單介紹 static 常見的使用情境，還有在使用時需要注意的事項。</p>
+<h2 id="靜態方法"><a href="#靜態方法" class="headerlink" title="靜態方法"></a>靜態方法</h2><p>靜態方法常出現在專案中的<strong>共用方法</strong>，像是 helper class 或是 type extention，最方便的地方在於靜態方法不需要被實體化，就可以被使用。下面的範例將示範傳統非靜態類方法與靜態方法被呼叫的方式:</p>
+<p>建立一個計算類別，其中包含 Plus (靜態方法) 以及 Minus (非靜態方法)</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Calculate</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span> <span class="title">Plus</span>(<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> a + b;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Minus</span>(<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> a - b;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>呼叫傳統的非靜態方法需先將 Calculate 類別實體化成物件，再由物件呼叫方法。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">	&#123;</span><br><span class="line">		Calculate calculateObject = <span class="keyword">new</span> Calculate();</span><br><span class="line">		<span class="keyword">var</span> minusResult = calculateObject.Minus(<span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">		Console.WriteLine(minusResult);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>output: 10</p>
+</blockquote>
+<p>呼叫靜態方法，不須要將類別實體化為物件，就可以直接透過類別呼叫。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">var</span> plusResult = Calculate.Plus(<span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">		Console.WriteLine(plusResult);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>output: 30</p>
+</blockquote>
+<h2 id="靜態變數"><a href="#靜態變數" class="headerlink" title="靜態變數"></a>靜態變數</h2><p>除了方法外，變數也可以在宣告時加入 static 修飾字，一樣是不需要實體化類別就可以被使用，但要特別注意的是，<strong>所有該類別實體化的物件，都可以改變靜態變數，而且這個靜態變數將被所有物件共用</strong>，下面將示範一個靜態變數的使用情境。</p>
+<p>家同共用帳戶範例:</p>
+<p>建立一個 Family class，其中有靜態變數 accountMoney 記錄家庭帳戶的金額。還有兩個非靜態方法 saveMoney()、spendMoney() 來異動 accountMoney 的數字。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Family</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span> accountMoney;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SaveMoney</span>(<span class="params"><span class="built_in">int</span> money</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		accountMoney += money;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SpendMoney</span>(<span class="params"><span class="built_in">int</span> money</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		accountMoney -= money;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Dad 做了存錢，Mom 做了花錢的動作後，因為 accountMoney 為靜態變數，所以會被所有物件 (Dad、Mon) 共用。也因 accountMoney 為靜態變數，所以在輸出 accountMoney 時，我們要直接透過類別 (Family) 來呼叫。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">	&#123;</span><br><span class="line">		Family Dad = <span class="keyword">new</span> Family();</span><br><span class="line">		Family Mon = <span class="keyword">new</span> Family();</span><br><span class="line">		</span><br><span class="line">		Console.WriteLine(<span class="string">&quot;爸爸存了 100 元&quot;</span>);</span><br><span class="line">		Dad.SaveMoney(<span class="number">100</span>);</span><br><span class="line">		Console.WriteLine(<span class="string">&quot;現在帳戶金額是 : &quot;</span> + Family.accountMoney);</span><br><span class="line">		</span><br><span class="line">		Console.WriteLine(<span class="string">&quot;媽媽花了 50 元&quot;</span>);</span><br><span class="line">		Mon.SpendMoney(<span class="number">50</span>);</span><br><span class="line">		Console.WriteLine(<span class="string">&quot;現在帳戶金額是 : &quot;</span> + Family.accountMoney);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>輸出結果:<br>爸爸存了 100 元<br>現在帳戶金額是 : 100<br>媽媽花了 50 元<br>現在帳戶金額是 : 50</p>
+</blockquote>
+<h2 id="靜態類別"><a href="#靜態類別" class="headerlink" title="靜態類別"></a>靜態類別</h2><p>若我們可以確定該類別內的所有成員 (property、method…) 皆為靜態類型，也可以直接將 class 設計為靜態類別。好處在於可以確保類別不會被實體化，且類別內容若出現非靜態成員，編輯器也會在編譯前就先報錯提醒。要設計一個靜態類別，需要注意以下事項:</p>
+<ul>
+<li>只能包含靜態類別成員</li>
+<li>不允許被實體化為物件</li>
+<li>不能被其他類別所繼承</li>
+</ul>
+<p>而靜態類別的寫法也相當簡單，在 class 前加上 static 關鍵字即可。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Family</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span> accountMoney;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SaveMoney</span>(<span class="params"><span class="built_in">int</span> money</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		accountMoney += money;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SpendMoney</span>(<span class="params"><span class="built_in">int</span> money</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		accountMoney -= money;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/static-classes-and-static-class-members">靜態類別和靜態類別成員 (C# 程式設計手冊)</a></li>
+<li><a target="_blank" rel="noopener" href="http://slmtsite.blogspot.com/2013/07/c-19-static.html">小山的 C# 教學-第19課-static 修飾字</a></li>
+<li><a target="_blank" rel="noopener" href="http://weisnote.blogspot.com/2012/08/static.html">Mr.Wei 的程式筆記 一秒看破 static</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/" data-id="cla7yx3hh000bpwtth52j14w6" data-title="物件導向(四) static修飾字 靜態類別和靜態類別成員" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/static/" rel="tag">static</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B/" rel="tag">靜態</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95/" rel="tag">靜態方法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E8%AE%8A%E6%95%B8/" rel="tag">靜態變數</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5/" rel="tag">靜態類別</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-物件導向(三) 建構子及其多載設計" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/" class="article-date">
+  <time class="dt-published" datetime="2020-01-16T08:02:04.000Z" itemprop="datePublished">2020-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/">物件導向(二) 實質型別(value type) 與參考型別(reference type)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="何謂建構子-constructior"><a href="#何謂建構子-constructior" class="headerlink" title="何謂建構子 constructior"></a>何謂建構子 constructior</h2><p>建構子 (Constructor) 是一種名稱和 Class 名稱相同，可以輸入參數，但沒有輸出值的特殊 method，在 class 被實體化的時候會被觸發，常被用來設定物件的初始值。</p>
+<h2 id="如何建立-class-的建構子"><a href="#如何建立-class-的建構子" class="headerlink" title="如何建立 class 的建構子"></a>如何建立 class 的建構子</h2><p>要設計一個類別的建構子，需要有以下要求:</p>
+<ul>
+<li>method name 和 class name 需相同</li>
+<li>不需要設定回傳值型別</li>
+</ul>
+<p>而以下就是一個典型的建構子設計範例:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Car</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> brand;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> speed;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// method name 與 class name 相同</span></span><br><span class="line">    <span class="comment">// 沒有設定回傳值型別</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 只要 Car class 被實體化，speed 初始值為 0</span></span><br><span class="line">        speed = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">CarStatus</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> brand + <span class="string">&quot;汽車目前時速為&quot;</span> + speed + <span class="string">&quot;公里&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Car 類別中有兩個 property 及兩個 method，一個 method 為名稱和類別名稱相同的建構子，另一個 CarStatus()，則回傳汽車狀態字串。</p>
+</blockquote>
+<p>當我們實體化一個物件出來後，建構子會自動被觸發，如以下範例:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// new 一個 Car 類別的物件名為 toyota</span></span><br><span class="line">        Car toyota = <span class="keyword">new</span> Car();</span><br><span class="line">        toyota.brand = <span class="string">&quot;Toyota&quot;</span>;</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(toyota.CarStatus());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>toyota 物件被 new 出來後，雖然沒有設定其屬性 speed 的值，但因物件被建立出來後，會呼叫 class 的建構子，所以 toyota 的 speed 被初始為 0。</p>
+</blockquote>
+<blockquote>
+<p>console 輸出的結果為 : Toyota汽車目前時速為0公里</p>
+</blockquote>
+<h2 id="設計多載建構子"><a href="#設計多載建構子" class="headerlink" title="設計多載建構子"></a>設計多載建構子</h2><p>而建構子也可以設計為多載，在不同參數輸入時，執行不一樣的程式碼，如以下範例:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Car</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> brand;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> speed;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建構子1: 沒有輸入參數</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        speed = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建構子2: 可以在建立物件時，同時設定速度</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span>(<span class="params"><span class="built_in">int</span> setSpeed</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        speed = setSpeed;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">CarStatus</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> brand + <span class="string">&quot;汽車目前時速為&quot;</span> + speed + <span class="string">&quot;公里&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在新增 toyota 物件時，呼叫建構子1，新增 mazda 物件時，呼叫建構子2 :</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 呼叫建構子1</span></span><br><span class="line">        Car toyota = <span class="keyword">new</span> Car();</span><br><span class="line">        toyota.brand = <span class="string">&quot;Toyota&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 呼叫建構子2</span></span><br><span class="line">        Car mazda = <span class="keyword">new</span> Car(<span class="number">60</span>);</span><br><span class="line">        mazda.brand = <span class="string">&quot;Mazda&quot;</span>;</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(toyota.CarStatus());</span><br><span class="line">        Console.WriteLine(mazda.CarStatus());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>輸出結果為 :</p>
+<blockquote>
+<p>Toyota 汽車目前時速為0公里<br>mazda 汽車目前時速為60公里</p>
+</blockquote>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/using-constructors">MSDN 使用建構函式 (C# 程式設計手冊)</a></li>
+<li><a target="_blank" rel="noopener" href="http://slmtsite.blogspot.com/2013/04/c-17-constructor.html">小山的 C# 教學-第17課-Constructor 建構子</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/" data-id="cla7yx3he0005pwtth8wy6skf" data-title="物件導向(二) 實質型別(value type) 與參考型別(reference type)" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Constructor/" rel="tag">Constructor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/overloaded/" rel="tag">overloaded</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%9A%E8%BC%89/" rel="tag">多載</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BB%BA%E6%A7%8B%E5%AD%90/" rel="tag">建構子</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-物件導向(二) 實質型別(value type) 與參考型別(reference type)" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/" class="article-date">
+  <time class="dt-published" datetime="2020-01-12T08:02:04.000Z" itemprop="datePublished">2020-01-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/">物件導向(三) 建構子及其多載設計</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>C# 依照記憶體存取方式的不同，將型別大致分為實質型別 (value type) 與參考型別 (reference type)。也因為這兩種型別在執行存取時運作的模式不一樣，觀念不夠清晰的情況下，常會發生執行結果與預期不相符的情況。這篇文章將簡單說明 value type 與 reference type 在執行記憶體存取的運作情形。</p>
+<h2 id="記憶體位置-stack-amp-heap"><a href="#記憶體位置-stack-amp-heap" class="headerlink" title="記憶體位置 stack &amp; heap"></a>記憶體位置 stack &amp; heap</h2><p>在說明兩種型別存取過程前，需要先簡單了解記憶體有兩個重要區塊:</p>
+<ul>
+<li>stack: 用於靜態記憶體配置，必須在編譯時期為<strong>已知</strong>的資料。</li>
+<li>heap: 用於動態記憶體配置，使用這裡的記憶體主要是用在編譯時期還<strong>不知道</strong>大小或個數的資料。</li>
+</ul>
+<blockquote>
+<p>這部分非本章節重點，只要先大致知道記憶體有這兩個不同區塊即可。</p>
+</blockquote>
+<h2 id="實質型別-Value-Type"><a href="#實質型別-Value-Type" class="headerlink" title="實質型別 Value Type"></a>實質型別 Value Type</h2><p>C# 中絕大部分的型別都屬於 value type，像是 int、bool、double、decimel…，在記憶體中存取的方式比較單純，下面將用一個簡單的例子來拆解 value type 在記憶體中存取的逐步運作。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> a = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> b = a;</span><br><span class="line"></span><br><span class="line">b = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(a);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(b);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>當執行 int a &#x3D; 0 時，記憶體狀況如下:</li>
+</ol>
+<p> <img src="https://upload.cc/i1/2020/01/13/3RfyLw.png" alt="Imgur"></p>
+<blockquote>
+<p>在 stack 新增一個區塊 a，填入值為 0。</p>
+</blockquote>
+<ol start="2">
+<li>當執行 int b &#x3D; a 時，記憶體狀況如下:</li>
+</ol>
+<p> <img src="https://upload.cc/i1/2020/01/13/XOYAUu.png" alt="Imgur"></p>
+<blockquote>
+<p>在 stack 新增一個區塊 b，填入值為和 a 相同的 0。</p>
+</blockquote>
+<ol start="3">
+<li>當執行 b &#x3D; 20 時，記憶體狀況如下:</li>
+</ol>
+<p> <img src="https://upload.cc/i1/2020/01/13/jwhvdM.png" alt="Imgur"></p>
+<blockquote>
+<p>b 原始的值 0 被新賦予值 20 取代。</p>
+</blockquote>
+<ol start="4">
+<li>所以程式執行最終的輸出結果:</li>
+</ol>
+<blockquote>
+<p>a &#x3D; 0、b &#x3D; 20。</p>
+</blockquote>
+<h2 id="參考型別-Reference-Type"><a href="#參考型別-Reference-Type" class="headerlink" title="參考型別 Reference Type"></a>參考型別 Reference Type</h2><p>參考型別在 C# 中最指標性的型別就是物件 (Object)，下面也會用一個簡單的例子來拆解 reference type 在記憶體中存取的逐步運作。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Car car1 = <span class="keyword">new</span> Car();</span><br><span class="line">car1.brand = <span class="string">&quot;Toyota&quot;</span>;</span><br><span class="line">car1.speed = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">Car car2 = car1;</span><br><span class="line">car2.brand = <span class="string">&quot;Mazda&quot;</span>;</span><br><span class="line">car2.speed = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(car1.brand + <span class="string">&quot;品牌的汽車正以&quot;</span> + car1.speed + <span class="string">&quot;公里的速度奔馳&quot;</span>)</span><br><span class="line"><span class="comment">// Output: </span></span><br><span class="line"></span><br><span class="line">Console.WriteLine(car2.brand + <span class="string">&quot;品牌的汽車正以&quot;</span> + car2.speed + <span class="string">&quot;公里的速度奔馳&quot;</span>)</span><br><span class="line"><span class="comment">// Output:</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>先建立一個 Car class，有兩個屬性 brand (string) 及 speed (int)。</li>
+<li>new 一個 Car，命名為 car1，並將其屬性賦予值，此時記憶體狀態如下:</li>
+</ol>
+<p> <img src="https://upload.cc/i1/2020/01/13/2QeC7A.png" alt="Imgur"></p>
+<blockquote>
+<p>car1 在 stack 建立了一組 car1 address，指向到儲存於 heap 的物件內容。</p>
+</blockquote>
+<ol start="3">
+<li>Car car2 &#x3D; car1。 宣告一個 car2 並將 car1 的值賦予給 car2，此時記憶體狀態如下:</li>
+</ol>
+<p> <img src="https://upload.cc/i1/2020/01/13/ZagmGN.png" alt="Imgur"></p>
+<blockquote>
+<p>car2 在 stack 新增了一個區塊，並將 car1 的值 car1 address 賦予給 car2，所以此時 car1、car2 在 stack 中的儲存內容都是 car1 address，指向 heap 中同一區塊。</p>
+</blockquote>
+<ol start="4">
+<li>修改 car2 的屬性 brand、speed，此時記憶體狀況如下:</li>
+</ol>
+<p> <img src="https://upload.cc/i1/2020/01/13/vFJMQr.png" alt="Imgur"></p>
+<blockquote>
+<p>屬性變更會直接到 heap 中修改屬性值，所以 heap 區塊中的 brand 變為 Mazda，speed 變為 60。</p>
+</blockquote>
+<ol start="5">
+<li>由於 car1、car2 都指向相同的 heap 區塊，所以輸出結果皆為</li>
+</ol>
+<blockquote>
+<p>Mazda品牌的汽車正以60公里的速度奔馳</p>
+</blockquote>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/language-reference/builtin-types/built-in-types">MSDN 內建類型資料表 (C# 參考)</a></li>
+<li><a target="_blank" rel="noopener" href="http://slmtsite.blogspot.com/2013/03/c-16-value-reference-type.html">小山的 C# 教學-第16課-Value 與 Reference Type</a></li>
+<li><a target="_blank" rel="noopener" href="https://nwpie.blogspot.com/2017/05/5-stack-heap.html">NW PIE stack 與 heap 的底層概念</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/" data-id="cla7yx3hf0008pwtt3iwm6bao" data-title="物件導向(三) 建構子及其多載設計" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/" rel="tag">heap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reference/" rel="tag">reference</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/type/" rel="tag">type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/value-type/" rel="tag">value type</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5/" rel="tag">參考型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5/" rel="tag">實質型別</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-物件導向(一) 物件與類別" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/01/08/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%80)%20%E7%89%A9%E4%BB%B6%E8%88%87%E9%A1%9E%E5%88%A5/" class="article-date">
+  <time class="dt-published" datetime="2020-01-08T08:02:04.000Z" itemprop="datePublished">2020-01-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/01/08/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%80)%20%E7%89%A9%E4%BB%B6%E8%88%87%E9%A1%9E%E5%88%A5/">物件導向(一) 物件與類別</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>要學習物件導向的第一步，就是要先釐清**物件(Object)<strong>與</strong>類別(Class)**的關係。<br>以下整理了幾個網路上比喻物件類別之間關係的例子:</p>
+<ol>
+<li>類別是建築物的設計圖，而物件則是依照設計圖設計出來的建築物。</li>
+<li>類別是一本武林秘笈，而物件則是精通武林秘笈的武林高手。</li>
+<li>物件是實體化後的類別。</li>
+</ol>
+<p>而我自己的理解是類別是虛擬的，需要將類別實體化(new出來)變成物件，才能被使用，下面將使用一段簡單的程式碼來示範何謂類別，何謂物件。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Car 類別</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Car</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">string</span> brand;</span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">string</span> color;</span><br><span class="line">	<span class="keyword">public</span> <span class="built_in">int</span> speed;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">Run</span>()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">$&quot;<span class="subst">&#123;brand&#125;</span><span class="subst">&#123;color&#125;</span>色的車正以<span class="subst">&#123;speed.ToString()&#125;</span>公里的速度速度前進中&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// new 一個 Car 類別的物件名為 toyota</span></span><br><span class="line">		Car toyota = <span class="keyword">new</span> Car();</span><br><span class="line">		toyota.brand = <span class="string">&quot;Toyota&quot;</span>;</span><br><span class="line">		toyota.color = <span class="string">&quot;白&quot;</span>;</span><br><span class="line">		toyota.speed = <span class="number">60</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// output: Toyota白色的車正以60公里的速度速度前進中</span></span><br><span class="line">		Console.WriteLine(toyota.Run());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼說明"><a href="#程式碼說明" class="headerlink" title="程式碼說明:"></a>程式碼說明:</h2><ol>
+<li>首先建立一個 Car 類別。</li>
+<li>Car 類別中包含三個屬性( brand、color、speed )及一個方法( Run )。</li>
+<li>在主程式 Main 中實體化一個 Car 類別的物件名為 toyota。</li>
+<li>賦予 toyota 這個物件的屬性值。</li>
+<li>執行 Run() 方法，並將結果輸出。</li>
+</ol>
+<p>以上就是物件與類別的基本介紹，可以將重點歸納為下面幾個項目:</p>
+<ul>
+<li>物件是實體化後的類別。</li>
+<li>類別中包含屬性( property )與方法( method )。</li>
+<li>要產生物件必須要將類別 new 出來。</li>
+</ul>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://slmtsite.blogspot.com/2013/02/c-14-class.html">小山的 C# 教學-第14課-物件導向基礎 Class</a> </li>
+<li><a target="_blank" rel="noopener" href="https://blog.miniasp.com/post/2009/08/27/OOP-Basis-What-is-class-and-object">The Will Will Web 物件導向基礎：何謂類別(Class)？何謂物件(Object)？</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/01/08/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%80)%20%E7%89%A9%E4%BB%B6%E8%88%87%E9%A1%9E%E5%88%A5/" data-id="cla7yx3hd0004pwttcjax9ebi" data-title="物件導向(一) 物件與類別" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Object/" rel="tag">Object</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-C-Delegate委派的使用情境與簡介" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/08/26/C-Delegate%E5%A7%94%E6%B4%BE%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%E8%88%87%E7%B0%A1%E4%BB%8B/" class="article-date">
+  <time class="dt-published" datetime="2019-08-26T08:02:04.000Z" itemprop="datePublished">2019-08-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/08/26/C-Delegate%E5%A7%94%E6%B4%BE%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%E8%88%87%E7%B0%A1%E4%BB%8B/">C# Delegate委派的使用情境與簡介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="委派的宣告"><a href="#委派的宣告" class="headerlink" title="委派的宣告"></a>委派的宣告</h2><p>簡單來說，委派就是將方法當成參數傳進另一個方法中。上面這個說法可能過於簡短有點抽象，我們可以先來了解一下委派宣告的方式。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 烹調方式 Delegate</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> <span class="built_in">string</span> <span class="title">HowToCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="委派的規則"><a href="#委派的規則" class="headerlink" title="委派的規則"></a>委派的規則</h2><p>而上面宣告的委派可以持有一個或多個方法，但前題是持有的方法必須與委派有相同的輸入和輸出，否則將無法編譯成功。下面將提供4個方法範例，媽媽煮、爸爸煮、妹妹煮及阿嬤煮。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 媽媽煮</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">MaMaCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;先清理<span class="subst">&#123;食材&#125;</span>&quot;</span>);</span><br><span class="line">    Console.WriteLine(<span class="string">&quot;熱鍋後爆香&quot;</span>);</span><br><span class="line">    Console.WriteLine(<span class="string">&quot;快炒3分鐘&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">$&quot;一盤美味的<span class="subst">&#123;食材&#125;</span>料理&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 爸爸煮</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">PaPaCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;先清理<span class="subst">&#123;食材&#125;</span>&quot;</span>);</span><br><span class="line">    Console.WriteLine(<span class="string">&quot;發生火災&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">$&quot;一盤焦黑的<span class="subst">&#123;食材&#125;</span>料理&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 妹妹煮</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SisterCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;我不會煮<span class="subst">&#123;食材&#125;</span>&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阿嬤煮</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">GrandMaCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;阿嬤覺得不夠鹹，加一些調味料在<span class="subst">&#123;食材&#125;</span>料理上&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">$&quot;一盤重口味的<span class="subst">&#123;食材&#125;</span>料理&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="委派的規則-1"><a href="#委派的規則-1" class="headerlink" title="委派的規則"></a>委派的規則</h2><p>可以使用下面方式來將方法指派給 Delegate。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 產生委派的參考</span></span><br><span class="line">HowToCook howToCook;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將 媽媽煮 指派給 howToCook</span></span><br><span class="line">howToCook = MaMaCook;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可以將 爸爸煮 指派給 howToCook</span></span><br><span class="line">howToCook = PaPaCook;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將 妹妹煮 指派給 howToCook 時會發生錯誤</span></span><br><span class="line"><span class="comment">// 因為 妹妹煮 回傳值是 void，不符合 HowToCook 回傳值須為 string 的條件</span></span><br><span class="line">howToCook = SisterCook; <span class="comment">// 會編譯失敗</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="委派的運作原理"><a href="#委派的運作原理" class="headerlink" title="委派的運作原理"></a>委派的運作原理</h2><p>將 媽媽煮 指派給委派的參考 howToCook 之後，我們直接執行 howToCook 將會得到和執行 媽媽煮 同樣的結果，而實際上，執行委派參考 howToCook 就是去執行 媽媽煮。</p>
+<h2 id="委派的規則-2"><a href="#委派的規則-2" class="headerlink" title="委派的規則"></a>委派的規則</h2><p>可以使用下面方式來將方法指派給 Delegate。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 產生委派的參考</span></span><br><span class="line">HowToCook howToCook;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將 媽媽煮 指派給 howToCook</span></span><br><span class="line">howToCook = MaMaCook;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> MaMaCookResult = MaMaCook(<span class="string">&quot;鮮魚&quot;</span>);</span><br><span class="line"><span class="built_in">string</span> HowToCookResult = howToCook(<span class="string">&quot;鮮魚&quot;</span>);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">$&quot;MaMaCookResult : <span class="subst">&#123;MaMaCookResult&#125;</span>&quot;</span>);</span><br><span class="line"><span class="comment">// Output : MaMaCookResult : 一盤美味的鮮魚料理</span></span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">$&quot;HowToCookResult : <span class="subst">&#123;HowToCookResult&#125;</span>&quot;</span>);</span><br><span class="line"><span class="comment">// Output : HowToCookResult : 一盤美味的鮮魚料理</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="將委派當作參數傳到其他方法"><a href="#將委派當作參數傳到其他方法" class="headerlink" title="將委派當作參數傳到其他方法"></a>將委派當作參數傳到其他方法</h2><p>看到這裡您可能會想，那我就直接執行 MaMaCook() 就好啦，何須多此一舉宣告一個委派來執行。但呼應文章開頭所說的「委派就是將方法當成參數傳進另一個方法中」，在設計類別時，可能會碰到某個方法需要依照不同情境有不同的處理，但又不想把該處理用 if 或 switch 來處理，因為有可能變化很多，又或是無法預先得知處理的規則，這時我們就可以將方法指派給 howToCook，再將 howToCook 當作參數傳進其他 function。</p>
+<p>例如下方範例的 GetFood 方法，其中可能有數十種，甚至數百種的烹煮食物邏輯，我們若把所有邏輯寫在同個 function 中，這個 GetFood 方法勢必會變得又臭又長，不好維護。所以我們將烹煮食物邏輯抽出，包裝在委派 HowToCook 中，並當成參數傳進 GetFood 方法，如此一來， GetFood 方法就只要專注於自己的輸出功能上，不用去在意烹煮食物邏輯。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">GetFood</span>(<span class="params"><span class="built_in">int</span> 人數, HowToCook 烹調方式</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> food = 烹調方式(<span class="string">&quot;鮮魚&quot;</span>);</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;food&#125;</span>給<span class="subst">&#123;人數&#125;</span>個人吃&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我們只要將 媽媽煮 指派給 howToCook，並呼叫，GetFood(4, howToCook)就可以得到以下的結果。</p>
+<p><img src="https://upload.cc/i1/2019/08/25/uvAICb.png" alt="Imgur"></p>
+<h2 id="多重委派"><a href="#多重委派" class="headerlink" title="多重委派"></a>多重委派</h2><p>委派可以被指派一個或多個方法，上面的範例都是一個委派被指派一個方法，下面這個範例則是示範委派參考 howToCook 如何被指派多個方法。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 產生委派的參考</span></span><br><span class="line">    HowToCook howToCook;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 指派的一個方法 媽媽煮 </span></span><br><span class="line">    howToCook = MaMaCook;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 指派第二個方法 阿嬤煮，透過 += 運算子</span></span><br><span class="line">    howToCook += GrandMaCook;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 執行 GetFood 方法，並將委派參考 howToCook 當作參數傳入</span></span><br><span class="line">    GetFood(<span class="number">4</span>, howToCook);</span><br><span class="line">    Console.Read();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行結果如下圖:<br><img src="https://upload.cc/i1/2019/08/25/lG0S8v.png" alt="Imgur"></p>
+<p>在使用多重委派還有幾個特性需要注意:</p>
+<ul>
+<li>被指派的任何方法，一定都要符合 Delegate 宣告的 input output 規範。</li>
+<li>會依照被指派的順序依序執行。</li>
+<li>可以接受同樣的方法被重複指派。</li>
+<li>當執行委派參考時，得到的回傳值，會是最後一個被指派方法的回傳值。</li>
+</ul>
+<h2 id="完整範例程式碼"><a href="#完整範例程式碼" class="headerlink" title="完整範例程式碼"></a>完整範例程式碼</h2><p>以下是本篇文章範例的完整程式碼，也會同步發行到 <a target="_blank" rel="noopener" href="https://github.com/ggaarryy12340/DelegateDemo">GitHub</a>，有興趣的朋友可以 Clone 下來執行看看。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 烹調方式 Delegate</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> <span class="built_in">string</span> <span class="title">HowToCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 媽媽煮</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">MaMaCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;先清理<span class="subst">&#123;食材&#125;</span>&quot;</span>);</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;熱鍋後爆香&quot;</span>);</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;快炒3分鐘&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">$&quot;一盤美味的<span class="subst">&#123;食材&#125;</span>料理&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 爸爸煮</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">PaPaCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;先清理<span class="subst">&#123;食材&#125;</span>&quot;</span>);</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;發生火災&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">$&quot;一盤焦黑的<span class="subst">&#123;食材&#125;</span>料理&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 妹妹煮</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SisterCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;我不會煮<span class="subst">&#123;食材&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 阿嬤煮</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">GrandMaCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;阿嬤覺得不夠鹹，加一些調味料在<span class="subst">&#123;食材&#125;</span>料理上&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">$&quot;一盤重口味的<span class="subst">&#123;食材&#125;</span>料理&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 得到煮好的食物</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;人數&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;烹調方式&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">GetFood</span>(<span class="params"><span class="built_in">int</span> 人數, HowToCook 烹調方式</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> food = 烹調方式(<span class="string">&quot;鮮魚&quot;</span>);</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;food&#125;</span>給<span class="subst">&#123;人數&#125;</span>個人吃&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment"><span class="doctag">///</span>/ 產生委派的參考</span></span><br><span class="line">        <span class="comment">//HowToCook howToCook;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span>/ 將 媽媽煮 指派給 howToCook</span></span><br><span class="line">        <span class="comment">//howToCook = MaMaCook;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//string MaMaCookResult = MaMaCook(&quot;鮮魚&quot;);</span></span><br><span class="line">        <span class="comment">//string HowToCookResult = howToCook(&quot;鮮魚&quot;);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//Console.WriteLine($&quot;MaMaCookResult : &#123;MaMaCookResult&#125;&quot;);</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span>/ Output : MaMaCookResult : 一盤美味的鮮魚料理</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//Console.WriteLine($&quot;HowToCookResult : &#123;HowToCookResult&#125;&quot;);</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span>/ Output : HowToCookResult : 一盤美味的鮮魚料理</span></span><br><span class="line"></span><br><span class="line">        HowToCook howToCook;</span><br><span class="line">        howToCook = MaMaCook;</span><br><span class="line">        howToCook += GrandMaCook;</span><br><span class="line"></span><br><span class="line">        GetFood(<span class="number">4</span>, howToCook);</span><br><span class="line">        Console.Read();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-tw/library/ms173171.aspx">委派 (C# 程式設計手冊)</a></li>
+<li><a target="_blank" rel="noopener" href="https://eric0806.blogspot.com/2015/01/dotnet-delegate-usage.html">.Net委派(delegate)的簡易解說與用法</a></li>
+<li><a target="_blank" rel="noopener" href="http://marklin-blog.logdown.com/posts/291268-object-oriented-series-menu-11-generic-generics">物件導向系列菜單 10 -『 委派 ( Delegate ) 』</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.huanlintalk.com/2009/01/delegate-revisited-csharp-1-to-2-to-3.html">C# 筆記：重訪委派－從 C# 1.0 到 2.0 到 3.0</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2019/08/26/C-Delegate%E5%A7%94%E6%B4%BE%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%E8%88%87%E7%B0%A1%E4%BB%8B/" data-id="cla7yx3h60000pwtt46yw4d74" data-title="C# Delegate委派的使用情境與簡介" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Delegate/" rel="tag">Delegate</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A7%94%E6%B4%BE/" rel="tag">委派</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Constructor/" rel="tag">Constructor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOC/" rel="tag">DOC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOCX/" rel="tag">DOCX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Delegate/" rel="tag">Delegate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELMAH/" rel="tag">ELMAH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Error/" rel="tag">Error</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IIS/" rel="tag">IIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Log/" rel="tag">Log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/" rel="tag">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ODF/" rel="tag">ODF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ODT/" rel="tag">ODT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object/" rel="tag">Object</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Word/" rel="tag">Word</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/automatically-implemented/" rel="tag">automatically implemented</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/get/" rel="tag">get</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/model/" rel="tag">model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/overloaded/" rel="tag">overloaded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/private/" rel="tag">private</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/properties/" rel="tag">properties</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/property/" rel="tag">property</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protected/" rel="tag">protected</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/public/" rel="tag">public</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/" rel="tag">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static/" rel="tag">static</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/type/" rel="tag">type</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/value-type/" rel="tag">value type</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%9D%E8%AD%B7%E5%B1%A4%E7%B4%9A/" rel="tag">保護層級</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5/" rel="tag">參考型別</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E8%BC%89/" rel="tag">多載</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A7%94%E6%B4%BE/" rel="tag">委派</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%98%E5%8F%96%E4%BF%AE%E9%A3%BE%E8%A9%9E/" rel="tag">存取修飾詞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5/" rel="tag">實質型別</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D/" rel="tag">封裝</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D%E6%80%A7/" rel="tag">封裝性</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BB%BA%E6%A7%8B%E5%AD%90/" rel="tag">建構子</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B6%B2%E7%AB%99%E7%9B%A3%E6%8E%A7/" rel="tag">網站監控</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%87%AA%E5%8B%95%E5%AF%A6%E4%BD%9C%E5%B1%AC%E6%80%A7/" rel="tag">自動實作屬性</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%89%E6%AA%94/" rel="tag">轉檔</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B/" rel="tag">靜態</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95/" rel="tag">靜態方法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E8%AE%8A%E6%95%B8/" rel="tag">靜態變數</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5/" rel="tag">靜態類別</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/Class/" style="font-size: 10px;">Class</a> <a href="/tags/Constructor/" style="font-size: 10px;">Constructor</a> <a href="/tags/DOC/" style="font-size: 10px;">DOC</a> <a href="/tags/DOCX/" style="font-size: 10px;">DOCX</a> <a href="/tags/Delegate/" style="font-size: 10px;">Delegate</a> <a href="/tags/ELMAH/" style="font-size: 10px;">ELMAH</a> <a href="/tags/Error/" style="font-size: 10px;">Error</a> <a href="/tags/IIS/" style="font-size: 10px;">IIS</a> <a href="/tags/Log/" style="font-size: 10px;">Log</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/ODF/" style="font-size: 10px;">ODF</a> <a href="/tags/ODT/" style="font-size: 10px;">ODT</a> <a href="/tags/Object/" style="font-size: 10px;">Object</a> <a href="/tags/Word/" style="font-size: 10px;">Word</a> <a href="/tags/automatically-implemented/" style="font-size: 10px;">automatically implemented</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/overloaded/" style="font-size: 10px;">overloaded</a> <a href="/tags/private/" style="font-size: 10px;">private</a> <a href="/tags/properties/" style="font-size: 10px;">properties</a> <a href="/tags/property/" style="font-size: 10px;">property</a> <a href="/tags/protected/" style="font-size: 10px;">protected</a> <a href="/tags/public/" style="font-size: 10px;">public</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/static/" style="font-size: 10px;">static</a> <a href="/tags/type/" style="font-size: 10px;">type</a> <a href="/tags/value-type/" style="font-size: 10px;">value type</a> <a href="/tags/%E4%BF%9D%E8%AD%B7%E5%B1%A4%E7%B4%9A/" style="font-size: 10px;">保護層級</a> <a href="/tags/%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5/" style="font-size: 10px;">參考型別</a> <a href="/tags/%E5%A4%9A%E8%BC%89/" style="font-size: 10px;">多載</a> <a href="/tags/%E5%A7%94%E6%B4%BE/" style="font-size: 10px;">委派</a> <a href="/tags/%E5%AD%98%E5%8F%96%E4%BF%AE%E9%A3%BE%E8%A9%9E/" style="font-size: 10px;">存取修飾詞</a> <a href="/tags/%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5/" style="font-size: 10px;">實質型別</a> <a href="/tags/%E5%B0%81%E8%A3%9D/" style="font-size: 13.33px;">封裝</a> <a href="/tags/%E5%B0%81%E8%A3%9D%E6%80%A7/" style="font-size: 13.33px;">封裝性</a> <a href="/tags/%E5%BB%BA%E6%A7%8B%E5%AD%90/" style="font-size: 10px;">建構子</a> <a href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" style="font-size: 16.67px;">物件導向</a> <a href="/tags/%E7%B6%B2%E7%AB%99%E7%9B%A3%E6%8E%A7/" style="font-size: 10px;">網站監控</a> <a href="/tags/%E8%87%AA%E5%8B%95%E5%AF%A6%E4%BD%9C%E5%B1%AC%E6%80%A7/" style="font-size: 10px;">自動實作屬性</a> <a href="/tags/%E8%BD%89%E6%AA%94/" style="font-size: 10px;">轉檔</a> <a href="/tags/%E9%9D%9C%E6%85%8B/" style="font-size: 10px;">靜態</a> <a href="/tags/%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95/" style="font-size: 10px;">靜態方法</a> <a href="/tags/%E9%9D%9C%E6%85%8B%E8%AE%8A%E6%95%B8/" style="font-size: 10px;">靜態變數</a> <a href="/tags/%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5/" style="font-size: 10px;">靜態類別</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/09/%E5%9C%A8%20ASP.Net%20MVC%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ELMAH%20%E5%A5%97%E4%BB%B6%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99%E6%9C%AA%E9%A0%90%E6%9C%9F%E7%9A%84%E4%BE%8B%E5%A4%96/">在 ASP.Net MVC 中使用 ELMAH 套件紀錄網站未預期的例外</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/02/ASP.NET%20Core%20MVC%20%E9%80%8F%E9%81%8E%20soffice.exe%20%E5%B0%87%20Word%20doxc%20%E6%AA%94%E8%BD%89%E6%88%90%20odt/">ASP.NET Core MVC 透過 soffice.exe 將 Word doxc 檔轉成 odt</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%85%AD)%20Get%20&%20Set%20%E5%AD%98%E5%8F%96%E5%AD%90/">物件導向(六) Get &amp; Set 存取子</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/">物件導向(五) 封裝性 Public Private Protected</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/">物件導向(四) static修飾字 靜態類別和靜態類別成員</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Gary Hsu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

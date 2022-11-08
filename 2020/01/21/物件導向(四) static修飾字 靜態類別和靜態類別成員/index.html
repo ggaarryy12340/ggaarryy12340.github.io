@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>物件導向(四) static修飾字 靜態類別和靜態類別成員 | Gary Blog - 以為程式很簡單</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="無論是程式新手或是有一些開發經驗的工程師，一定都會在範例程式或是專案中常常看到 static 關鍵字。本篇文章將簡單介紹 static 常見的使用情境，還有在使用時需要注意的事項。 靜態方法靜態方法常出現在專案中的共用方法，像是 helper class 或是 type extention，最方便的地方在於靜態方法不需要被實體化，就可以被使用。下面的範例將示範傳統非靜態類方法與靜態方法被呼叫的方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="物件導向(四) static修飾字 靜態類別和靜態類別成員">
+<meta property="og:url" content="http://example.com/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/index.html">
+<meta property="og:site_name" content="Gary Blog - 以為程式很簡單">
+<meta property="og:description" content="無論是程式新手或是有一些開發經驗的工程師，一定都會在範例程式或是專案中常常看到 static 關鍵字。本篇文章將簡單介紹 static 常見的使用情境，還有在使用時需要注意的事項。 靜態方法靜態方法常出現在專案中的共用方法，像是 helper class 或是 type extention，最方便的地方在於靜態方法不需要被實體化，就可以被使用。下面的範例將示範傳統非靜態類方法與靜態方法被呼叫的方式">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-01-21T08:02:04.000Z">
+<meta property="article:modified_time" content="2022-10-11T08:14:24.260Z">
+<meta property="article:author" content="Gary Hsu">
+<meta property="article:tag" content="C#">
+<meta property="article:tag" content="物件導向">
+<meta property="article:tag" content="static">
+<meta property="article:tag" content="靜態">
+<meta property="article:tag" content="靜態方法">
+<meta property="article:tag" content="靜態變數">
+<meta property="article:tag" content="靜態類別">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Gary Blog - 以為程式很簡單" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Gary Blog - 以為程式很簡單</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-物件導向(四) static修飾字 靜態類別和靜態類別成員" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/" class="article-date">
+  <time class="dt-published" datetime="2020-01-21T08:02:04.000Z" itemprop="datePublished">2020-01-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      物件導向(四) static修飾字 靜態類別和靜態類別成員
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>無論是程式新手或是有一些開發經驗的工程師，一定都會在範例程式或是專案中常常看到 static 關鍵字。本篇文章將簡單介紹 static 常見的使用情境，還有在使用時需要注意的事項。</p>
+<h2 id="靜態方法"><a href="#靜態方法" class="headerlink" title="靜態方法"></a>靜態方法</h2><p>靜態方法常出現在專案中的<strong>共用方法</strong>，像是 helper class 或是 type extention，最方便的地方在於靜態方法不需要被實體化，就可以被使用。下面的範例將示範傳統非靜態類方法與靜態方法被呼叫的方式:</p>
+<p>建立一個計算類別，其中包含 Plus (靜態方法) 以及 Minus (非靜態方法)</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Calculate</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span> <span class="title">Plus</span>(<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> a + b;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Minus</span>(<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> a - b;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>呼叫傳統的非靜態方法需先將 Calculate 類別實體化成物件，再由物件呼叫方法。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">	&#123;</span><br><span class="line">		Calculate calculateObject = <span class="keyword">new</span> Calculate();</span><br><span class="line">		<span class="keyword">var</span> minusResult = calculateObject.Minus(<span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">		Console.WriteLine(minusResult);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>output: 10</p>
+</blockquote>
+<p>呼叫靜態方法，不須要將類別實體化為物件，就可以直接透過類別呼叫。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">var</span> plusResult = Calculate.Plus(<span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">		Console.WriteLine(plusResult);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>output: 30</p>
+</blockquote>
+<h2 id="靜態變數"><a href="#靜態變數" class="headerlink" title="靜態變數"></a>靜態變數</h2><p>除了方法外，變數也可以在宣告時加入 static 修飾字，一樣是不需要實體化類別就可以被使用，但要特別注意的是，<strong>所有該類別實體化的物件，都可以改變靜態變數，而且這個靜態變數將被所有物件共用</strong>，下面將示範一個靜態變數的使用情境。</p>
+<p>家同共用帳戶範例:</p>
+<p>建立一個 Family class，其中有靜態變數 accountMoney 記錄家庭帳戶的金額。還有兩個非靜態方法 saveMoney()、spendMoney() 來異動 accountMoney 的數字。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Family</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span> accountMoney;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SaveMoney</span>(<span class="params"><span class="built_in">int</span> money</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		accountMoney += money;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SpendMoney</span>(<span class="params"><span class="built_in">int</span> money</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		accountMoney -= money;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Dad 做了存錢，Mom 做了花錢的動作後，因為 accountMoney 為靜態變數，所以會被所有物件 (Dad、Mon) 共用。也因 accountMoney 為靜態變數，所以在輸出 accountMoney 時，我們要直接透過類別 (Family) 來呼叫。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">	&#123;</span><br><span class="line">		Family Dad = <span class="keyword">new</span> Family();</span><br><span class="line">		Family Mon = <span class="keyword">new</span> Family();</span><br><span class="line">		</span><br><span class="line">		Console.WriteLine(<span class="string">&quot;爸爸存了 100 元&quot;</span>);</span><br><span class="line">		Dad.SaveMoney(<span class="number">100</span>);</span><br><span class="line">		Console.WriteLine(<span class="string">&quot;現在帳戶金額是 : &quot;</span> + Family.accountMoney);</span><br><span class="line">		</span><br><span class="line">		Console.WriteLine(<span class="string">&quot;媽媽花了 50 元&quot;</span>);</span><br><span class="line">		Mon.SpendMoney(<span class="number">50</span>);</span><br><span class="line">		Console.WriteLine(<span class="string">&quot;現在帳戶金額是 : &quot;</span> + Family.accountMoney);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>輸出結果:<br>爸爸存了 100 元<br>現在帳戶金額是 : 100<br>媽媽花了 50 元<br>現在帳戶金額是 : 50</p>
+</blockquote>
+<h2 id="靜態類別"><a href="#靜態類別" class="headerlink" title="靜態類別"></a>靜態類別</h2><p>若我們可以確定該類別內的所有成員 (property、method…) 皆為靜態類型，也可以直接將 class 設計為靜態類別。好處在於可以確保類別不會被實體化，且類別內容若出現非靜態成員，編輯器也會在編譯前就先報錯提醒。要設計一個靜態類別，需要注意以下事項:</p>
+<ul>
+<li>只能包含靜態類別成員</li>
+<li>不允許被實體化為物件</li>
+<li>不能被其他類別所繼承</li>
+</ul>
+<p>而靜態類別的寫法也相當簡單，在 class 前加上 static 關鍵字即可。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Family</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span> accountMoney;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SaveMoney</span>(<span class="params"><span class="built_in">int</span> money</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		accountMoney += money;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SpendMoney</span>(<span class="params"><span class="built_in">int</span> money</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		accountMoney -= money;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/static-classes-and-static-class-members">靜態類別和靜態類別成員 (C# 程式設計手冊)</a></li>
+<li><a target="_blank" rel="noopener" href="http://slmtsite.blogspot.com/2013/07/c-19-static.html">小山的 C# 教學-第19課-static 修飾字</a></li>
+<li><a target="_blank" rel="noopener" href="http://weisnote.blogspot.com/2012/08/static.html">Mr.Wei 的程式筆記 一秒看破 static</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/" data-id="cla7yx3hh000bpwtth52j14w6" data-title="物件導向(四) static修飾字 靜態類別和靜態類別成員" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/static/" rel="tag">static</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B/" rel="tag">靜態</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95/" rel="tag">靜態方法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E8%AE%8A%E6%95%B8/" rel="tag">靜態變數</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5/" rel="tag">靜態類別</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          物件導向(五) 封裝性 Public Private Protected
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">物件導向(二) 實質型別(value type) 與參考型別(reference type)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Class/" rel="tag">Class</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Constructor/" rel="tag">Constructor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOC/" rel="tag">DOC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DOCX/" rel="tag">DOCX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Delegate/" rel="tag">Delegate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELMAH/" rel="tag">ELMAH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Error/" rel="tag">Error</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IIS/" rel="tag">IIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Log/" rel="tag">Log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVC/" rel="tag">MVC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ODF/" rel="tag">ODF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ODT/" rel="tag">ODT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object/" rel="tag">Object</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Word/" rel="tag">Word</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/automatically-implemented/" rel="tag">automatically implemented</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/get/" rel="tag">get</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/model/" rel="tag">model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/overloaded/" rel="tag">overloaded</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/private/" rel="tag">private</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/properties/" rel="tag">properties</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/property/" rel="tag">property</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/protected/" rel="tag">protected</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/public/" rel="tag">public</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reference/" rel="tag">reference</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static/" rel="tag">static</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/type/" rel="tag">type</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/value-type/" rel="tag">value type</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%9D%E8%AD%B7%E5%B1%A4%E7%B4%9A/" rel="tag">保護層級</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5/" rel="tag">參考型別</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E8%BC%89/" rel="tag">多載</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A7%94%E6%B4%BE/" rel="tag">委派</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%98%E5%8F%96%E4%BF%AE%E9%A3%BE%E8%A9%9E/" rel="tag">存取修飾詞</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5/" rel="tag">實質型別</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D/" rel="tag">封裝</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%81%E8%A3%9D%E6%80%A7/" rel="tag">封裝性</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BB%BA%E6%A7%8B%E5%AD%90/" rel="tag">建構子</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" rel="tag">物件導向</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B6%B2%E7%AB%99%E7%9B%A3%E6%8E%A7/" rel="tag">網站監控</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%87%AA%E5%8B%95%E5%AF%A6%E4%BD%9C%E5%B1%AC%E6%80%A7/" rel="tag">自動實作屬性</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%89%E6%AA%94/" rel="tag">轉檔</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B/" rel="tag">靜態</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95/" rel="tag">靜態方法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E8%AE%8A%E6%95%B8/" rel="tag">靜態變數</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5/" rel="tag">靜態類別</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 20px;">C#</a> <a href="/tags/Class/" style="font-size: 10px;">Class</a> <a href="/tags/Constructor/" style="font-size: 10px;">Constructor</a> <a href="/tags/DOC/" style="font-size: 10px;">DOC</a> <a href="/tags/DOCX/" style="font-size: 10px;">DOCX</a> <a href="/tags/Delegate/" style="font-size: 10px;">Delegate</a> <a href="/tags/ELMAH/" style="font-size: 10px;">ELMAH</a> <a href="/tags/Error/" style="font-size: 10px;">Error</a> <a href="/tags/IIS/" style="font-size: 10px;">IIS</a> <a href="/tags/Log/" style="font-size: 10px;">Log</a> <a href="/tags/MVC/" style="font-size: 10px;">MVC</a> <a href="/tags/ODF/" style="font-size: 10px;">ODF</a> <a href="/tags/ODT/" style="font-size: 10px;">ODT</a> <a href="/tags/Object/" style="font-size: 10px;">Object</a> <a href="/tags/Word/" style="font-size: 10px;">Word</a> <a href="/tags/automatically-implemented/" style="font-size: 10px;">automatically implemented</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/overloaded/" style="font-size: 10px;">overloaded</a> <a href="/tags/private/" style="font-size: 10px;">private</a> <a href="/tags/properties/" style="font-size: 10px;">properties</a> <a href="/tags/property/" style="font-size: 10px;">property</a> <a href="/tags/protected/" style="font-size: 10px;">protected</a> <a href="/tags/public/" style="font-size: 10px;">public</a> <a href="/tags/reference/" style="font-size: 10px;">reference</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/static/" style="font-size: 10px;">static</a> <a href="/tags/type/" style="font-size: 10px;">type</a> <a href="/tags/value-type/" style="font-size: 10px;">value type</a> <a href="/tags/%E4%BF%9D%E8%AD%B7%E5%B1%A4%E7%B4%9A/" style="font-size: 10px;">保護層級</a> <a href="/tags/%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5/" style="font-size: 10px;">參考型別</a> <a href="/tags/%E5%A4%9A%E8%BC%89/" style="font-size: 10px;">多載</a> <a href="/tags/%E5%A7%94%E6%B4%BE/" style="font-size: 10px;">委派</a> <a href="/tags/%E5%AD%98%E5%8F%96%E4%BF%AE%E9%A3%BE%E8%A9%9E/" style="font-size: 10px;">存取修飾詞</a> <a href="/tags/%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5/" style="font-size: 10px;">實質型別</a> <a href="/tags/%E5%B0%81%E8%A3%9D/" style="font-size: 13.33px;">封裝</a> <a href="/tags/%E5%B0%81%E8%A3%9D%E6%80%A7/" style="font-size: 13.33px;">封裝性</a> <a href="/tags/%E5%BB%BA%E6%A7%8B%E5%AD%90/" style="font-size: 10px;">建構子</a> <a href="/tags/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91/" style="font-size: 16.67px;">物件導向</a> <a href="/tags/%E7%B6%B2%E7%AB%99%E7%9B%A3%E6%8E%A7/" style="font-size: 10px;">網站監控</a> <a href="/tags/%E8%87%AA%E5%8B%95%E5%AF%A6%E4%BD%9C%E5%B1%AC%E6%80%A7/" style="font-size: 10px;">自動實作屬性</a> <a href="/tags/%E8%BD%89%E6%AA%94/" style="font-size: 10px;">轉檔</a> <a href="/tags/%E9%9D%9C%E6%85%8B/" style="font-size: 10px;">靜態</a> <a href="/tags/%E9%9D%9C%E6%85%8B%E6%96%B9%E6%B3%95/" style="font-size: 10px;">靜態方法</a> <a href="/tags/%E9%9D%9C%E6%85%8B%E8%AE%8A%E6%95%B8/" style="font-size: 10px;">靜態變數</a> <a href="/tags/%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5/" style="font-size: 10px;">靜態類別</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/09/%E5%9C%A8%20ASP.Net%20MVC%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ELMAH%20%E5%A5%97%E4%BB%B6%E7%B4%80%E9%8C%84%E7%B6%B2%E7%AB%99%E6%9C%AA%E9%A0%90%E6%9C%9F%E7%9A%84%E4%BE%8B%E5%A4%96/">在 ASP.Net MVC 中使用 ELMAH 套件紀錄網站未預期的例外</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/02/ASP.NET%20Core%20MVC%20%E9%80%8F%E9%81%8E%20soffice.exe%20%E5%B0%87%20Word%20doxc%20%E6%AA%94%E8%BD%89%E6%88%90%20odt/">ASP.NET Core MVC 透過 soffice.exe 將 Word doxc 檔轉成 odt</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%85%AD)%20Get%20&%20Set%20%E5%AD%98%E5%8F%96%E5%AD%90/">物件導向(六) Get &amp; Set 存取子</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/">物件導向(五) 封裝性 Public Private Protected</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/21/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E5%9B%9B)%20static%E4%BF%AE%E9%A3%BE%E5%AD%97%20%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E5%92%8C%E9%9D%9C%E6%85%8B%E9%A1%9E%E5%88%A5%E6%88%90%E5%93%A1/">物件導向(四) static修飾字 靜態類別和靜態類別成員</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Gary Hsu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
