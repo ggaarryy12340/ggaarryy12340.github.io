@@ -167,7 +167,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/27/%E9%9D%9E%E5%B0%8D%E7%A8%B1%E5%8A%A0%E5%AF%86/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/27/Net-C-%E4%BD%BF%E7%94%A8-RSA-%E9%9D%9E%E5%B0%8D%E7%A8%B1%E5%8A%A0%E5%AF%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -181,7 +181,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/27/%E9%9D%9E%E5%B0%8D%E7%A8%B1%E5%8A%A0%E5%AF%86/" class="post-title-link" itemprop="url">非對稱加密</a>
+            <a href="/2022/12/27/Net-C-%E4%BD%BF%E7%94%A8-RSA-%E9%9D%9E%E5%B0%8D%E7%A8%B1%E5%8A%A0%E5%AF%86/" class="post-title-link" itemprop="url">.Net C# 使用 RSA 非對稱加密</a>
         </h2>
 
         <div class="post-meta">
@@ -191,8 +191,15 @@
               </span>
               <span class="post-meta-item-text">發表於</span>
 
-              <time title="創建時間：2022-12-27 18:01:59" itemprop="dateCreated datePublished" datetime="2022-12-27T18:01:59+08:00">2022-12-27</time>
+              <time title="創建時間：2022-12-27 17:57:04" itemprop="dateCreated datePublished" datetime="2022-12-27T17:57:04+08:00">2022-12-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-12-28 16:14:12" itemprop="dateModified" datetime="2022-12-28T16:14:12+08:00">2022-12-28</time>
+              </span>
 
           
 
@@ -205,7 +212,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h2 id="對稱式加密及非對稱式加密"><a href="#對稱式加密及非對稱式加密" class="headerlink" title="對稱式加密及非對稱式加密"></a>對稱式加密及非對稱式加密</h2><p>加密的方法一般分成<strong>對稱式加密</strong>與<strong>非對稱式加密</strong>。對稱式加密顧名思義就是分別在<strong>提供端</strong>及<strong>接收端</strong>存放一組相同的 Key 供加解密使用。而非對稱加密則是需先在<strong>接收端</strong>產生<strong>公鑰</strong>及<strong>私鑰</strong>後，將<strong>公鑰</strong>給資料<strong>提供端</strong>進行加密，而資料<strong>接收端</strong>在收到加密的資料後再以<strong>私鑰</strong>解密。單從文字可能不太好理解，可以參考下面 RSA 的加解密流程圖。而非對稱式加密雖然安全性較高，但加解密速度較慢，對稱式加密則反之。沒有好與壞，一切都看需要使用加解密的情境。</p>
+<h2 id="RSA-非對稱加解密流程圖"><a href="#RSA-非對稱加解密流程圖" class="headerlink" title="RSA 非對稱加解密流程圖"></a>RSA 非對稱加解密流程圖</h2><p><img src="https://i.imgur.com/64GNyZC.png" alt="Imgur"></p>
+<h2 id="產生公鑰及私鑰"><a href="#產生公鑰及私鑰" class="headerlink" title="產生公鑰及私鑰"></a>產生公鑰及私鑰</h2><p>要先 using System.Security.Cryptography</p>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RSACryptoServiceProvider rsa = <span class="keyword">new</span> RSACryptoServiceProvider();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 產生公、私鑰</span></span><br><span class="line"><span class="keyword">var</span> publicKey = rsa.ToXmlString(<span class="literal">false</span>);</span><br><span class="line"><span class="keyword">var</span> privateKey = rsa.ToXmlString(<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="資料提供者透過公鑰加密"><a href="#資料提供者透過公鑰加密" class="headerlink" title="資料提供者透過公鑰加密"></a>資料提供者透過公鑰加密</h2> <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RSACryptoServiceProvider rsa = <span class="keyword">new</span> RSACryptoServiceProvider();</span><br><span class="line">rsa.FromXmlString(publicKey);</span><br><span class="line"><span class="keyword">var</span> encryptString = Convert.ToBase64String(rsa.Encrypt(Encoding.UTF8.GetBytes(content), <span class="literal">false</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="資料接收者透過私鑰解密"><a href="#資料接收者透過私鑰解密" class="headerlink" title="資料接收者透過私鑰解密"></a>資料接收者透過私鑰解密</h2> <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rsa.FromXmlString(privateKey);</span><br><span class="line"><span class="keyword">var</span> decryptString = Encoding.UTF8.GetString(rsa.Decrypt(Convert.FromBase64String(encryptString), <span class="literal">false</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="完整程式碼"><a href="#完整程式碼" class="headerlink" title="完整程式碼"></a>完整程式碼</h2> <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Security.Cryptography;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">RSAEncrypt</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            RSACryptoServiceProvider rsa = <span class="keyword">new</span> RSACryptoServiceProvider();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 產生公、私鑰</span></span><br><span class="line">            <span class="keyword">var</span> publicKey = rsa.ToXmlString(<span class="literal">false</span>);</span><br><span class="line">            <span class="keyword">var</span> privateKey = rsa.ToXmlString(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 提供公鑰給資料提供者加密</span></span><br><span class="line">            <span class="keyword">var</span> encryptString = Encrypt(publicKey, <span class="string">&quot;要被加密的字串&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 資料接收者使用私鑰解密</span></span><br><span class="line">            rsa.FromXmlString(privateKey);</span><br><span class="line">            <span class="keyword">var</span> decryptString = Encoding.UTF8.GetString(rsa.Decrypt(Convert.FromBase64String(encryptString), <span class="literal">false</span>));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">Encrypt</span>(<span class="params"><span class="built_in">string</span> publicKey, <span class="built_in">string</span> content</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            RSACryptoServiceProvider rsa = <span class="keyword">new</span> RSACryptoServiceProvider();</span><br><span class="line">            rsa.FromXmlString(publicKey);</span><br><span class="line">            <span class="keyword">var</span> encryptString = Convert.ToBase64String(rsa.Encrypt(Encoding.UTF8.GetBytes(content), <span class="literal">false</span>));</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> encryptString;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/api/system.security.cryptography.rsacryptoserviceprovider?view=net-7.0">Microsoft RSACryptoServiceProvider 類別</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.darkthread.net/blog/rsa-notes/">黑暗執行緒 RSA 非對稱金鑰加解密與數位簽章筆記</a></li>
+</ul>
+
       
     </div>
 
@@ -1219,7 +1242,7 @@
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">標籤</span>
       </div>
   </nav>
