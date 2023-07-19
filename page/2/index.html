@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content=".Net Web 網站開發筆記及技術分享">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gary Blog - 以為程式很簡單">
+<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta property="og:site_name" content="Gary Blog - 以為程式很簡單">
+<meta property="og:description" content=".Net Web 網站開發筆記及技術分享">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:author" content="Gary Hsu">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/page/2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Gary Blog - 以為程式很簡單</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Gary Blog - 以為程式很簡單</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>網站地圖</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/08/26/C-Delegate%E5%A7%94%E6%B4%BE%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%E8%88%87%E7%B0%A1%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/26/C-Delegate%E5%A7%94%E6%B4%BE%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%E8%88%87%E7%B0%A1%E4%BB%8B/" class="post-title-link" itemprop="url">C# Delegate委派的使用情境與簡介</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2019-08-26 16:02:04" itemprop="dateCreated datePublished" datetime="2019-08-26T16:02:04+08:00">2019-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-10-11 16:08:02" itemprop="dateModified" datetime="2022-10-11T16:08:02+08:00">2022-10-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="委派的宣告"><a href="#委派的宣告" class="headerlink" title="委派的宣告"></a>委派的宣告</h2><p>簡單來說，委派就是將方法當成參數傳進另一個方法中。上面這個說法可能過於簡短有點抽象，我們可以先來了解一下委派宣告的方式。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 烹調方式 Delegate</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> <span class="built_in">string</span> <span class="title">HowToCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="委派的規則"><a href="#委派的規則" class="headerlink" title="委派的規則"></a>委派的規則</h2><p>而上面宣告的委派可以持有一個或多個方法，但前題是持有的方法必須與委派有相同的輸入和輸出，否則將無法編譯成功。下面將提供4個方法範例，媽媽煮、爸爸煮、妹妹煮及阿嬤煮。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 媽媽煮</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">MaMaCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;先清理<span class="subst">&#123;食材&#125;</span>&quot;</span>);</span><br><span class="line">    Console.WriteLine(<span class="string">&quot;熱鍋後爆香&quot;</span>);</span><br><span class="line">    Console.WriteLine(<span class="string">&quot;快炒3分鐘&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">$&quot;一盤美味的<span class="subst">&#123;食材&#125;</span>料理&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 爸爸煮</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">PaPaCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;先清理<span class="subst">&#123;食材&#125;</span>&quot;</span>);</span><br><span class="line">    Console.WriteLine(<span class="string">&quot;發生火災&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">$&quot;一盤焦黑的<span class="subst">&#123;食材&#125;</span>料理&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 妹妹煮</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SisterCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;我不會煮<span class="subst">&#123;食材&#125;</span>&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阿嬤煮</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">GrandMaCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;阿嬤覺得不夠鹹，加一些調味料在<span class="subst">&#123;食材&#125;</span>料理上&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">$&quot;一盤重口味的<span class="subst">&#123;食材&#125;</span>料理&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="委派的規則-1"><a href="#委派的規則-1" class="headerlink" title="委派的規則"></a>委派的規則</h2><p>可以使用下面方式來將方法指派給 Delegate。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 產生委派的參考</span></span><br><span class="line">HowToCook howToCook;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將 媽媽煮 指派給 howToCook</span></span><br><span class="line">howToCook = MaMaCook;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可以將 爸爸煮 指派給 howToCook</span></span><br><span class="line">howToCook = PaPaCook;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將 妹妹煮 指派給 howToCook 時會發生錯誤</span></span><br><span class="line"><span class="comment">// 因為 妹妹煮 回傳值是 void，不符合 HowToCook 回傳值須為 string 的條件</span></span><br><span class="line">howToCook = SisterCook; <span class="comment">// 會編譯失敗</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="委派的運作原理"><a href="#委派的運作原理" class="headerlink" title="委派的運作原理"></a>委派的運作原理</h2><p>將 媽媽煮 指派給委派的參考 howToCook 之後，我們直接執行 howToCook 將會得到和執行 媽媽煮 同樣的結果，而實際上，執行委派參考 howToCook 就是去執行 媽媽煮。</p>
+<h2 id="委派的規則-2"><a href="#委派的規則-2" class="headerlink" title="委派的規則"></a>委派的規則</h2><p>可以使用下面方式來將方法指派給 Delegate。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 產生委派的參考</span></span><br><span class="line">HowToCook howToCook;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 將 媽媽煮 指派給 howToCook</span></span><br><span class="line">howToCook = MaMaCook;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> MaMaCookResult = MaMaCook(<span class="string">&quot;鮮魚&quot;</span>);</span><br><span class="line"><span class="built_in">string</span> HowToCookResult = howToCook(<span class="string">&quot;鮮魚&quot;</span>);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">$&quot;MaMaCookResult : <span class="subst">&#123;MaMaCookResult&#125;</span>&quot;</span>);</span><br><span class="line"><span class="comment">// Output : MaMaCookResult : 一盤美味的鮮魚料理</span></span><br><span class="line"></span><br><span class="line">Console.WriteLine(<span class="string">$&quot;HowToCookResult : <span class="subst">&#123;HowToCookResult&#125;</span>&quot;</span>);</span><br><span class="line"><span class="comment">// Output : HowToCookResult : 一盤美味的鮮魚料理</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="將委派當作參數傳到其他方法"><a href="#將委派當作參數傳到其他方法" class="headerlink" title="將委派當作參數傳到其他方法"></a>將委派當作參數傳到其他方法</h2><p>看到這裡您可能會想，那我就直接執行 MaMaCook() 就好啦，何須多此一舉宣告一個委派來執行。但呼應文章開頭所說的「委派就是將方法當成參數傳進另一個方法中」，在設計類別時，可能會碰到某個方法需要依照不同情境有不同的處理，但又不想把該處理用 if 或 switch 來處理，因為有可能變化很多，又或是無法預先得知處理的規則，這時我們就可以將方法指派給 howToCook，再將 howToCook 當作參數傳進其他 function。</p>
+<p>例如下方範例的 GetFood 方法，其中可能有數十種，甚至數百種的烹煮食物邏輯，我們若把所有邏輯寫在同個 function 中，這個 GetFood 方法勢必會變得又臭又長，不好維護。所以我們將烹煮食物邏輯抽出，包裝在委派 HowToCook 中，並當成參數傳進 GetFood 方法，如此一來， GetFood 方法就只要專注於自己的輸出功能上，不用去在意烹煮食物邏輯。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">GetFood</span>(<span class="params"><span class="built_in">int</span> 人數, HowToCook 烹調方式</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> food = 烹調方式(<span class="string">&quot;鮮魚&quot;</span>);</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;food&#125;</span>給<span class="subst">&#123;人數&#125;</span>個人吃&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我們只要將 媽媽煮 指派給 howToCook，並呼叫，GetFood(4, howToCook)就可以得到以下的結果。</p>
+<p><img src="https://upload.cc/i1/2019/08/25/uvAICb.png" alt="Imgur"></p>
+<h2 id="多重委派"><a href="#多重委派" class="headerlink" title="多重委派"></a>多重委派</h2><p>委派可以被指派一個或多個方法，上面的範例都是一個委派被指派一個方法，下面這個範例則是示範委派參考 howToCook 如何被指派多個方法。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 產生委派的參考</span></span><br><span class="line">    HowToCook howToCook;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 指派的一個方法 媽媽煮 </span></span><br><span class="line">    howToCook = MaMaCook;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 指派第二個方法 阿嬤煮，透過 += 運算子</span></span><br><span class="line">    howToCook += GrandMaCook;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 執行 GetFood 方法，並將委派參考 howToCook 當作參數傳入</span></span><br><span class="line">    GetFood(<span class="number">4</span>, howToCook);</span><br><span class="line">    Console.Read();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行結果如下圖:<br><img src="https://upload.cc/i1/2019/08/25/lG0S8v.png" alt="Imgur"></p>
+<p>在使用多重委派還有幾個特性需要注意:</p>
+<ul>
+<li>被指派的任何方法，一定都要符合 Delegate 宣告的 input output 規範。</li>
+<li>會依照被指派的順序依序執行。</li>
+<li>可以接受同樣的方法被重複指派。</li>
+<li>當執行委派參考時，得到的回傳值，會是最後一個被指派方法的回傳值。</li>
+</ul>
+<h2 id="完整範例程式碼"><a href="#完整範例程式碼" class="headerlink" title="完整範例程式碼"></a>完整範例程式碼</h2><p>以下是本篇文章範例的完整程式碼，也會同步發行到 <a target="_blank" rel="noopener" href="https://github.com/ggaarryy12340/DelegateDemo">GitHub</a>，有興趣的朋友可以 Clone 下來執行看看。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 烹調方式 Delegate</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> <span class="built_in">string</span> <span class="title">HowToCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 媽媽煮</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">MaMaCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;先清理<span class="subst">&#123;食材&#125;</span>&quot;</span>);</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;熱鍋後爆香&quot;</span>);</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;快炒3分鐘&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">$&quot;一盤美味的<span class="subst">&#123;食材&#125;</span>料理&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 爸爸煮</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">PaPaCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;先清理<span class="subst">&#123;食材&#125;</span>&quot;</span>);</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;發生火災&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">$&quot;一盤焦黑的<span class="subst">&#123;食材&#125;</span>料理&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 妹妹煮</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">SisterCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;我不會煮<span class="subst">&#123;食材&#125;</span>&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 阿嬤煮</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;食材&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;returns&gt;</span>煮好的佳餚<span class="doctag">&lt;/returns&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">GrandMaCook</span>(<span class="params"><span class="built_in">string</span> 食材</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;阿嬤覺得不夠鹹，加一些調味料在<span class="subst">&#123;食材&#125;</span>料理上&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">$&quot;一盤重口味的<span class="subst">&#123;食材&#125;</span>料理&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 得到煮好的食物</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;人數&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;烹調方式&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">GetFood</span>(<span class="params"><span class="built_in">int</span> 人數, HowToCook 烹調方式</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> food = 烹調方式(<span class="string">&quot;鮮魚&quot;</span>);</span><br><span class="line">        Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;food&#125;</span>給<span class="subst">&#123;人數&#125;</span>個人吃&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment"><span class="doctag">///</span>/ 產生委派的參考</span></span><br><span class="line">        <span class="comment">//HowToCook howToCook;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span>/ 將 媽媽煮 指派給 howToCook</span></span><br><span class="line">        <span class="comment">//howToCook = MaMaCook;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//string MaMaCookResult = MaMaCook(&quot;鮮魚&quot;);</span></span><br><span class="line">        <span class="comment">//string HowToCookResult = howToCook(&quot;鮮魚&quot;);</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//Console.WriteLine($&quot;MaMaCookResult : &#123;MaMaCookResult&#125;&quot;);</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span>/ Output : MaMaCookResult : 一盤美味的鮮魚料理</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//Console.WriteLine($&quot;HowToCookResult : &#123;HowToCookResult&#125;&quot;);</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span>/ Output : HowToCookResult : 一盤美味的鮮魚料理</span></span><br><span class="line"></span><br><span class="line">        HowToCook howToCook;</span><br><span class="line">        howToCook = MaMaCook;</span><br><span class="line">        howToCook += GrandMaCook;</span><br><span class="line"></span><br><span class="line">        GetFood(<span class="number">4</span>, howToCook);</span><br><span class="line">        Console.Read();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-tw/library/ms173171.aspx">委派 (C# 程式設計手冊)</a></li>
+<li><a target="_blank" rel="noopener" href="https://eric0806.blogspot.com/2015/01/dotnet-delegate-usage.html">.Net委派(delegate)的簡易解說與用法</a></li>
+<li><a target="_blank" rel="noopener" href="http://marklin-blog.logdown.com/posts/291268-object-oriented-series-menu-11-generic-generics">物件導向系列菜單 10 -『 委派 ( Delegate ) 』</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.huanlintalk.com/2009/01/delegate-revisited-csharp-1-to-2-to-3.html">C# 筆記：重訪委派－從 C# 1.0 到 2.0 到 3.0</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一頁"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Gary Hsu</p>
+  <div class="site-description" itemprop="description">.Net Web 網站開發筆記及技術分享</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary Hsu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
