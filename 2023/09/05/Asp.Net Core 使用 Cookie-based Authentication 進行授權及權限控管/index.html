@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在 .Net Core 的時代，主流的授權驗證方式有以下三種。  Cookie-based Authentication JWT (JSON Web Token) ASP.NET Core Identity  其中實作最簡便的我認為是 Cookie-based Authentication，這種機制類似於以前 .Net Framework 時代的「表單驗證」(Forms Authenticatio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Asp.Net Core 使用 Cookie-based Authentication 進行授權及權限控管">
+<meta property="og:url" content="http://example.com/2023/09/05/Asp.Net%20Core%20%E4%BD%BF%E7%94%A8%20Cookie-based%20Authentication%20%E9%80%B2%E8%A1%8C%E6%8E%88%E6%AC%8A%E5%8F%8A%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1/index.html">
+<meta property="og:site_name" content="Gary Blog - 以為程式很簡單">
+<meta property="og:description" content="在 .Net Core 的時代，主流的授權驗證方式有以下三種。  Cookie-based Authentication JWT (JSON Web Token) ASP.NET Core Identity  其中實作最簡便的我認為是 Cookie-based Authentication，這種機制類似於以前 .Net Framework 時代的「表單驗證」(Forms Authenticatio">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/a11IZDj.png">
+<meta property="og:image" content="https://i.imgur.com/iiryCvz.png">
+<meta property="og:image" content="https://i.imgur.com/d6JDfnu.png">
+<meta property="og:image" content="https://i.imgur.com/F2fbnOw.png">
+<meta property="og:image" content="https://i.imgur.com/a11IZDj.png">
+<meta property="article:published_time" content="2023-09-05T15:55:04.000Z">
+<meta property="article:modified_time" content="2023-09-05T15:28:22.905Z">
+<meta property="article:author" content="Gary Hsu">
+<meta property="article:tag" content="C#">
+<meta property="article:tag" content=".Net">
+<meta property="article:tag" content="Core">
+<meta property="article:tag" content="Cookie">
+<meta property="article:tag" content="Authentication">
+<meta property="article:tag" content="Authorize">
+<meta property="article:tag" content="授權">
+<meta property="article:tag" content="驗證">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/a11IZDj.png">
+
+<link rel="canonical" href="http://example.com/2023/09/05/Asp.Net%20Core%20%E4%BD%BF%E7%94%A8%20Cookie-based%20Authentication%20%E9%80%B2%E8%A1%8C%E6%8E%88%E6%AC%8A%E5%8F%8A%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Asp.Net Core 使用 Cookie-based Authentication 進行授權及權限控管 | Gary Blog - 以為程式很簡單</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Gary Blog - 以為程式很簡單</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>網站地圖</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/05/Asp.Net%20Core%20%E4%BD%BF%E7%94%A8%20Cookie-based%20Authentication%20%E9%80%B2%E8%A1%8C%E6%8E%88%E6%AC%8A%E5%8F%8A%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Asp.Net Core 使用 Cookie-based Authentication 進行授權及權限控管
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2023-09-05 23:55:04 / 修改時間：23:28:22" itemprop="dateCreated datePublished" datetime="2023-09-05T23:55:04+08:00">2023-09-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在 .Net Core 的時代，主流的授權驗證方式有以下三種。</p>
+<ul>
+<li>Cookie-based Authentication</li>
+<li>JWT (JSON Web Token)</li>
+<li>ASP.NET Core Identity</li>
+</ul>
+<p>其中實作最簡便的我認為是 Cookie-based Authentication，這種機制類似於以前 .Net Framework 時代的「表單驗證」(Forms Authentication)。僅需加入一些內建的語法，即可完成授權及權限控管的基本功能。而 Cookie-based Authentication 也足以應付中小型網站大部分的需求，安全性也是沒問題的。本篇將記錄下 Cookie-based Authentication 的實作流程。</p>
+<h2 id="Startup-cs-設定"><a href="#Startup-cs-設定" class="headerlink" title="Startup.cs 設定"></a>Startup.cs 設定</h2><p>先至 Startup.cs 的 ConfigureServices() 加入以下設定:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ConfigureServices</span><span class="params">(IServiceCollection services)</span></span><br><span class="line">&#123;</span><br><span class="line">    #region For Cookies Auth</span><br><span class="line"></span><br><span class="line">    services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 如未登入，導至 NotLogin API</span></span><br><span class="line">        option.LoginPath = <span class="keyword">new</span> <span class="title class_">PathString</span>(<span class="string">&quot;/api/Login/NotLogin&quot;</span>);</span><br><span class="line">        <span class="comment">// 如權限不足，導至 AccessDenied API</span></span><br><span class="line">        option.AccessDeniedPath = <span class="keyword">new</span> <span class="title class_">PathString</span>(<span class="string">&quot;/api/Login/AccessDenied&quot;</span>);</span><br><span class="line">        <span class="comment">// TimeOut 設定</span></span><br><span class="line">        option.ExpireTimeSpan = TimeSpan.FromHours(<span class="number">2</span>);</span><br><span class="line">        <span class="comment">// 呼叫後過期時間更新</span></span><br><span class="line">        option.SlidingExpiration = <span class="literal">true</span>;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    #endregion</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再至 Startup.cs 的 Configure() 加入以下設定(要注意順序)</p>
+<ul>
+<li><code>app.UseCookiePolicy();</code></li>
+<li><code>app.UseAuthentication();</code></li>
+<li><code>app.UseAuthorization();</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">Configure</span><span class="params">(IApplicationBuilder app, IWebHostEnvironment env)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (env.IsDevelopment())</span><br><span class="line">    &#123;</span><br><span class="line">        app.UseDeveloperExceptionPage();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    app.UseHttpsRedirection();</span><br><span class="line"></span><br><span class="line">    app.UseRouting();</span><br><span class="line"></span><br><span class="line">    app.UseCookiePolicy();</span><br><span class="line">    app.UseAuthentication();</span><br><span class="line">    app.UseAuthorization();</span><br><span class="line"></span><br><span class="line">    app.UseEndpoints(endpoints =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        endpoints.MapControllers();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="登入-API"><a href="#登入-API" class="headerlink" title="登入 API"></a>登入 API</h2><p>接著到負責處理權限驗證的 Controller 新增 Login API。要做的動作如下:</p>
+<ol>
+<li>到資料庫驗證輸入的資訊是否有吻合的對象</li>
+<li>若有則新增 Claim List 將登入資訊放入</li>
+<li>到權限資料庫領取該使用者的權限並加入 Claim List</li>
+<li>呼叫 Cookie-Based Authentication 登入方法 HttpContext.SignInAsync()</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[HttpPost]</span><br><span class="line"><span class="keyword">public</span> string <span class="title function_">Login</span><span class="params">(LoginPostDto model)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">var</span> <span class="variable">user</span> <span class="operator">=</span> _todoContext.Employees.SingleOrDefault(x =&gt; x.Account == model.Account &amp;&amp; x.Password == model.Password);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (user == <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;帳號密碼錯誤&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">var</span> <span class="variable">claims</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">List</span>&lt;Claim&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">Claim</span>(ClaimTypes.Name, user.Account),</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">Claim</span>(<span class="string">&quot;FullName&quot;</span>, user.Name),</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">Claim</span>(<span class="string">&quot;EmployeeId&quot;</span>, user.EmployeeId.ToString())</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 設定權限</span></span><br><span class="line">        <span class="type">var</span> <span class="variable">roleList</span> <span class="operator">=</span> GetRoleList(user.EmployeeId);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (roleList != <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            foreach (<span class="keyword">var</span> role in roleList)</span><br><span class="line">            &#123;</span><br><span class="line">                claims.Add(<span class="keyword">new</span> <span class="title class_">Claim</span>(ClaimTypes.Role, role));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">var</span> <span class="variable">claimsIdentity</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClaimsIdentity</span>(claims, CookieAuthenticationDefaults.AuthenticationScheme);</span><br><span class="line">        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, <span class="keyword">new</span> <span class="title class_">ClaimsPrincipal</span>(claimsIdentity));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;登入成功&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="登出設定"><a href="#登出設定" class="headerlink" title="登出設定"></a>登出設定</h2><p>登出也很簡單，只要呼叫 HttpContext.SignOutAsync() 即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[HttpDelete]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">Logout</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="身分驗證"><a href="#身分驗證" class="headerlink" title="身分驗證"></a>身分驗證</h2><p>登入登出 API 完成了，接下來就是設定那些功能必須要登入才能讀取，需套用 Authorize 屬性，有以下幾種套用方式</p>
+<ul>
+<li>套用在 Class 層級(所有 Class 的服務都要登入才可使用)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Route(<span class="string">&quot;api/[controller]&quot;</span>)]</span><br><span class="line">[ApiController]</span><br><span class="line">[Authorize]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TodoController</span> : ControllerBase</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>套用在 Action 層級(這個 Action 必須登入才可以使用)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[HttpGet]</span><br><span class="line">[Authorize]</span><br><span class="line"><span class="keyword">public</span> IActionResult <span class="title function_">Get</span><span class="params">([FromQuery] TodoGetParameters todoGetParameters)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>套用 Authorize 屬性外還加上 Roles(除了登入還需要有設定的權限才可使用)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[HttpGet]</span><br><span class="line">[Authorize(Roles = <span class="string">&quot;Todo&quot;</span>)]</span><br><span class="line"><span class="keyword">public</span> IActionResult <span class="title function_">Get</span><span class="params">([FromQuery] TodoGetParameters todoGetParameters)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>匿名驗證: 可以直接套用整個 Class 再針對一些無需登入就可使用的功能(如登入頁面、最新消息) 加上 [AllowAnonymous]</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Route(<span class="string">&quot;api/[controller]&quot;</span>)]</span><br><span class="line">[ApiController]</span><br><span class="line">[Authorize]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TodoController</span> : ControllerBase</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// GET: api/&lt;TodoController&gt;</span></span><br><span class="line">	[HttpGet]</span><br><span class="line">	[AllowAnonymous]</span><br><span class="line">	<span class="keyword">public</span> IActionResult <span class="title function_">Get</span><span class="params">([FromQuery] TodoGetParameters todoGetParameters)</span></span><br><span class="line">	&#123;</span><br><span class="line">		...</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="功能實測"><a href="#功能實測" class="headerlink" title="功能實測"></a>功能實測</h2><p>在登入前呼叫任一套用 <code>[Authorize]</code> 的 API 會被導到 Startup.cs 設定的 <code>NotLogin</code> API。</p>
+<p><img src="https://i.imgur.com/a11IZDj.png" alt="imgur"></p>
+<p>呼叫 Login API 候登入成功後，可以看到 Response 多了一組加密的 AspNetCore 的 Cookie。</p>
+<p><img src="https://i.imgur.com/iiryCvz.png" alt="imgur"></p>
+<p>登入成功後再次呼叫有套用 <code>[Authorize]</code> 的 API，可以成功取得資料了。</p>
+<p><img src="https://i.imgur.com/d6JDfnu.png" alt="imgur"></p>
+<p>呼叫登出 API 後，可以發現 AspNetCore 的 Cookie 消失了。</p>
+<p><img src="https://i.imgur.com/F2fbnOw.png" alt="imgur"></p>
+<p>重新呼叫套用 <code>[Authorize]</code> 的 API 又被導到 NotLogin 了。</p>
+<p><img src="https://i.imgur.com/a11IZDj.png" alt="imgur"></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>授權驗證幾乎是每個系統必定會應用到的功能，.Net 有內建替我們省下了大量的開發時間，讓我們可以更專注在業務邏輯的開發。試想若是自己造輪子除了會花費大把的時間外，還要擔心在安全性的部分設想的周不周全。今天完成了 Cookie-based Authentication 的實作，預計下一篇會寫開頭提到的 JWT 驗證，也是很主流的驗證方式，不能不知道。</p>
+<h2 id="參考資訊"><a href="#參考資訊" class="headerlink" title="參考資訊"></a>參考資訊</h2><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/aspnet/core/security/authentication/cookie?view=aspnetcore-7.0">在沒有 ASP.NET Core的情況下使用 cookie 驗證 Identity</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.talllkai.com/ASPNETCore/2021/08/22/CookieAuthentication">ASP.NET Core Web API 入門教學 - 使用 cookie 驗證但不使用 ASP.NET Core Identity</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C#</a>
+              <a href="/tags/Net/" rel="tag"># .Net</a>
+              <a href="/tags/Core/" rel="tag"># Core</a>
+              <a href="/tags/Cookie/" rel="tag"># Cookie</a>
+              <a href="/tags/Authentication/" rel="tag"># Authentication</a>
+              <a href="/tags/Authorize/" rel="tag"># Authorize</a>
+              <a href="/tags/%E6%8E%88%E6%AC%8A/" rel="tag"># 授權</a>
+              <a href="/tags/%E9%A9%97%E8%AD%89/" rel="tag"># 驗證</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/01/ASP.NET%20Core%20%E4%BE%9D%E8%B3%B4%E6%B3%A8%E5%85%A5%20Dependency%20Injection(DI)%20%E6%B3%A8%E5%85%A5%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F/" rel="prev" title="ASP.NET Core 依賴注入 Dependency Injection(DI) 注入生命週期">
+      <i class="fa fa-chevron-left"></i> ASP.NET Core 依賴注入 Dependency Injection(DI) 注入生命週期
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Startup-cs-%E8%A8%AD%E5%AE%9A"><span class="nav-number">1.</span> <span class="nav-text">Startup.cs 設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%85%A5-API"><span class="nav-number">2.</span> <span class="nav-text">登入 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%87%BA%E8%A8%AD%E5%AE%9A"><span class="nav-number">3.</span> <span class="nav-text">登出設定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BA%AB%E5%88%86%E9%A9%97%E8%AD%89"><span class="nav-number">4.</span> <span class="nav-text">身分驗證</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E5%AF%A6%E6%B8%AC"><span class="nav-number">5.</span> <span class="nav-text">功能實測</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E8%AA%9E"><span class="nav-number">6.</span> <span class="nav-text">結語</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E8%A8%8A"><span class="nav-number">7.</span> <span class="nav-text">參考資訊</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Gary Hsu</p>
+  <div class="site-description" itemprop="description">.Net Web 網站開發筆記及技術分享</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary Hsu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

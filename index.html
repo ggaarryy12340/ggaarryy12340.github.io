@@ -167,6 +167,128 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/05/Asp.Net%20Core%20%E4%BD%BF%E7%94%A8%20Cookie-based%20Authentication%20%E9%80%B2%E8%A1%8C%E6%8E%88%E6%AC%8A%E5%8F%8A%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/05/Asp.Net%20Core%20%E4%BD%BF%E7%94%A8%20Cookie-based%20Authentication%20%E9%80%B2%E8%A1%8C%E6%8E%88%E6%AC%8A%E5%8F%8A%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1/" class="post-title-link" itemprop="url">Asp.Net Core 使用 Cookie-based Authentication 進行授權及權限控管</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2023-09-05 23:55:04 / 修改時間：23:28:22" itemprop="dateCreated datePublished" datetime="2023-09-05T23:55:04+08:00">2023-09-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在 .Net Core 的時代，主流的授權驗證方式有以下三種。</p>
+<ul>
+<li>Cookie-based Authentication</li>
+<li>JWT (JSON Web Token)</li>
+<li>ASP.NET Core Identity</li>
+</ul>
+<p>其中實作最簡便的我認為是 Cookie-based Authentication，這種機制類似於以前 .Net Framework 時代的「表單驗證」(Forms Authentication)。僅需加入一些內建的語法，即可完成授權及權限控管的基本功能。而 Cookie-based Authentication 也足以應付中小型網站大部分的需求，安全性也是沒問題的。本篇將記錄下 Cookie-based Authentication 的實作流程。</p>
+<h2 id="Startup-cs-設定"><a href="#Startup-cs-設定" class="headerlink" title="Startup.cs 設定"></a>Startup.cs 設定</h2><p>先至 Startup.cs 的 ConfigureServices() 加入以下設定:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ConfigureServices</span><span class="params">(IServiceCollection services)</span></span><br><span class="line">&#123;</span><br><span class="line">    #region For Cookies Auth</span><br><span class="line"></span><br><span class="line">    services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 如未登入，導至 NotLogin API</span></span><br><span class="line">        option.LoginPath = <span class="keyword">new</span> <span class="title class_">PathString</span>(<span class="string">&quot;/api/Login/NotLogin&quot;</span>);</span><br><span class="line">        <span class="comment">// 如權限不足，導至 AccessDenied API</span></span><br><span class="line">        option.AccessDeniedPath = <span class="keyword">new</span> <span class="title class_">PathString</span>(<span class="string">&quot;/api/Login/AccessDenied&quot;</span>);</span><br><span class="line">        <span class="comment">// TimeOut 設定</span></span><br><span class="line">        option.ExpireTimeSpan = TimeSpan.FromHours(<span class="number">2</span>);</span><br><span class="line">        <span class="comment">// 呼叫後過期時間更新</span></span><br><span class="line">        option.SlidingExpiration = <span class="literal">true</span>;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    #endregion</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再至 Startup.cs 的 Configure() 加入以下設定(要注意順序)</p>
+<ul>
+<li><code>app.UseCookiePolicy();</code></li>
+<li><code>app.UseAuthentication();</code></li>
+<li><code>app.UseAuthorization();</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">Configure</span><span class="params">(IApplicationBuilder app, IWebHostEnvironment env)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (env.IsDevelopment())</span><br><span class="line">    &#123;</span><br><span class="line">        app.UseDeveloperExceptionPage();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    app.UseHttpsRedirection();</span><br><span class="line"></span><br><span class="line">    app.UseRouting();</span><br><span class="line"></span><br><span class="line">    app.UseCookiePolicy();</span><br><span class="line">    app.UseAuthentication();</span><br><span class="line">    app.UseAuthorization();</span><br><span class="line"></span><br><span class="line">    app.UseEndpoints(endpoints =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        endpoints.MapControllers();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="登入-API"><a href="#登入-API" class="headerlink" title="登入 API"></a>登入 API</h2><p>接著到負責處理權限驗證的 Controller 新增 Login API。要做的動作如下:</p>
+<ol>
+<li>到資料庫驗證輸入的資訊是否有吻合的對象</li>
+<li>若有則新增 Claim List 將登入資訊放入</li>
+<li>到權限資料庫領取該使用者的權限並加入 Claim List</li>
+<li>呼叫 Cookie-Based Authentication 登入方法 HttpContext.SignInAsync()</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">[HttpPost]</span><br><span class="line"><span class="keyword">public</span> string <span class="title function_">Login</span><span class="params">(LoginPostDto model)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">var</span> <span class="variable">user</span> <span class="operator">=</span> _todoContext.Employees.SingleOrDefault(x =&gt; x.Account == model.Account &amp;&amp; x.Password == model.Password);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (user == <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;帳號密碼錯誤&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">var</span> <span class="variable">claims</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">List</span>&lt;Claim&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">Claim</span>(ClaimTypes.Name, user.Account),</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">Claim</span>(<span class="string">&quot;FullName&quot;</span>, user.Name),</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">Claim</span>(<span class="string">&quot;EmployeeId&quot;</span>, user.EmployeeId.ToString())</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 設定權限</span></span><br><span class="line">        <span class="type">var</span> <span class="variable">roleList</span> <span class="operator">=</span> GetRoleList(user.EmployeeId);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (roleList != <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            foreach (<span class="keyword">var</span> role in roleList)</span><br><span class="line">            &#123;</span><br><span class="line">                claims.Add(<span class="keyword">new</span> <span class="title class_">Claim</span>(ClaimTypes.Role, role));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">var</span> <span class="variable">claimsIdentity</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClaimsIdentity</span>(claims, CookieAuthenticationDefaults.AuthenticationScheme);</span><br><span class="line">        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, <span class="keyword">new</span> <span class="title class_">ClaimsPrincipal</span>(claimsIdentity));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;登入成功&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="登出設定"><a href="#登出設定" class="headerlink" title="登出設定"></a>登出設定</h2><p>登出也很簡單，只要呼叫 HttpContext.SignOutAsync() 即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[HttpDelete]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">Logout</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="身分驗證"><a href="#身分驗證" class="headerlink" title="身分驗證"></a>身分驗證</h2><p>登入登出 API 完成了，接下來就是設定那些功能必須要登入才能讀取，需套用 Authorize 屬性，有以下幾種套用方式</p>
+<ul>
+<li>套用在 Class 層級(所有 Class 的服務都要登入才可使用)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Route(<span class="string">&quot;api/[controller]&quot;</span>)]</span><br><span class="line">[ApiController]</span><br><span class="line">[Authorize]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TodoController</span> : ControllerBase</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>套用在 Action 層級(這個 Action 必須登入才可以使用)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[HttpGet]</span><br><span class="line">[Authorize]</span><br><span class="line"><span class="keyword">public</span> IActionResult <span class="title function_">Get</span><span class="params">([FromQuery] TodoGetParameters todoGetParameters)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>套用 Authorize 屬性外還加上 Roles(除了登入還需要有設定的權限才可使用)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[HttpGet]</span><br><span class="line">[Authorize(Roles = <span class="string">&quot;Todo&quot;</span>)]</span><br><span class="line"><span class="keyword">public</span> IActionResult <span class="title function_">Get</span><span class="params">([FromQuery] TodoGetParameters todoGetParameters)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>匿名驗證: 可以直接套用整個 Class 再針對一些無需登入就可使用的功能(如登入頁面、最新消息) 加上 [AllowAnonymous]</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Route(<span class="string">&quot;api/[controller]&quot;</span>)]</span><br><span class="line">[ApiController]</span><br><span class="line">[Authorize]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TodoController</span> : ControllerBase</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// GET: api/&lt;TodoController&gt;</span></span><br><span class="line">	[HttpGet]</span><br><span class="line">	[AllowAnonymous]</span><br><span class="line">	<span class="keyword">public</span> IActionResult <span class="title function_">Get</span><span class="params">([FromQuery] TodoGetParameters todoGetParameters)</span></span><br><span class="line">	&#123;</span><br><span class="line">		...</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="功能實測"><a href="#功能實測" class="headerlink" title="功能實測"></a>功能實測</h2><p>在登入前呼叫任一套用 <code>[Authorize]</code> 的 API 會被導到 Startup.cs 設定的 <code>NotLogin</code> API。</p>
+<p><img src="https://i.imgur.com/a11IZDj.png" alt="imgur"></p>
+<p>呼叫 Login API 候登入成功後，可以看到 Response 多了一組加密的 AspNetCore 的 Cookie。</p>
+<p><img src="https://i.imgur.com/iiryCvz.png" alt="imgur"></p>
+<p>登入成功後再次呼叫有套用 <code>[Authorize]</code> 的 API，可以成功取得資料了。</p>
+<p><img src="https://i.imgur.com/d6JDfnu.png" alt="imgur"></p>
+<p>呼叫登出 API 後，可以發現 AspNetCore 的 Cookie 消失了。</p>
+<p><img src="https://i.imgur.com/F2fbnOw.png" alt="imgur"></p>
+<p>重新呼叫套用 <code>[Authorize]</code> 的 API 又被導到 NotLogin 了。</p>
+<p><img src="https://i.imgur.com/a11IZDj.png" alt="imgur"></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>授權驗證幾乎是每個系統必定會應用到的功能，.Net 有內建替我們省下了大量的開發時間，讓我們可以更專注在業務邏輯的開發。試想若是自己造輪子除了會花費大把的時間外，還要擔心在安全性的部分設想的周不周全。今天完成了 Cookie-based Authentication 的實作，預計下一篇會寫開頭提到的 JWT 驗證，也是很主流的驗證方式，不能不知道。</p>
+<h2 id="參考資訊"><a href="#參考資訊" class="headerlink" title="參考資訊"></a>參考資訊</h2><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/aspnet/core/security/authentication/cookie?view=aspnetcore-7.0">在沒有 ASP.NET Core的情況下使用 cookie 驗證 Identity</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.talllkai.com/ASPNETCore/2021/08/22/CookieAuthentication">ASP.NET Core Web API 入門教學 - 使用 cookie 驗證但不使用 ASP.NET Core Identity</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/01/ASP.NET%20Core%20%E4%BE%9D%E8%B3%B4%E6%B3%A8%E5%85%A5%20Dependency%20Injection(DI)%20%E6%B3%A8%E5%85%A5%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -957,7 +1079,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/" class="post-title-link" itemprop="url">物件導向(二) 實質型別(value type) 與參考型別(reference type)</a>
+            <a href="/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/" class="post-title-link" itemprop="url">物件導向(三) 建構子及其多載設計</a>
         </h2>
 
         <div class="post-meta">
@@ -974,7 +1096,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-10-11 16:13:01" itemprop="dateModified" datetime="2022-10-11T16:13:01+08:00">2022-10-11</time>
+                <time title="修改時間：2023-09-05 23:39:37" itemprop="dateModified" datetime="2023-09-05T23:39:37+08:00">2023-09-05</time>
               </span>
 
           
@@ -1022,145 +1144,6 @@
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/using-constructors">MSDN 使用建構函式 (C# 程式設計手冊)</a></li>
 <li><a target="_blank" rel="noopener" href="http://slmtsite.blogspot.com/2013/04/c-17-constructor.html">小山的 C# 教學-第17課-Constructor 建構子</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Gary Hsu">
-      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/" class="post-title-link" itemprop="url">物件導向(三) 建構子及其多載設計</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-01-12 16:02:04" itemprop="dateCreated datePublished" datetime="2020-01-12T16:02:04+08:00">2020-01-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-10-11 16:12:41" itemprop="dateModified" datetime="2022-10-11T16:12:41+08:00">2022-10-11</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>C# 依照記憶體存取方式的不同，將型別大致分為實質型別 (value type) 與參考型別 (reference type)。也因為這兩種型別在執行存取時運作的模式不一樣，觀念不夠清晰的情況下，常會發生執行結果與預期不相符的情況。這篇文章將簡單說明 value type 與 reference type 在執行記憶體存取的運作情形。</p>
-<h2 id="記憶體位置-stack-amp-heap"><a href="#記憶體位置-stack-amp-heap" class="headerlink" title="記憶體位置 stack &amp; heap"></a>記憶體位置 stack &amp; heap</h2><p>在說明兩種型別存取過程前，需要先簡單了解記憶體有兩個重要區塊:</p>
-<ul>
-<li>stack: 用於靜態記憶體配置，必須在編譯時期為<strong>已知</strong>的資料。</li>
-<li>heap: 用於動態記憶體配置，使用這裡的記憶體主要是用在編譯時期還<strong>不知道</strong>大小或個數的資料。</li>
-</ul>
-<blockquote>
-<p>這部分非本章節重點，只要先大致知道記憶體有這兩個不同區塊即可。</p>
-</blockquote>
-<h2 id="實質型別-Value-Type"><a href="#實質型別-Value-Type" class="headerlink" title="實質型別 Value Type"></a>實質型別 Value Type</h2><p>C# 中絕大部分的型別都屬於 value type，像是 int、bool、double、decimel…，在記憶體中存取的方式比較單純，下面將用一個簡單的例子來拆解 value type 在記憶體中存取的逐步運作。</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> a = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> b = a;</span><br><span class="line"></span><br><span class="line">b = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(a);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(b);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>當執行 int a &#x3D; 0 時，記憶體狀況如下:</li>
-</ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/3RfyLw.png" alt="Imgur"></p>
-<blockquote>
-<p>在 stack 新增一個區塊 a，填入值為 0。</p>
-</blockquote>
-<ol start="2">
-<li>當執行 int b &#x3D; a 時，記憶體狀況如下:</li>
-</ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/XOYAUu.png" alt="Imgur"></p>
-<blockquote>
-<p>在 stack 新增一個區塊 b，填入值為和 a 相同的 0。</p>
-</blockquote>
-<ol start="3">
-<li>當執行 b &#x3D; 20 時，記憶體狀況如下:</li>
-</ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/jwhvdM.png" alt="Imgur"></p>
-<blockquote>
-<p>b 原始的值 0 被新賦予值 20 取代。</p>
-</blockquote>
-<ol start="4">
-<li>所以程式執行最終的輸出結果:</li>
-</ol>
-<blockquote>
-<p>a &#x3D; 0、b &#x3D; 20。</p>
-</blockquote>
-<h2 id="參考型別-Reference-Type"><a href="#參考型別-Reference-Type" class="headerlink" title="參考型別 Reference Type"></a>參考型別 Reference Type</h2><p>參考型別在 C# 中最指標性的型別就是物件 (Object)，下面也會用一個簡單的例子來拆解 reference type 在記憶體中存取的逐步運作。</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Car car1 = <span class="keyword">new</span> Car();</span><br><span class="line">car1.brand = <span class="string">&quot;Toyota&quot;</span>;</span><br><span class="line">car1.speed = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">Car car2 = car1;</span><br><span class="line">car2.brand = <span class="string">&quot;Mazda&quot;</span>;</span><br><span class="line">car2.speed = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(car1.brand + <span class="string">&quot;品牌的汽車正以&quot;</span> + car1.speed + <span class="string">&quot;公里的速度奔馳&quot;</span>)</span><br><span class="line"><span class="comment">// Output: </span></span><br><span class="line"></span><br><span class="line">Console.WriteLine(car2.brand + <span class="string">&quot;品牌的汽車正以&quot;</span> + car2.speed + <span class="string">&quot;公里的速度奔馳&quot;</span>)</span><br><span class="line"><span class="comment">// Output:</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>先建立一個 Car class，有兩個屬性 brand (string) 及 speed (int)。</li>
-<li>new 一個 Car，命名為 car1，並將其屬性賦予值，此時記憶體狀態如下:</li>
-</ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/2QeC7A.png" alt="Imgur"></p>
-<blockquote>
-<p>car1 在 stack 建立了一組 car1 address，指向到儲存於 heap 的物件內容。</p>
-</blockquote>
-<ol start="3">
-<li>Car car2 &#x3D; car1。 宣告一個 car2 並將 car1 的值賦予給 car2，此時記憶體狀態如下:</li>
-</ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/ZagmGN.png" alt="Imgur"></p>
-<blockquote>
-<p>car2 在 stack 新增了一個區塊，並將 car1 的值 car1 address 賦予給 car2，所以此時 car1、car2 在 stack 中的儲存內容都是 car1 address，指向 heap 中同一區塊。</p>
-</blockquote>
-<ol start="4">
-<li>修改 car2 的屬性 brand、speed，此時記憶體狀況如下:</li>
-</ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/vFJMQr.png" alt="Imgur"></p>
-<blockquote>
-<p>屬性變更會直接到 heap 中修改屬性值，所以 heap 區塊中的 brand 變為 Mazda，speed 變為 60。</p>
-</blockquote>
-<ol start="5">
-<li>由於 car1、car2 都指向相同的 heap 區塊，所以輸出結果皆為</li>
-</ol>
-<blockquote>
-<p>Mazda品牌的汽車正以60公里的速度奔馳</p>
-</blockquote>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/language-reference/builtin-types/built-in-types">MSDN 內建類型資料表 (C# 參考)</a></li>
-<li><a target="_blank" rel="noopener" href="http://slmtsite.blogspot.com/2013/03/c-16-value-reference-type.html">小山的 C# 教學-第16課-Value 與 Reference Type</a></li>
-<li><a target="_blank" rel="noopener" href="https://nwpie.blogspot.com/2017/05/5-stack-heap.html">NW PIE stack 與 heap 的底層概念</a></li>
 </ul>
 
       
@@ -1246,12 +1229,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">標籤</span>
       </div>
   </nav>

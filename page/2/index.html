@@ -167,6 +167,145 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/" class="post-title-link" itemprop="url">物件導向(二) 實質型別(value type) 與參考型別(reference type)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-01-12 16:02:04" itemprop="dateCreated datePublished" datetime="2020-01-12T16:02:04+08:00">2020-01-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2023-09-05 23:39:36" itemprop="dateModified" datetime="2023-09-05T23:39:36+08:00">2023-09-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>C# 依照記憶體存取方式的不同，將型別大致分為實質型別 (value type) 與參考型別 (reference type)。也因為這兩種型別在執行存取時運作的模式不一樣，觀念不夠清晰的情況下，常會發生執行結果與預期不相符的情況。這篇文章將簡單說明 value type 與 reference type 在執行記憶體存取的運作情形。</p>
+<h2 id="記憶體位置-stack-amp-heap"><a href="#記憶體位置-stack-amp-heap" class="headerlink" title="記憶體位置 stack &amp; heap"></a>記憶體位置 stack &amp; heap</h2><p>在說明兩種型別存取過程前，需要先簡單了解記憶體有兩個重要區塊:</p>
+<ul>
+<li>stack: 用於靜態記憶體配置，必須在編譯時期為<strong>已知</strong>的資料。</li>
+<li>heap: 用於動態記憶體配置，使用這裡的記憶體主要是用在編譯時期還<strong>不知道</strong>大小或個數的資料。</li>
+</ul>
+<blockquote>
+<p>這部分非本章節重點，只要先大致知道記憶體有這兩個不同區塊即可。</p>
+</blockquote>
+<h2 id="實質型別-Value-Type"><a href="#實質型別-Value-Type" class="headerlink" title="實質型別 Value Type"></a>實質型別 Value Type</h2><p>C# 中絕大部分的型別都屬於 value type，像是 int、bool、double、decimel…，在記憶體中存取的方式比較單純，下面將用一個簡單的例子來拆解 value type 在記憶體中存取的逐步運作。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> a = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> b = a;</span><br><span class="line"></span><br><span class="line">b = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(a);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(b);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>當執行 int a &#x3D; 0 時，記憶體狀況如下:</li>
+</ol>
+<p> <img src="https://upload.cc/i1/2020/01/13/3RfyLw.png" alt="Imgur"></p>
+<blockquote>
+<p>在 stack 新增一個區塊 a，填入值為 0。</p>
+</blockquote>
+<ol start="2">
+<li>當執行 int b &#x3D; a 時，記憶體狀況如下:</li>
+</ol>
+<p> <img src="https://upload.cc/i1/2020/01/13/XOYAUu.png" alt="Imgur"></p>
+<blockquote>
+<p>在 stack 新增一個區塊 b，填入值為和 a 相同的 0。</p>
+</blockquote>
+<ol start="3">
+<li>當執行 b &#x3D; 20 時，記憶體狀況如下:</li>
+</ol>
+<p> <img src="https://upload.cc/i1/2020/01/13/jwhvdM.png" alt="Imgur"></p>
+<blockquote>
+<p>b 原始的值 0 被新賦予值 20 取代。</p>
+</blockquote>
+<ol start="4">
+<li>所以程式執行最終的輸出結果:</li>
+</ol>
+<blockquote>
+<p>a &#x3D; 0、b &#x3D; 20。</p>
+</blockquote>
+<h2 id="參考型別-Reference-Type"><a href="#參考型別-Reference-Type" class="headerlink" title="參考型別 Reference Type"></a>參考型別 Reference Type</h2><p>參考型別在 C# 中最指標性的型別就是物件 (Object)，下面也會用一個簡單的例子來拆解 reference type 在記憶體中存取的逐步運作。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Car car1 = <span class="keyword">new</span> Car();</span><br><span class="line">car1.brand = <span class="string">&quot;Toyota&quot;</span>;</span><br><span class="line">car1.speed = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">Car car2 = car1;</span><br><span class="line">car2.brand = <span class="string">&quot;Mazda&quot;</span>;</span><br><span class="line">car2.speed = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">Console.WriteLine(car1.brand + <span class="string">&quot;品牌的汽車正以&quot;</span> + car1.speed + <span class="string">&quot;公里的速度奔馳&quot;</span>)</span><br><span class="line"><span class="comment">// Output: </span></span><br><span class="line"></span><br><span class="line">Console.WriteLine(car2.brand + <span class="string">&quot;品牌的汽車正以&quot;</span> + car2.speed + <span class="string">&quot;公里的速度奔馳&quot;</span>)</span><br><span class="line"><span class="comment">// Output:</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>先建立一個 Car class，有兩個屬性 brand (string) 及 speed (int)。</li>
+<li>new 一個 Car，命名為 car1，並將其屬性賦予值，此時記憶體狀態如下:</li>
+</ol>
+<p> <img src="https://upload.cc/i1/2020/01/13/2QeC7A.png" alt="Imgur"></p>
+<blockquote>
+<p>car1 在 stack 建立了一組 car1 address，指向到儲存於 heap 的物件內容。</p>
+</blockquote>
+<ol start="3">
+<li>Car car2 &#x3D; car1。 宣告一個 car2 並將 car1 的值賦予給 car2，此時記憶體狀態如下:</li>
+</ol>
+<p> <img src="https://upload.cc/i1/2020/01/13/ZagmGN.png" alt="Imgur"></p>
+<blockquote>
+<p>car2 在 stack 新增了一個區塊，並將 car1 的值 car1 address 賦予給 car2，所以此時 car1、car2 在 stack 中的儲存內容都是 car1 address，指向 heap 中同一區塊。</p>
+</blockquote>
+<ol start="4">
+<li>修改 car2 的屬性 brand、speed，此時記憶體狀況如下:</li>
+</ol>
+<p> <img src="https://upload.cc/i1/2020/01/13/vFJMQr.png" alt="Imgur"></p>
+<blockquote>
+<p>屬性變更會直接到 heap 中修改屬性值，所以 heap 區塊中的 brand 變為 Mazda，speed 變為 60。</p>
+</blockquote>
+<ol start="5">
+<li>由於 car1、car2 都指向相同的 heap 區塊，所以輸出結果皆為</li>
+</ol>
+<blockquote>
+<p>Mazda品牌的汽車正以60公里的速度奔馳</p>
+</blockquote>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/language-reference/builtin-types/built-in-types">MSDN 內建類型資料表 (C# 參考)</a></li>
+<li><a target="_blank" rel="noopener" href="http://slmtsite.blogspot.com/2013/03/c-16-value-reference-type.html">小山的 C# 教學-第16課-Value 與 Reference Type</a></li>
+<li><a target="_blank" rel="noopener" href="https://nwpie.blogspot.com/2017/05/5-stack-heap.html">NW PIE stack 與 heap 的底層概念</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/08/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%80)%20%E7%89%A9%E4%BB%B6%E8%88%87%E9%A1%9E%E5%88%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -423,12 +562,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">標籤</span>
       </div>
   </nav>
