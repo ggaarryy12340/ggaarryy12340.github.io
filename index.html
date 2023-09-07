@@ -190,10 +190,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
-              
 
-              <time title="創建時間：2023-09-05 23:55:04 / 修改時間：23:28:22" itemprop="dateCreated datePublished" datetime="2023-09-05T23:55:04+08:00">2023-09-05</time>
+              <time title="創建時間：2023-09-05 23:55:04" itemprop="dateCreated datePublished" datetime="2023-09-05T23:55:04+08:00">2023-09-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2023-09-07 15:42:08" itemprop="dateModified" datetime="2023-09-07T15:42:08+08:00">2023-09-07</time>
+              </span>
 
           
 
@@ -212,7 +218,7 @@
 <li>JWT (JSON Web Token)</li>
 <li>ASP.NET Core Identity</li>
 </ul>
-<p>其中實作最簡便的我認為是 Cookie-based Authentication，這種機制類似於以前 .Net Framework 時代的「表單驗證」(Forms Authentication)。僅需加入一些內建的語法，即可完成授權及權限控管的基本功能。而 Cookie-based Authentication 也足以應付中小型網站大部分的需求，安全性也是沒問題的。本篇將記錄下 Cookie-based Authentication 的實作流程。</p>
+<p>其中實作最簡便的我認為是 Cookie-based Authentication，這種機制類似於以前 .Net Framework 時代的「表單驗證」(Forms Authentication)。僅需加入一些內建的語法，即可完成授權及權限控管的基本功能。而 Cookie-based Authentication 也足以應付中小型網站大部分的需求，只要做好 Cookie 屬性設定後安全性也無須擔心。本篇將記錄下 Cookie-based Authentication 的實作流程。</p>
 <h2 id="Startup-cs-設定"><a href="#Startup-cs-設定" class="headerlink" title="Startup.cs 設定"></a>Startup.cs 設定</h2><p>先至 Startup.cs 的 ConfigureServices() 加入以下設定:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ConfigureServices</span><span class="params">(IServiceCollection services)</span></span><br><span class="line">&#123;</span><br><span class="line">    #region For Cookies Auth</span><br><span class="line"></span><br><span class="line">    services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 如未登入，導至 NotLogin API</span></span><br><span class="line">        option.LoginPath = <span class="keyword">new</span> <span class="title class_">PathString</span>(<span class="string">&quot;/api/Login/NotLogin&quot;</span>);</span><br><span class="line">        <span class="comment">// 如權限不足，導至 AccessDenied API</span></span><br><span class="line">        option.AccessDeniedPath = <span class="keyword">new</span> <span class="title class_">PathString</span>(<span class="string">&quot;/api/Login/AccessDenied&quot;</span>);</span><br><span class="line">        <span class="comment">// TimeOut 設定</span></span><br><span class="line">        option.ExpireTimeSpan = TimeSpan.FromHours(<span class="number">2</span>);</span><br><span class="line">        <span class="comment">// 呼叫後過期時間更新</span></span><br><span class="line">        option.SlidingExpiration = <span class="literal">true</span>;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    #endregion</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -267,6 +273,12 @@
 <p><img src="https://i.imgur.com/F2fbnOw.png" alt="imgur"></p>
 <p>重新呼叫套用 <code>[Authorize]</code> 的 API 又被導到 NotLogin 了。</p>
 <p><img src="https://i.imgur.com/a11IZDj.png" alt="imgur"></p>
+<h2 id="其他安全性設定"><a href="#其他安全性設定" class="headerlink" title="其他安全性設定"></a>其他安全性設定</h2><p>雖然 Cookie-based Authentication 很方便，但 Cookie 畢竟也會存放在 Client 端，若被有心人士竊取後，將 Cookie 加進自己的 Request 就可以進入我們的網站並取得權限，這聽起來也有點可怕。所以還是建議要在 Cookie 套用 Secure、HttpOnly、SameSite 等屬性，讓這套授權驗證機制能夠更安全。</p>
+<ul>
+<li>Secure: 限使用 Https</li>
+<li>HttpOnly: 無法被 JavaScript 調用</li>
+<li>SameSite: 同網域才能使用</li>
+</ul>
 <h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>授權驗證幾乎是每個系統必定會應用到的功能，.Net 有內建替我們省下了大量的開發時間，讓我們可以更專注在業務邏輯的開發。試想若是自己造輪子除了會花費大把的時間外，還要擔心在安全性的部分設想的周不周全。今天完成了 Cookie-based Authentication 的實作，預計下一篇會寫開頭提到的 JWT 驗證，也是很主流的驗證方式，不能不知道。</p>
 <h2 id="參考資訊"><a href="#參考資訊" class="headerlink" title="參考資訊"></a>參考資訊</h2><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/aspnet/core/security/authentication/cookie?view=aspnetcore-7.0">在沒有 ASP.NET Core的情況下使用 cookie 驗證 Identity</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.talllkai.com/ASPNETCore/2021/08/22/CookieAuthentication">ASP.NET Core Web API 入門教學 - 使用 cookie 驗證但不使用 ASP.NET Core Identity</a></p>
