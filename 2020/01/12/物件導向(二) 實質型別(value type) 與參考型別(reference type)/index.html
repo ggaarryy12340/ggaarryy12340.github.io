@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="Gary Blog - 以為程式很簡單">
 <meta property="og:description" content="C# 依照記憶體存取方式的不同，將型別大致分為實質型別 (value type) 與參考型別 (reference type)。也因為這兩種型別在執行存取時運作的模式不一樣，觀念不夠清晰的情況下，常會發生執行結果與預期不相符的情況。這篇文章將簡單說明 value type 與 reference type 在執行記憶體存取的運作情形。 記憶體位置 stack &amp; heap在說明兩種型別存取">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://upload.cc/i1/2020/01/13/3RfyLw.png">
-<meta property="og:image" content="https://upload.cc/i1/2020/01/13/XOYAUu.png">
-<meta property="og:image" content="https://upload.cc/i1/2020/01/13/jwhvdM.png">
-<meta property="og:image" content="https://upload.cc/i1/2020/01/13/2QeC7A.png">
-<meta property="og:image" content="https://upload.cc/i1/2020/01/13/ZagmGN.png">
-<meta property="og:image" content="https://upload.cc/i1/2020/01/13/vFJMQr.png">
+<meta property="og:image" content="https://i.imgur.com/CuZW1RM.png">
+<meta property="og:image" content="https://i.imgur.com/1UljbkH.png">
+<meta property="og:image" content="https://i.imgur.com/6Ul9vwU.png">
+<meta property="og:image" content="https://i.imgur.com/VhSlcDc.png">
+<meta property="og:image" content="https://i.imgur.com/WJI8tfO.png">
+<meta property="og:image" content="https://i.imgur.com/us852ck.png">
 <meta property="article:published_time" content="2020-01-12T08:02:04.000Z">
-<meta property="article:modified_time" content="2023-09-05T15:39:36.014Z">
+<meta property="article:modified_time" content="2023-09-07T08:37:19.068Z">
 <meta property="article:author" content="Gary Hsu">
 <meta property="article:tag" content="C#">
 <meta property="article:tag" content="物件導向">
@@ -43,7 +43,7 @@
 <meta property="article:tag" content="多載">
 <meta property="article:tag" content="建構子">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://upload.cc/i1/2020/01/13/3RfyLw.png">
+<meta name="twitter:image" content="https://i.imgur.com/CuZW1RM.png">
 
 <link rel="canonical" href="http://example.com/2020/01/12/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%8C)%20%E5%AF%A6%E8%B3%AA%E5%9E%8B%E5%88%A5(value%20type)%20%E8%88%87%E5%8F%83%E8%80%83%E5%9E%8B%E5%88%A5(reference%20type)/">
 
@@ -213,7 +213,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2023-09-05 23:39:36" itemprop="dateModified" datetime="2023-09-05T23:39:36+08:00">2023-09-05</time>
+                <time title="修改時間：2023-09-07 16:37:19" itemprop="dateModified" datetime="2023-09-07T16:37:19+08:00">2023-09-07</time>
               </span>
 
           
@@ -242,21 +242,21 @@
 <ol>
 <li>當執行 int a &#x3D; 0 時，記憶體狀況如下:</li>
 </ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/3RfyLw.png" alt="Imgur"></p>
+<p> <img src="https://i.imgur.com/CuZW1RM.png" alt="Imgur"></p>
 <blockquote>
 <p>在 stack 新增一個區塊 a，填入值為 0。</p>
 </blockquote>
 <ol start="2">
 <li>當執行 int b &#x3D; a 時，記憶體狀況如下:</li>
 </ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/XOYAUu.png" alt="Imgur"></p>
+<p> <img src="https://i.imgur.com/1UljbkH.png" alt="Imgur"></p>
 <blockquote>
 <p>在 stack 新增一個區塊 b，填入值為和 a 相同的 0。</p>
 </blockquote>
 <ol start="3">
 <li>當執行 b &#x3D; 20 時，記憶體狀況如下:</li>
 </ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/jwhvdM.png" alt="Imgur"></p>
+<p> <img src="https://i.imgur.com/6Ul9vwU.png" alt="Imgur"></p>
 <blockquote>
 <p>b 原始的值 0 被新賦予值 20 取代。</p>
 </blockquote>
@@ -273,21 +273,21 @@
 <li>先建立一個 Car class，有兩個屬性 brand (string) 及 speed (int)。</li>
 <li>new 一個 Car，命名為 car1，並將其屬性賦予值，此時記憶體狀態如下:</li>
 </ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/2QeC7A.png" alt="Imgur"></p>
+<p> <img src="https://i.imgur.com/VhSlcDc.png" alt="Imgur"></p>
 <blockquote>
 <p>car1 在 stack 建立了一組 car1 address，指向到儲存於 heap 的物件內容。</p>
 </blockquote>
 <ol start="3">
 <li>Car car2 &#x3D; car1。 宣告一個 car2 並將 car1 的值賦予給 car2，此時記憶體狀態如下:</li>
 </ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/ZagmGN.png" alt="Imgur"></p>
+<p> <img src="https://i.imgur.com/WJI8tfO.png" alt="Imgur"></p>
 <blockquote>
 <p>car2 在 stack 新增了一個區塊，並將 car1 的值 car1 address 賦予給 car2，所以此時 car1、car2 在 stack 中的儲存內容都是 car1 address，指向 heap 中同一區塊。</p>
 </blockquote>
 <ol start="4">
 <li>修改 car2 的屬性 brand、speed，此時記憶體狀況如下:</li>
 </ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/vFJMQr.png" alt="Imgur"></p>
+<p> <img src="https://i.imgur.com/us852ck.png" alt="Imgur"></p>
 <blockquote>
 <p>屬性變更會直接到 heap 中修改屬性值，所以 heap 區塊中的 brand 變為 Mazda，speed 變為 60。</p>
 </blockquote>

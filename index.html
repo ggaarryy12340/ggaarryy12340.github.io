@@ -911,7 +911,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-10-11 16:15:44" itemprop="dateModified" datetime="2022-10-11T16:15:44+08:00">2022-10-11</time>
+                <time title="修改時間：2023-09-07 16:40:36" itemprop="dateModified" datetime="2023-09-07T16:40:36+08:00">2023-09-07</time>
               </span>
 
           
@@ -940,10 +940,9 @@
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Driver</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 踩下油門()</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		car.加速();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>如此一來 Driver 想加速時只要踩下油門就會加速，而 Car 類別中其他 private method Driver 都不需要了解(也不能呼叫)，因為全部都被<strong>封裝</strong>在加速() method 了。</p>
-<p>若我們嘗試要直接在 Driver 類別去呼叫 Car 類別的 private 的方法，如下例:</p>
+<p>若我們嘗試要直接在 Driver 類別去呼叫 Car 類別的 private 的方法，則會出現錯誤訊息，如下例:</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Driver</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 踩下油門()</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		car.帶動輪圈();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>則會出現下面錯誤訊息<br> <img src="https://ggaarryy12340.github.io/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91-%E4%BA%94-%E5%B0%81%E8%A3%9D%E6%80%A7-Public-Private-Protected/%E5%B0%81%E8%A3%9D%E9%8C%AF%E8%AA%A4%E8%A8%8A%E6%81%AF.png" alt="Imgur"></p>
 <blockquote>
 <p>由於其保護層級之故，所以無法存取。</p>
 </blockquote>

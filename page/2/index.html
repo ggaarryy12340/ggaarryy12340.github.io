@@ -198,7 +198,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2023-09-05 23:39:36" itemprop="dateModified" datetime="2023-09-05T23:39:36+08:00">2023-09-05</time>
+                <time title="修改時間：2023-09-07 16:37:19" itemprop="dateModified" datetime="2023-09-07T16:37:19+08:00">2023-09-07</time>
               </span>
 
           
@@ -227,21 +227,21 @@
 <ol>
 <li>當執行 int a &#x3D; 0 時，記憶體狀況如下:</li>
 </ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/3RfyLw.png" alt="Imgur"></p>
+<p> <img src="https://i.imgur.com/CuZW1RM.png" alt="Imgur"></p>
 <blockquote>
 <p>在 stack 新增一個區塊 a，填入值為 0。</p>
 </blockquote>
 <ol start="2">
 <li>當執行 int b &#x3D; a 時，記憶體狀況如下:</li>
 </ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/XOYAUu.png" alt="Imgur"></p>
+<p> <img src="https://i.imgur.com/1UljbkH.png" alt="Imgur"></p>
 <blockquote>
 <p>在 stack 新增一個區塊 b，填入值為和 a 相同的 0。</p>
 </blockquote>
 <ol start="3">
 <li>當執行 b &#x3D; 20 時，記憶體狀況如下:</li>
 </ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/jwhvdM.png" alt="Imgur"></p>
+<p> <img src="https://i.imgur.com/6Ul9vwU.png" alt="Imgur"></p>
 <blockquote>
 <p>b 原始的值 0 被新賦予值 20 取代。</p>
 </blockquote>
@@ -258,21 +258,21 @@
 <li>先建立一個 Car class，有兩個屬性 brand (string) 及 speed (int)。</li>
 <li>new 一個 Car，命名為 car1，並將其屬性賦予值，此時記憶體狀態如下:</li>
 </ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/2QeC7A.png" alt="Imgur"></p>
+<p> <img src="https://i.imgur.com/VhSlcDc.png" alt="Imgur"></p>
 <blockquote>
 <p>car1 在 stack 建立了一組 car1 address，指向到儲存於 heap 的物件內容。</p>
 </blockquote>
 <ol start="3">
 <li>Car car2 &#x3D; car1。 宣告一個 car2 並將 car1 的值賦予給 car2，此時記憶體狀態如下:</li>
 </ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/ZagmGN.png" alt="Imgur"></p>
+<p> <img src="https://i.imgur.com/WJI8tfO.png" alt="Imgur"></p>
 <blockquote>
 <p>car2 在 stack 新增了一個區塊，並將 car1 的值 car1 address 賦予給 car2，所以此時 car1、car2 在 stack 中的儲存內容都是 car1 address，指向 heap 中同一區塊。</p>
 </blockquote>
 <ol start="4">
 <li>修改 car2 的屬性 brand、speed，此時記憶體狀況如下:</li>
 </ol>
-<p> <img src="https://upload.cc/i1/2020/01/13/vFJMQr.png" alt="Imgur"></p>
+<p> <img src="https://i.imgur.com/us852ck.png" alt="Imgur"></p>
 <blockquote>
 <p>屬性變更會直接到 heap 中修改屬性值，所以 heap 區塊中的 brand 變為 Mazda，speed 變為 60。</p>
 </blockquote>
@@ -427,7 +427,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-10-11 16:08:02" itemprop="dateModified" datetime="2022-10-11T16:08:02+08:00">2022-10-11</time>
+                <time title="修改時間：2023-09-07 16:30:28" itemprop="dateModified" datetime="2023-09-07T16:30:28+08:00">2023-09-07</time>
               </span>
 
           
@@ -458,11 +458,11 @@
 <p>例如下方範例的 GetFood 方法，其中可能有數十種，甚至數百種的烹煮食物邏輯，我們若把所有邏輯寫在同個 function 中，這個 GetFood 方法勢必會變得又臭又長，不好維護。所以我們將烹煮食物邏輯抽出，包裝在委派 HowToCook 中，並當成參數傳進 GetFood 方法，如此一來， GetFood 方法就只要專注於自己的輸出功能上，不用去在意烹煮食物邏輯。</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">GetFood</span>(<span class="params"><span class="built_in">int</span> 人數, HowToCook 烹調方式</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> food = 烹調方式(<span class="string">&quot;鮮魚&quot;</span>);</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;food&#125;</span>給<span class="subst">&#123;人數&#125;</span>個人吃&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我們只要將 媽媽煮 指派給 howToCook，並呼叫，GetFood(4, howToCook)就可以得到以下的結果。</p>
-<p><img src="https://upload.cc/i1/2019/08/25/uvAICb.png" alt="Imgur"></p>
+<p><img src="https://i.imgur.com/umGYUVE.png" alt="Imgur"></p>
 <h2 id="多重委派"><a href="#多重委派" class="headerlink" title="多重委派"></a>多重委派</h2><p>委派可以被指派一個或多個方法，上面的範例都是一個委派被指派一個方法，下面這個範例則是示範委派參考 howToCook 如何被指派多個方法。</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 產生委派的參考</span></span><br><span class="line">    HowToCook howToCook;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 指派的一個方法 媽媽煮 </span></span><br><span class="line">    howToCook = MaMaCook;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 指派第二個方法 阿嬤煮，透過 += 運算子</span></span><br><span class="line">    howToCook += GrandMaCook;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 執行 GetFood 方法，並將委派參考 howToCook 當作參數傳入</span></span><br><span class="line">    GetFood(<span class="number">4</span>, howToCook);</span><br><span class="line">    Console.Read();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>執行結果如下圖:<br><img src="https://upload.cc/i1/2019/08/25/lG0S8v.png" alt="Imgur"></p>
+<p>執行結果如下圖:<br><img src="https://i.imgur.com/FCBLheg.png" alt="Imgur"></p>
 <p>在使用多重委派還有幾個特性需要注意:</p>
 <ul>
 <li>被指派的任何方法，一定都要符合 Delegate 宣告的 input output 規範。</li>

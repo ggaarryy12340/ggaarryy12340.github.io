@@ -27,17 +27,17 @@
 <meta property="og:site_name" content="Gary Blog - 以為程式很簡單">
 <meta property="og:description" content="委派的宣告簡單來說，委派就是將方法當成參數傳進另一個方法中。上面這個說法可能過於簡短有點抽象，我們可以先來了解一下委派宣告的方式。 1234567&#x2F;&#x2F;&#x2F; &lt;summary&gt;&#x2F;&#x2F;&#x2F; 烹調方式 Delegate&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;&#x2F;&#x2F;&#x2F; &lt;param name&#x3D;&quot;食材&quot;&gt;&lt;&#x2F;param&gt;&#x2F;&#x2F;&#x2F; &lt;returns&gt;煮">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://upload.cc/i1/2019/08/25/uvAICb.png">
-<meta property="og:image" content="https://upload.cc/i1/2019/08/25/lG0S8v.png">
+<meta property="og:image" content="https://i.imgur.com/umGYUVE.png">
+<meta property="og:image" content="https://i.imgur.com/FCBLheg.png">
 <meta property="article:published_time" content="2019-08-26T08:02:04.000Z">
-<meta property="article:modified_time" content="2022-10-11T08:08:02.840Z">
+<meta property="article:modified_time" content="2023-09-07T08:30:28.582Z">
 <meta property="article:author" content="Gary Hsu">
 <meta property="article:tag" content="C#">
 <meta property="article:tag" content="Delegate">
 <meta property="article:tag" content="委派">
 <meta property="article:tag" content="物件導向">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://upload.cc/i1/2019/08/25/uvAICb.png">
+<meta name="twitter:image" content="https://i.imgur.com/umGYUVE.png">
 
 <link rel="canonical" href="http://example.com/2019/08/26/C-Delegate%E5%A7%94%E6%B4%BE%E7%9A%84%E4%BD%BF%E7%94%A8%E6%83%85%E5%A2%83%E8%88%87%E7%B0%A1%E4%BB%8B/">
 
@@ -207,7 +207,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-10-11 16:08:02" itemprop="dateModified" datetime="2022-10-11T16:08:02+08:00">2022-10-11</time>
+                <time title="修改時間：2023-09-07 16:30:28" itemprop="dateModified" datetime="2023-09-07T16:30:28+08:00">2023-09-07</time>
               </span>
 
           
@@ -238,11 +238,11 @@
 <p>例如下方範例的 GetFood 方法，其中可能有數十種，甚至數百種的烹煮食物邏輯，我們若把所有邏輯寫在同個 function 中，這個 GetFood 方法勢必會變得又臭又長，不好維護。所以我們將烹煮食物邏輯抽出，包裝在委派 HowToCook 中，並當成參數傳進 GetFood 方法，如此一來， GetFood 方法就只要專注於自己的輸出功能上，不用去在意烹煮食物邏輯。</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">GetFood</span>(<span class="params"><span class="built_in">int</span> 人數, HowToCook 烹調方式</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> food = 烹調方式(<span class="string">&quot;鮮魚&quot;</span>);</span><br><span class="line">    Console.WriteLine(<span class="string">$&quot;<span class="subst">&#123;food&#125;</span>給<span class="subst">&#123;人數&#125;</span>個人吃&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我們只要將 媽媽煮 指派給 howToCook，並呼叫，GetFood(4, howToCook)就可以得到以下的結果。</p>
-<p><img src="https://upload.cc/i1/2019/08/25/uvAICb.png" alt="Imgur"></p>
+<p><img src="https://i.imgur.com/umGYUVE.png" alt="Imgur"></p>
 <h2 id="多重委派"><a href="#多重委派" class="headerlink" title="多重委派"></a>多重委派</h2><p>委派可以被指派一個或多個方法，上面的範例都是一個委派被指派一個方法，下面這個範例則是示範委派參考 howToCook 如何被指派多個方法。</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 產生委派的參考</span></span><br><span class="line">    HowToCook howToCook;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 指派的一個方法 媽媽煮 </span></span><br><span class="line">    howToCook = MaMaCook;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 指派第二個方法 阿嬤煮，透過 += 運算子</span></span><br><span class="line">    howToCook += GrandMaCook;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 執行 GetFood 方法，並將委派參考 howToCook 當作參數傳入</span></span><br><span class="line">    GetFood(<span class="number">4</span>, howToCook);</span><br><span class="line">    Console.Read();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>執行結果如下圖:<br><img src="https://upload.cc/i1/2019/08/25/lG0S8v.png" alt="Imgur"></p>
+<p>執行結果如下圖:<br><img src="https://i.imgur.com/FCBLheg.png" alt="Imgur"></p>
 <p>在使用多重委派還有幾個特性需要注意:</p>
 <ul>
 <li>被指派的任何方法，一定都要符合 Delegate 宣告的 input output 規範。</li>

@@ -27,9 +27,8 @@
 <meta property="og:site_name" content="Gary Blog - 以為程式很簡單">
 <meta property="og:description" content="封裝性 (Encapsulation) 是物件導向三大特性之一。若是要理解封裝性，可以想像當我們在駕駛汽車時想加速的話，我們不需要理解引擎如何運作將動力傳輸到輪胎上，只需要踩下油門踏板就好，因為加速的知識已經被封裝起來了。再舉一個例子我們想拍照的時候不需要去理解鏡頭是如何捕捉影像在儲存至手機裡，只需要按快門就好，因為按快門至儲存影像這中間的運作，也已經被封裝起來了，透過這兩個例子應該會對封裝性有初">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:image" content="https://ggaarryy12340.github.io/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91-%E4%BA%94-%E5%B0%81%E8%A3%9D%E6%80%A7-Public-Private-Protected/%E5%B0%81%E8%A3%9D%E9%8C%AF%E8%AA%A4%E8%A8%8A%E6%81%AF.png">
 <meta property="article:published_time" content="2020-02-07T08:02:04.000Z">
-<meta property="article:modified_time" content="2022-10-11T08:15:44.730Z">
+<meta property="article:modified_time" content="2023-09-07T08:40:36.430Z">
 <meta property="article:author" content="Gary Hsu">
 <meta property="article:tag" content="C#">
 <meta property="article:tag" content="物件導向">
@@ -41,7 +40,6 @@
 <meta property="article:tag" content="封裝">
 <meta property="article:tag" content="封裝性">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ggaarryy12340.github.io/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91-%E4%BA%94-%E5%B0%81%E8%A3%9D%E6%80%A7-Public-Private-Protected/%E5%B0%81%E8%A3%9D%E9%8C%AF%E8%AA%A4%E8%A8%8A%E6%81%AF.png">
 
 <link rel="canonical" href="http://example.com/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%BA%94)%20%E5%B0%81%E8%A3%9D%E6%80%A7%20Public%20Private%20Protected/">
 
@@ -211,7 +209,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-10-11 16:15:44" itemprop="dateModified" datetime="2022-10-11T16:15:44+08:00">2022-10-11</time>
+                <time title="修改時間：2023-09-07 16:40:36" itemprop="dateModified" datetime="2023-09-07T16:40:36+08:00">2023-09-07</time>
               </span>
 
           
@@ -240,10 +238,9 @@
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Driver</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 踩下油門()</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		car.加速();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>如此一來 Driver 想加速時只要踩下油門就會加速，而 Car 類別中其他 private method Driver 都不需要了解(也不能呼叫)，因為全部都被<strong>封裝</strong>在加速() method 了。</p>
-<p>若我們嘗試要直接在 Driver 類別去呼叫 Car 類別的 private 的方法，如下例:</p>
+<p>若我們嘗試要直接在 Driver 類別去呼叫 Car 類別的 private 的方法，則會出現錯誤訊息，如下例:</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Driver</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> 踩下油門()</span><br><span class="line">	&#123;</span><br><span class="line">		Car car = <span class="keyword">new</span> Car();</span><br><span class="line">		car.帶動輪圈();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>則會出現下面錯誤訊息<br> <img src="https://ggaarryy12340.github.io/2020/02/07/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91-%E4%BA%94-%E5%B0%81%E8%A3%9D%E6%80%A7-Public-Private-Protected/%E5%B0%81%E8%A3%9D%E9%8C%AF%E8%AA%A4%E8%A8%8A%E6%81%AF.png" alt="Imgur"></p>
 <blockquote>
 <p>由於其保護層級之故，所以無法存取。</p>
 </blockquote>
