@@ -167,6 +167,140 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/13/ASP.NET%20Core%20%E4%BD%BF%E7%94%A8%20JWT%20%E9%80%B2%E8%A1%8C%E8%BA%AB%E5%88%86%E8%AA%8D%E8%AD%89%E5%8F%8A%E6%8E%88%E6%AC%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Gary Hsu">
+      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/13/ASP.NET%20Core%20%E4%BD%BF%E7%94%A8%20JWT%20%E9%80%B2%E8%A1%8C%E8%BA%AB%E5%88%86%E8%AA%8D%E8%AD%89%E5%8F%8A%E6%8E%88%E6%AC%8A/" class="post-title-link" itemprop="url">ASP.NET Core 使用 JWT 進行身分認證及授權</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2023-09-13 21:50:04 / 修改時間：16:24:15" itemprop="dateCreated datePublished" datetime="2023-09-13T21:50:04+08:00">2023-09-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="JWT-是什麼"><a href="#JWT-是什麼" class="headerlink" title="JWT 是什麼"></a>JWT 是什麼</h2><p>無論什麼開發系，越來越多網頁開發專案選擇前後端分離的架構。而 JWT(JSON Web Tokens) 就是實作前後端授權、驗證一種很方便的機制。而 JWT Token 是由以下三個 JSON 所組成:</p>
+<ul>
+<li><p>Header: 需含以下兩個資訊</p>
+<ul>
+<li>alg: token加密的演算法</li>
+<li>typ: token的類型</li>
+</ul>
+</li>
+<li><p>Payload: 放聲明(Claim)內容的區塊，但僅限存放非機密資訊，因為這段只用 Base64 編碼。</p>
+</li>
+<li><p>Signature: 由以下三個部分組成</p>
+<ul>
+<li>以 Base64 編碼的 Header</li>
+<li>以 Base64 編碼的 Payload</li>
+<li>存放於 Server 端的 secret 密鑰</li>
+</ul>
+</li>
+</ul>
+<p>三個物件中間再以 <strong>.</strong> 連接後即完成一個完整的 Token 如下圖</p>
+<p><img src="https://i.imgur.com/6kXfWPF.png" alt="IMGUR"></p>
+<h2 id="JWT-簡易驗證流程"><a href="#JWT-簡易驗證流程" class="headerlink" title="JWT 簡易驗證流程"></a>JWT 簡易驗證流程</h2><ul>
+<li>前端將登入資訊傳至後端</li>
+<li>後端再將資訊加密成 Token 再傳回前端</li>
+<li>前端將收到的 Token 放進 Header</li>
+<li>後端驗證 Token 是否合法，及分析其權限</li>
+</ul>
+<h2 id="在-Net-Core-生成-JWT-Token"><a href="#在-Net-Core-生成-JWT-Token" class="headerlink" title="在 .Net Core 生成 JWT Token"></a>在 .Net Core 生成 JWT Token</h2><p>首先先將 JWT 驗證所需的資訊加入 appsettings.json</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;JWT&quot;: &#123;</span><br><span class="line">  &quot;KEY&quot;: &quot;fasdfoijsvmaijni&quot;,</span><br><span class="line">  &quot;Issuer&quot;: &quot;todo.com&quot;,</span><br><span class="line">  &quot;Audience&quot;:  &quot;XXX&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>加入一支 JWT Login 的 API，裡面要實做的工作如下:</p>
+<ul>
+<li>確認登入資訊是否能在 DB 找到對應資料</li>
+<li>將登入資訊及權限寫入 Claims</li>
+<li>到 appsettings.json 取回 jwt key</li>
+<li>new 出 JwtSecurityToken 物件</li>
+<li>呼叫 JwtSecurityTokenHandler().WriteToken() 取得 Token</li>
+<li>將 JWT Token 回傳</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">[HttpPost(<span class="string">&quot;JwtLogin&quot;</span>)]</span><br><span class="line"><span class="keyword">public</span> string <span class="title function_">JwtLogin</span><span class="params">(LoginPostDto model)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">var</span> <span class="variable">user</span> <span class="operator">=</span> _todoContext.Employees.SingleOrDefault(x =&gt; x.Account == model.Account &amp;&amp; x.Password == model.Password);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (user == <span class="literal">null</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;帳號密碼錯誤&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">var</span> <span class="variable">claims</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">List</span>&lt;Claim&gt;</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">new</span> <span class="title class_">Claim</span>(JwtRegisteredClaimNames.Email, user.Account),</span><br><span class="line">		<span class="keyword">new</span> <span class="title class_">Claim</span>(<span class="string">&quot;FullName&quot;</span>, user.Name),</span><br><span class="line">		<span class="keyword">new</span> <span class="title class_">Claim</span>(JwtRegisteredClaimNames.NameId, user.EmployeeId.ToString())</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 設定權限</span></span><br><span class="line">	<span class="type">var</span> <span class="variable">roleList</span> <span class="operator">=</span> GetRoleList(user.EmployeeId);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (roleList != <span class="literal">null</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		foreach (<span class="keyword">var</span> role in roleList)</span><br><span class="line">		&#123;</span><br><span class="line">			claims.Add(<span class="keyword">new</span> <span class="title class_">Claim</span>(ClaimTypes.Role, role));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="type">var</span> <span class="variable">securityKey</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SymmetricSecurityKey</span>(Encoding.UTF8.GetBytes(_configuration[<span class="string">&quot;JWT:KEY&quot;</span>]));</span><br><span class="line"></span><br><span class="line">	<span class="type">var</span> <span class="variable">jwt</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JwtSecurityToken</span></span><br><span class="line">	(</span><br><span class="line">		issuer: _configuration[<span class="string">&quot;JWT:Issuer&quot;</span>],</span><br><span class="line">		audience: _configuration[<span class="string">&quot;JWT:Audience&quot;</span>],</span><br><span class="line">		claims: claims,</span><br><span class="line">		expires: DateTime.Now.AddMinutes(<span class="number">30</span>),</span><br><span class="line">		signingCredentials: <span class="keyword">new</span> <span class="title class_">SigningCredentials</span>(securityKey, SecurityAlgorithms.HmacSha256)</span><br><span class="line">	);</span><br><span class="line"></span><br><span class="line">	<span class="type">var</span> <span class="variable">token</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JwtSecurityTokenHandler</span>().WriteToken(jwt);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> token;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Token-解析-JWT-IO"><a href="#Token-解析-JWT-IO" class="headerlink" title="Token 解析(JWT.IO)"></a>Token 解析(JWT.IO)</h2><p>而取得回傳的 Token 後，可以將其丟到 <a target="_blank" rel="noopener" href="https://jwt.io/">JWT.IO</a> 進行解析。可以發現除了 Signature 外，Header &amp; Payload 都可以被揭露，因此要特別注意別將敏感資訊如密碼寫在 Payload 中。也可以發現我們在後端塞的 Claims，都會顯示在 Payload 區塊。</p>
+<p><img src="https://i.imgur.com/EvuLWgL.png" alt="IMGUR"></p>
+<h2 id="Startup-cs-設定此網站採用-JWT-方式認證"><a href="#Startup-cs-設定此網站採用-JWT-方式認證" class="headerlink" title="Startup.cs 設定此網站採用 JWT 方式認證"></a>Startup.cs 設定此網站採用 JWT 方式認證</h2><p>在 ConfigureServices() 加入以下設定，裡面的 TokenValidationParameters 屬性可參考<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.identitymodel.tokens.tokenvalidationparameters?view=msal-web-dotnet-latest">微軟官方文件</a>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                options.TokenValidationParameters = <span class="keyword">new</span> <span class="title class_">TokenValidationParameters</span></span><br><span class="line">                &#123;</span><br><span class="line">                    ValidateIssuer = <span class="literal">true</span>,</span><br><span class="line">                    ValidIssuer = Configuration[<span class="string">&quot;Jwt:Issuer&quot;</span>],</span><br><span class="line">                    ValidateAudience = <span class="literal">true</span>,</span><br><span class="line">                    ValidAudience = Configuration[<span class="string">&quot;Jwt:Audience&quot;</span>],</span><br><span class="line">                    ValidateLifetime = <span class="literal">true</span>,</span><br><span class="line">                    IssuerSigningKey = <span class="keyword">new</span> <span class="title class_">SymmetricSecurityKey</span>(Encoding.UTF8.GetBytes(Configuration[<span class="string">&quot;JWT:KEY&quot;</span>]))</span><br><span class="line">                &#125;;</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="權限驗證"><a href="#權限驗證" class="headerlink" title="權限驗證"></a>權限驗證</h2><p>而 JWT 的權限驗證方式和前篇的 Cookie-base 驗證一樣，是在 Class 或 API 套用 [Authorize] or [AllowAnonymous]</p>
+<ul>
+<li>套用在 Class 層級(所有 Class 的服務都要登入才可使用)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Route(<span class="string">&quot;api/[controller]&quot;</span>)]</span><br><span class="line">[ApiController]</span><br><span class="line">[Authorize]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TodoController</span> : ControllerBase</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>套用在 Action 層級(這個 Action 必須登入才可以使用)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[HttpGet]</span><br><span class="line">[Authorize]</span><br><span class="line"><span class="keyword">public</span> IActionResult <span class="title function_">Get</span><span class="params">([FromQuery] TodoGetParameters todoGetParameters)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>套用 Authorize 屬性外還加上 Roles(除了登入還需要有設定的權限才可使用)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[HttpGet]</span><br><span class="line">[Authorize(Roles = <span class="string">&quot;Todo&quot;</span>)]</span><br><span class="line"><span class="keyword">public</span> IActionResult <span class="title function_">Get</span><span class="params">([FromQuery] TodoGetParameters todoGetParameters)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>匿名驗證: 可以直接套用整個 Class 再針對一些無需登入就可使用的功能(如登入頁面、最新消息) 加上 [AllowAnonymous]</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Route(<span class="string">&quot;api/[controller]&quot;</span>)]</span><br><span class="line">[ApiController]</span><br><span class="line">[Authorize]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TodoController</span> : ControllerBase</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// GET: api/&lt;TodoController&gt;</span></span><br><span class="line">	[HttpGet]</span><br><span class="line">	[AllowAnonymous]</span><br><span class="line">	<span class="keyword">public</span> IActionResult <span class="title function_">Get</span><span class="params">([FromQuery] TodoGetParameters todoGetParameters)</span></span><br><span class="line">	&#123;</span><br><span class="line">		...</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Postman-功能實測"><a href="#Postman-功能實測" class="headerlink" title="Postman 功能實測"></a>Postman 功能實測</h2><p>呼叫 &#x2F;api&#x2F;Login&#x2F;JwtLogin 取得 JWT Token</p>
+<p><img src="https://i.imgur.com/p73eLD7.png" alt="IMGUR"></p>
+<p>再呼叫有套用 [Authorize] 的 API，還需在 Header 加入 <strong>Authorization</strong> 的屬性， value 填上 “bearer “ + 回傳的 token。</p>
+<p><img src="https://i.imgur.com/Equ1ePw.png" alt="IMGUR"></p>
+<p>授權、驗證皆通過，成功取回資料。</p>
+<p><img src="https://i.imgur.com/nMAzws8.png" alt="IMGUR"></p>
+<h2 id="JWT-其他注意事項"><a href="#JWT-其他注意事項" class="headerlink" title="JWT 其他注意事項"></a>JWT 其他注意事項</h2><p>實做到這裡應該已經有人發現，JWT 似乎無法實作登出的需求。沒錯，只要 Client 取得 Token 後，除非過期，否則這個 token 就可以一直使用。如果還是要實作，就必須在串接資料庫，建立黑名單，透過此機制實現登出需求。此外因為只要取得 token 的 Client 就可以通過驗證。因此預防 token 也是很重要的議題。可以透過限制 IP 或 Https 甚至是雙重驗證的方式來提高安全性。</p>
+<h2 id="參考資訊"><a href="#參考資訊" class="headerlink" title="參考資訊"></a>參考資訊</h2><p><a target="_blank" rel="noopener" href="https://blog.miniasp.com/post/2022/02/13/How-to-use-JWT-token-based-auth-in-aspnet-core-60">如何在 ASP.NET Core 6 使用 Token-based 身份認證與授權 (JWT)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.talllkai.com/ASPNETCore/2021/09/15/JWT">ASP.NET Core Web API 入門教學 - JWT身分驗證</a></p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.identitymodel.tokens.tokenvalidationparameters?view=msal-web-dotnet-latest">TokenValidationParameters Class</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/05/Asp.Net%20Core%20%E4%BD%BF%E7%94%A8%20Cookie-based%20Authentication%20%E9%80%B2%E8%A1%8C%E6%8E%88%E6%AC%8A%E5%8F%8A%E6%AC%8A%E9%99%90%E6%8E%A7%E7%AE%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1072,105 +1206,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Gary Hsu">
-      <meta itemprop="description" content=".Net Web 網站開發筆記及技術分享">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gary Blog - 以為程式很簡單">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/16/%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91(%E4%B8%89)%20%E5%BB%BA%E6%A7%8B%E5%AD%90%E5%8F%8A%E5%85%B6%E5%A4%9A%E8%BC%89%E8%A8%AD%E8%A8%88/" class="post-title-link" itemprop="url">物件導向(三) 建構子及其多載設計</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-01-16 16:02:04" itemprop="dateCreated datePublished" datetime="2020-01-16T16:02:04+08:00">2020-01-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2023-09-05 23:39:37" itemprop="dateModified" datetime="2023-09-05T23:39:37+08:00">2023-09-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="何謂建構子-constructior"><a href="#何謂建構子-constructior" class="headerlink" title="何謂建構子 constructior"></a>何謂建構子 constructior</h2><p>建構子 (Constructor) 是一種名稱和 Class 名稱相同，可以輸入參數，但沒有輸出值的特殊 method，在 class 被實體化的時候會被觸發，常被用來設定物件的初始值。</p>
-<h2 id="如何建立-class-的建構子"><a href="#如何建立-class-的建構子" class="headerlink" title="如何建立 class 的建構子"></a>如何建立 class 的建構子</h2><p>要設計一個類別的建構子，需要有以下要求:</p>
-<ul>
-<li>method name 和 class name 需相同</li>
-<li>不需要設定回傳值型別</li>
-</ul>
-<p>而以下就是一個典型的建構子設計範例:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Car</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> brand;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> speed;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// method name 與 class name 相同</span></span><br><span class="line">    <span class="comment">// 沒有設定回傳值型別</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 只要 Car class 被實體化，speed 初始值為 0</span></span><br><span class="line">        speed = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">CarStatus</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> brand + <span class="string">&quot;汽車目前時速為&quot;</span> + speed + <span class="string">&quot;公里&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Car 類別中有兩個 property 及兩個 method，一個 method 為名稱和類別名稱相同的建構子，另一個 CarStatus()，則回傳汽車狀態字串。</p>
-</blockquote>
-<p>當我們實體化一個物件出來後，建構子會自動被觸發，如以下範例:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// new 一個 Car 類別的物件名為 toyota</span></span><br><span class="line">        Car toyota = <span class="keyword">new</span> Car();</span><br><span class="line">        toyota.brand = <span class="string">&quot;Toyota&quot;</span>;</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(toyota.CarStatus());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>toyota 物件被 new 出來後，雖然沒有設定其屬性 speed 的值，但因物件被建立出來後，會呼叫 class 的建構子，所以 toyota 的 speed 被初始為 0。</p>
-</blockquote>
-<blockquote>
-<p>console 輸出的結果為 : Toyota汽車目前時速為0公里</p>
-</blockquote>
-<h2 id="設計多載建構子"><a href="#設計多載建構子" class="headerlink" title="設計多載建構子"></a>設計多載建構子</h2><p>而建構子也可以設計為多載，在不同參數輸入時，執行不一樣的程式碼，如以下範例:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Car</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> brand;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> speed;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建構子1: 沒有輸入參數</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        speed = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 建構子2: 可以在建立物件時，同時設定速度</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span>(<span class="params"><span class="built_in">int</span> setSpeed</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        speed = setSpeed;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">CarStatus</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> brand + <span class="string">&quot;汽車目前時速為&quot;</span> + speed + <span class="string">&quot;公里&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在新增 toyota 物件時，呼叫建構子1，新增 mazda 物件時，呼叫建構子2 :</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 呼叫建構子1</span></span><br><span class="line">        Car toyota = <span class="keyword">new</span> Car();</span><br><span class="line">        toyota.brand = <span class="string">&quot;Toyota&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 呼叫建構子2</span></span><br><span class="line">        Car mazda = <span class="keyword">new</span> Car(<span class="number">60</span>);</span><br><span class="line">        mazda.brand = <span class="string">&quot;Mazda&quot;</span>;</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(toyota.CarStatus());</span><br><span class="line">        Console.WriteLine(mazda.CarStatus());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>輸出結果為 :</p>
-<blockquote>
-<p>Toyota 汽車目前時速為0公里<br>mazda 汽車目前時速為60公里</p>
-</blockquote>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料:"></a>參考資料:</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/using-constructors">MSDN 使用建構函式 (C# 程式設計手冊)</a></li>
-<li><a target="_blank" rel="noopener" href="http://slmtsite.blogspot.com/2013/04/c-17-constructor.html">小山的 C# 教學-第17課-Constructor 建構子</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1240,12 +1275,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">標籤</span>
       </div>
   </nav>
